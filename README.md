@@ -1,5 +1,6 @@
 # **VLarn**
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7300e03603374a828bd5467260353f41)](https://www.codacy.com/gh/johnsonjh/vlarn/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=johnsonjh/vlarn&amp;utm_campaign=Badge_Grade)
 [![DeepSourceA](https://deepsource.io/gh/johnsonjh/vlarn.svg/?label=active+issues)](https://deepsource.io/gh/johnsonjh/vlarn/?ref=repository-badge)
 [![DeepSourceR](https://deepsource.io/gh/johnsonjh/vlarn.svg/?label=resolved+issues)](https://deepsource.io/gh/johnsonjh/vlarn/?ref=repository-badge)
 
