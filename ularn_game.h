@@ -68,21 +68,21 @@ extern char nobeep;   /* true if program is not to beep*/
 
 /* *************** File Names *************** */
 
-#define SCORENAME     "Uscore"
-#define HELPNAME      "Uhelp"
-#define LEVELSNAME    "Umaps"
-#define FORTSNAME     "Ufortune"
+#define SCORENAME     "Vscore"
+#define HELPNAME      "Vhelp"
+#define LEVELSNAME    "Vmaps"
+#define FORTSNAME     "Vfortune"
 
 
 /* maximum number moves before the game is called*/
-#define TIMELIMIT 40000
+#define TIMELIMIT 90000
 
 /* create a checkpoint file every CKCOUNT moves */
-#define CKCOUNT 400
+#define CKCOUNT 150
 
 /* max size of the players name */
-#define LOGNAMESIZE 40
-#define USERNAME_LENGTH 40
+#define LOGNAMESIZE 80
+#define USERNAME_LENGTH 80
 
 #ifndef MAXPATHLEN
 #define MAXPATHLEN 1024

@@ -7,17 +7,20 @@ LDFLAGS=
 
 OBJECT=ularn.o ularn_winami.o ularn_game.o ularn_ask.o store.o sphere.o spell.o show.o scroll.o scores.o saveutils.o savegame.o potion.o player.o object.o monster.o itm.o help.o getopt.o fortune.o dungeon_obj.o dungeon.o diag.o action.o ifftools.o bio.o smart_menu.o
 
-ularn: $(OBJECT)
-	$(LD) $(LDFLAGS) $(OBJECT) lib:scm.lib ProgramName=ularn
+all: vlarn
+vlarn: $(OBJECT)
+	$(LD) $(LDFLAGS) $(OBJECT) lib:scm.lib ProgramName=vlarn
+
+rebuild: archive vlarn
 
 clean:
 	delete #?.o
 
 archive: clean
-	del lib\uscore
-	del lib\ularn.pid
-	del ularn.ini
-	del ularn.opt
+	del lib\vscore
+	del lib\vlarn.pid
+	del vlarn.ini
+	del vlarn.opt
 
 ularn.o: ularn.c patchlevel.h ularn_game.h ularn_win.h ularn_ask.h getopt.h savegame.h scores.h header.h dungeon_obj.h dungeon.h player.h monster.h action.h object.h potion.h scroll.h spell.h show.h help.h diag.h itm.h
 	$(CC) $(CFLAGS) ularn.c

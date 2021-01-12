@@ -221,19 +221,19 @@ static char EventChar;
 //
 // player id file
 //
-static char *PIDName = LIBDIR "\\ularn.pid";
+static char *PIDName = LIBDIR "\\vlarn.pid";
 #define FIRST_PID 1001
 
 //
 // ularn.ini file for window position & font selection
 //
-static char *IniName = "ularn.ini";
+static char *IniName = "vlarn.ini";
 
 //
 // Bitmaps for tiles
 //
 
-static char *TileBMName = LIBDIR "\\ularn_gfx.bmp";
+static char *TileBMName = LIBDIR "\\vlarn_gfx.bmp";
 static HBITMAP TileBitmap = NULL;
 
 static HDC TileDC;

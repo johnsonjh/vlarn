@@ -400,7 +400,7 @@ static int nospell(SpellType x, MonsterIdType monst)
   int tmp;
 
   /* bad spell or monst */
-  if ((x >= SPELL_COUNT) || (monst >= MONST_COUNT) || (monst < 0) || (x < 0))
+  if ((x >= SPELL_COUNT) || (monst >= MONST_COUNT) || ((signed)monst < 0) || ((signed)x < 0))
     return (0);
 
   if ((tmp = spelweird[monst][x]) == 0)
@@ -638,7 +638,7 @@ static void direct(SpellType spnum, int dam, char *str, int arg, MagicEffectsTyp
   MonsterIdType m;
 
   /* check for bad arguments */
-  if ((spnum < 0) || (spnum >= SPELL_COUNT) || (str == 0))
+  if (((signed)spnum < 0) || (spnum >= SPELL_COUNT) || (str == 0))
     return;
 
   /* check player confusion */
@@ -735,7 +735,7 @@ static void tdirect(SpellType spnum)
   MonsterIdType m;
 
   /* check for bad args */
-  if ((spnum < 0) || (spnum >= SPELL_COUNT)) return;
+  if (((signed)spnum < 0) || (spnum >= SPELL_COUNT)) return;
 
   /* check for player confusion */
   if (isconfuse()) return;
@@ -790,7 +790,7 @@ static void makewall(SpellType spnum)
   int tx, ty;
 
   /* check for bad args */
-  if (spnum < 0 || spnum >= SPELL_COUNT) return;
+  if (((signed)spnum < 0) || (spnum >= SPELL_COUNT)) return;
 
   /* check for player confusion */
   if (isconfuse()) return;
@@ -889,7 +889,7 @@ static void omnidirect(SpellType spnum, int dam, char *str, MagicEffectsType fx)
   int frame_count;
 
   /* check for bad args */
-  if (spnum < 0 || spnum >= SPELL_COUNT || str == 0) return;
+  if ((signed)spnum < 0 || spnum >= SPELL_COUNT || str == 0) return;
 
   /* get the area affected */
   xl = max(playerx - 1, 0);
@@ -973,7 +973,7 @@ static void dirpoly(SpellType spnum)
   MonsterIdType m;
 
   /* check for bad args */
-  if (spnum < 0 || spnum >= SPELL_COUNT) return;
+  if ((signed)spnum < 0 || spnum >= SPELL_COUNT) return;
 
   /* check for player confusion */
   if (isconfuse()) return;
@@ -1165,7 +1165,7 @@ static void speldamage(SpellType Spell)
   }
 
   clev = c[LEVEL];
-  if ((clev * 3 + 2) < Spell)
+  if ((clev * 3 + 2) < (int)Spell)
   {
     Print("\n  Nothing happens.  You seem inexperienced.");
     return;
@@ -1647,7 +1647,7 @@ void godirect(SpellType spnum, int dam, char *str, int delay, DirEffectsType csh
   int tx, ty;
 
   /* check for bad args */
-  if ((spnum < 0) || (spnum >= SPELL_COUNT) || (str == 0) || (delay < 0))
+  if (((signed)spnum < 0) || (spnum >= SPELL_COUNT) || (str == 0) || (delay < 0))
     return;
 
   /* Check player confusion */

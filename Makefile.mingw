@@ -15,10 +15,10 @@ clean:
 	del *.obj
 
 archive: clean
-	del lib\uscore
-	del lib\ularn.pid
-	del ularn.ini
-	del ularn.opt
+	del lib\vscore
+	del lib\vlarn.pid
+	del vlarn.ini
+	del vlarn.opt
 
 ularn.o: ularn.c patchlevel.h ularn_game.h ularn_win.h ularn_ask.h getopt.h savegame.h scores.h header.h dungeon_obj.h dungeon.h player.h monster.h action.h object.h potion.h scroll.h spell.h show.h help.h diag.h itm.h
 	$(CC) $(CFLAGS) -c ularn.c

@@ -354,19 +354,19 @@ static struct SmartMenu UlarnMenu[6] =
 //
 // player id file
 //
-static char *PIDName = LIBDIR "/ularn.pid";
+static char *PIDName = LIBDIR "/vlarn.pid";
 #define FIRST_PID 1001
 
 //
 // ularn.ini file for window position & font selection
 //
-static char *IniName = "ularn.ini";
+static char *IniName = "vlarn.ini";
 
 //
 // Bitmaps for tiles
 //
 
-static char *TileBMName = LIBDIR "/ularn_gfx.iff";
+static char *TileBMName = LIBDIR "/vlarn_gfx.iff";
 
 /* Tiles for different character classes, (female, male) */
 static int PlayerTiles[8][2] =
@@ -1980,7 +1980,7 @@ void get_password_input(char *password, int Len)
   password[Pos] = 0;
 
 }
-
+#if 0
 /* =============================================================================
  * FUNCTION: get_string_input
  */
@@ -2038,7 +2038,7 @@ static void get_string_input(char *string, int Len)
   string[Pos] = 0;
 
 }
-
+#endif
 /* =============================================================================
  * FUNCTION: get_num_input
  */

@@ -75,7 +75,9 @@
 //
 // player id file
 //
-static char *PIDName = LIBDIR "\\ularn.pid";
+#ifndef UNIX
+static char *PIDName = LIBDIR "\\vlarn.pid";
+#endif
 #define FIRST_PID 1001
 
 /* =============================================================================
@@ -459,6 +461,7 @@ WINDOW *TextWindow;
 // Text mode stuff
 //
 
+/* XXX trn default is 80 */
 #define LINE_LENGTH 80
 
 //
@@ -472,6 +475,7 @@ static int MsgCursorY = 1;
 //
 // Text
 //
+/* XXX trn default is 24, 80 */
 #define MAX_TEXT_LINES 24
 #define TEXT_LINE_LENGTH 80
 static FormatType CurrentTextFormat;
@@ -1436,7 +1440,7 @@ void get_password_input(char *password, int Len)
 
 
 }
-
+#if 0
 /* =============================================================================
  * FUNCTION: get_string_input
  */
@@ -1497,7 +1501,7 @@ static void get_string_input(char *string, int Len)
   string[Pos] = 0;
 
 }
-
+#endif
 /* =============================================================================
  * FUNCTION: get_num_input
  */
@@ -1745,12 +1749,12 @@ void set_display(DisplayModeType Mode)
  */
 static void IncCursorY(int Count)
 {
-  int Scroll;
+  /*int Scroll;*/
   int inc;
   int x;
 
   inc = Count;
-  Scroll = 0;
+  /*Scroll = 0;*/
 
   while (inc > 0)
   {
@@ -1758,7 +1762,7 @@ static void IncCursorY(int Count)
 
     if (CursorY > MaxLine)
     {
-      Scroll = 1;
+      /*Scroll = 1;*/
       CursorY--;
 
       scrollok(TextWindow, 1);
@@ -2159,7 +2163,11 @@ void drawscreen(void)
  */
 void draws(int minx, int miny, int maxx, int maxy)
 {
-  PaintWindow();
+	(void) minx;
+	(void) miny;
+	(void) maxx;
+	(void) maxy;
+	PaintWindow();
 }
 
 /* =============================================================================

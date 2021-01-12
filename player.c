@@ -187,7 +187,7 @@ char char_picked;       /* the character chosen */
 int playerx, playery;  /* the room on the present level of the player*/
 int lastpx, lastpy;    /* 0 --- MAXX-1  or  0 --- MAXY-1   */
 
-long initialtime=0;       /* time playing began   */
+time_t initialtime=0;       /* time playing began   */
 long gtime=0;             /* the clock for the game */
 long outstanding_taxes=0; /* present tax bill from score file */
 
@@ -395,7 +395,7 @@ static void pick_char(int foo)
   {
     ClearText();
     MoveCursor(29, 1);
-    Standout("The Addiction of Ularn\n\n");
+    Standout("The Addiction of VLarn\n\n");
     Print("Pick a character class...\n\n");
 
     Print("\ta)  Ogre       - Exceptional strength, but thick as a brick\n");
@@ -938,7 +938,7 @@ void losemspells (int x)
 void positionplayer (void)
 {
   int x, y;
-  int cx, cy;
+  int cx = 0, cy = 0;
   int dist, closest;
 
   if ((item[playerx][playery] == ONOTHING) &&
@@ -1141,7 +1141,7 @@ int take (int itm, int arg)
   /*
    * Decide how many items the player can carry
    */
-  limit = 15+(c[LEVEL]>>1);
+  limit = 16+(c[LEVEL]>>1);
   if (limit > IVENSIZE)
   {
     limit = IVENSIZE;

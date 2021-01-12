@@ -1,11 +1,11 @@
 /* =============================================================================
- * PROGRAM:  ularn
- * FILENAME: ularn_game.h
+ * PROGRAM:  vlarn
+ * FILENAME: vlarn_game.h
  *
  * DESCRIPTION:
- * Game data used by Ularn.
+ * Game data used by VLarn.
  * This Contains:
- *   . The names of data files used by ularn
+ *   . The names of data files used by vlarn
  *   . The player's name
  *   . Current game options
  *
@@ -17,14 +17,14 @@
  * mail           : True if mail bills when game is won
  * ckpflag        : True if checkpoint files are to be used.
  * nobeep         : True if beep is off.
- * libdir         : Ularn library path
+ * libdir         : VLarn library path
  * savedir        : Directroy for save games
  * savefilename   : Filename for saving the game
  * scorefile      : Filename for the scores
- * helpfile       : Filename for ularn help
+ * helpfile       : Filename for vlarn help
  * larnlevels     : Filename for pregenerated levels
  * fortfile       : Filename for fortunes
- * optsfile       : Ularn options file
+ * optsfile       : VLarn options file
  * ckpfile        : Checkpoint file name
  * diagfile       : Diagnostic dump file name
  * userid         : User Id of the player
@@ -45,7 +45,7 @@
  *
  * newgame      : Funtion to initialise a new game.
  * sethard      : Function to set the game difficulty
- * read_options : Function to read the ularn options file
+ * read_options : Function to read the vlarn options file
  *
  * =============================================================================
  */
@@ -94,16 +94,16 @@ char larnlevels[MAXPATHLEN];
 char fortfile[MAXPATHLEN];
 
 /* the options file filename */
-char optsfile[MAXPATHLEN] = "ularn.opt";
+char optsfile[MAXPATHLEN] = "vlarn.opt";
 
 /* the checkpoint file filename */
-char ckpfile[MAXPATHLEN] = "ularn.ckp";
+char ckpfile[MAXPATHLEN] = "vlarn.ckp";
 
 /* the diagnostic filename  */
 char diagfile[] = "diagfile.txt";
 
 /* the wizard's password */
-char *password ="fizban";
+char *password ="rodney";
 
 int userid;                 /* the players login user id number */
 char loginname[USERNAME_LENGTH + 1];          /* players login name */

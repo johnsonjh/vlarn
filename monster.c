@@ -296,7 +296,7 @@ static void dropsomething (int x, int y, MonsterIdType monst)
 static char *rust_armour(void)
 {
   int Armour;
-  int ArmourId;
+  int ArmourId = NULL;
   int Shield;
   int Rusted = 0;
   int i;
@@ -1676,7 +1676,7 @@ void hitmonster(int x, int y)
 
   if (mitem[x][y].mon == LEMMING)
   {
-    if (rnd(100) <= 40) createmonster(LEMMING);
+    if (rnd(100) <= 10) createmonster(LEMMING); /* was 40, now 10 */
   }
 }
 

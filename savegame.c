@@ -124,7 +124,7 @@ static void fcheat(void)
 
   Print("\nSorry but your savefile can't be deleted.  This can only mean\n");
   Print("that you tried to CHEAT by protecting the directory the savefile\n");
-  Print("is in.  Since this is unfair to the rest of the Ularn community, I\n");
+  Print("is in.  Since this is unfair to the rest of the VLarn community, I\n");
   Print("cannot let you play this game.\n");
   nap(5000);
   c[GOLD] = c[BANKACCOUNT] = 0;

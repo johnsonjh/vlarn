@@ -9,17 +9,20 @@ RCFLAGS=-32 -Ic:\bcc55\include -r
 
 OBJECT=ularn.obj ularn_wintty.obj ularn_game.obj ularn_ask.obj store.obj sphere.obj spell.obj show.obj scroll.obj scores.obj saveutils.obj savegame.obj potion.obj player.obj object.obj monster.obj itm.obj help.obj getopt.obj fortune.obj dungeon_obj.obj dungeon.obj diag.obj action.obj
 
-ularn.exe: $(OBJECT) ularnpc.res
+all: vlarn
+vlarn.exe: $(OBJECT) ularnpc.res
 	$(LD) $(LDFLAGS) @ularntty.rsp
+
+rebuild: archive vlarn
 
 clean:
 	del *.obj
 
 archive: clean
-	del lib\uscore
-	del lib\ularn.pid
-	del ularn.ini
-	del ularn.opt
+	del lib\vscore
+	del lib\vlarn.pid
+	del vlarn.ini
+	del vlarn.opt
 
 ularn.obj: ularn.c patchlevel.h ularn_game.h ularn_win.h ularn_ask.h getopt.h savegame.h scores.h header.h dungeon_obj.h dungeon.h player.h monster.h action.h object.h potion.h scroll.h spell.h show.h help.h diag.h itm.h
 	$(CC) $(CFLAGS) -c ularn.c

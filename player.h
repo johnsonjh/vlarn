@@ -226,7 +226,7 @@ extern char char_picked;      /* the character chosen */
 extern int playerx, playery; /* the room on the present level of the player*/
 extern int lastpx, lastpy;   /* 0 --- MAXX-1  or  0 --- MAXY-1   */
 
-extern long initialtime;        /* time playing began   */
+extern time_t initialtime;        /* time playing began   */
 extern long gtime;              /* the clock for the game */
 extern long outstanding_taxes;  /* present tax bill from score file */
 

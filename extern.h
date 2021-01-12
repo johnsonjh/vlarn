@@ -600,6 +600,7 @@ extern short iarg[MAXX][MAXY], lastnum;	/* must be short for gold piles */
 extern int yrepcount,userid;
 extern int ipoint, iepoint;
 
-extern long initialtime,outstanding_taxes,skill[],gtime,c[],cbak[];
+extern time_t initialtime;
+extern long outstanding_taxes,skill[],gtime,c[],cbak[];
 extern long lasttime;
 

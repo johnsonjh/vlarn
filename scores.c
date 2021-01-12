@@ -52,7 +52,7 @@
  * Energetic coders may provide an automatic score board format upgrade.
  */
 
-#define SCORE_VERSION 1
+#define SCORE_VERSION 2
 
 struct score_header_type
 {
@@ -106,7 +106,7 @@ static char *whydead[DIED_COUNT] =
   "killed by a monster",
   "quit",
   "suspended",
-  "self - annihilated",
+  "self-annihilated",
   "shot by an arrow",
   "hit by a dart",
   "fell into a pit",
@@ -244,6 +244,9 @@ static long calc_score(int Winner)
 
   /* Calculate the final score */
   score = gold_value + c[EXPERIENCE] + deepest * 50;
+
+  /* no negative score */
+  if (score < 0) score = 0;
 
   return score;
 }
@@ -734,7 +737,7 @@ static int show_winners(void)
   {
     ClearText();
     clearpager();
-    Print("   Score       Diff   Time Needed  Ularn Winners List\n");
+    Print("   Score       Diff   Time Needed  VLarn Winners List\n");
     pager();
     
     /* needed to print out the winners in order */
@@ -820,7 +823,7 @@ static int show_visitors(int show_inv)
   {
     ClearText();
     clearpager();
-    Print("  Score Diff  Ularn Visitor Log\n");
+    Print("  Score Diff  VLarn Visitor Log\n");
     pager();
 
     for (i = 0 ; i < count ; i++)
@@ -916,11 +919,11 @@ static void show_player_score(DiedReasonType Reason, int Monster, long score)
     strcpy(char_class, "<unknown>");
   }
 
-  Print("---------------------------------------------------------------\n");
-  Print("                 U L A R N    S C O R E S\n");
-  Print("---------------------------------------------------------------\n");
-  Printf("Score: %ld  Diff: %d  ", score, c[HARDGAME]);
-  Printf("Level: %s  Char: %s\n", cls, char_class);
+  Print("-----------------------------------------------------------------------------\n");
+  Print("                            V L A R N    S C O R E S\n");
+  Print("-----------------------------------------------------------------------------\n\n");
+  Printf(" Score: %ld      Diff: %d  ", score, c[HARDGAME]);
+  Printf(" Level: %s       Char: %s\n", cls, char_class);
   Printf("\t%s", logname);
 
   print_died_reason(Reason, Monster, level);
@@ -936,7 +939,7 @@ static void show_player_score(DiedReasonType Reason, int Monster, long score)
   }
 
   Print("\n");
-  Print("---------------------------------------------------------------");
+  Print("-----------------------------------------------------------------------------");
 
 }
 

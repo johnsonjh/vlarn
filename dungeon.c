@@ -746,7 +746,7 @@ static void makeobject (int j)
   {
     if (rnd(100) > 75)
     {
-      fillroom(OPAD, 0);  /* Dealer McDope's Pad */
+      //fillroom(OPAD, 0);  /* Dealer McDope's Pad */
       c[PAD]++;
     }
   }
@@ -1598,7 +1598,7 @@ void createitem(int x, int y, int it, int arg)
  */
 void something(int x, int y, int lev)
 {
-  int item_id, item_arg;
+  int item_id, item_arg = NULL;
 
   /* correct level? */
   if (lev < 0 || lev > VBOTTOM) return;

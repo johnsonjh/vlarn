@@ -384,7 +384,7 @@ static void dnditem(int i)
  */
 static void dnd_2hed(void)
 {
-  Print("Welcome to the Ularn Thrift Shoppe.  We stock many items explorers find useful\n");
+  Print("Welcome to the VLarn Thrift Shoppe.  We stock many items explorers find useful\n");
   Print("in their adventures.  Feel free to browse to your heart's content.\n");
   Print("Also be advised that if you break 'em, you pay for 'em.");
 }
@@ -435,7 +435,7 @@ void dndstore(void)
   dnd_2hed();
   if (outstanding_taxes>0)
   {
-    Print("\n\nThe Ularn Revenue Service has ordered us to not do business with tax evaders.\n");
+    Print("\n\nThe VLarn Revenue Service has ordered us to not do business with tax evaders.\n");
     UlarnBeep();
     Printf("They have also told us that you owe %d gp in back taxes and, as we must\n",(long)outstanding_taxes);
     Print("comply with the law, we cannot serve you at this time.  So Sorry.\n");
@@ -601,7 +601,7 @@ static void sch_hed(void)
 {
   ClearText();
 
-  Print("The College of Ularn offers the exciting opportunity of higher education to\n");
+  Print("The College of VLarn offers the exciting opportunity of higher education to\n");
   Print("all inhabitants of the caves.  Here is the class schedule:\n\n\n");
   Print("\t\t    Course Name \t       Time Needed\n\n");
 
@@ -628,7 +628,7 @@ static void sch_hed(void)
     Print("\t\tg)  Contemporary Dance          10 mobuls");
   Printc('\n');
   if (course[7]==0)
-    Print("\t\th)  History of Ularn             5 mobuls");
+    Print("\t\th)  History of VLarn             5 mobuls");
 
   Print("\n\n\t\tAll courses cost 250 gold pieces.");
   MoveCursor(30,18);
@@ -1166,7 +1166,7 @@ static void banktitle(char *str)
   Print(str);
   if (outstanding_taxes > 0)
   {
-    Print("\n\nThe Ularn Revenue Service has ordered that your account be frozen until all\n");
+    Print("\n\nThe VLarn Revenue Service has ordered that your account be frozen until all\n");
     UlarnBeep();
     Printf("levied taxes have been paid.  They have also told us that you owe %d gp in\n",(long)outstanding_taxes);
     Print("taxes and we must comply with them. We cannot serve you at this time.  Sorry.\n");
@@ -1269,7 +1269,7 @@ void ointerest(void)
 static void otradhead(void)
 {
   ClearText();
-  Print("Welcome to the Ularn Trading Post.  We buy items that explorers no longer find\n");
+  Print("Welcome to the VLarn Trading Post.  We buy items that explorers no longer find\n");
   Print("useful.  Since the condition of the items you bring in is not certain,\n");
   Print("and we incur great expense in reconditioning the items, we usually pay\n");
   Print("only 20% of their value were they to be new.  If the items are badly\n");
@@ -1536,7 +1536,7 @@ void olrs(void)
 
   }
 
-  Print("Welcome to the Ularn Revenue Service district office.  How can we help you?");
+  Print("Welcome to the VLarn Revenue Service district office.  How can we help you?");
   while (1)
   {
     MoveCursor(1,6);
@@ -1756,7 +1756,7 @@ static void pad_hd(void)
 
   ClearText();
   Print("Hey man, welcome to Dealer McDope's Pad!  I gots the some of the finest dope\n");
-  Print("you'll find anywhere in Ularn -- check it out...\n\n\n");
+  Print("you'll find anywhere in VLarn -- check it out...\n\n\n");
   Print("\t\t    The Stash\t\t\tThe Cash\n\n");
 
   for (Dope = 0 ; Dope < DOPE_COUNT ; Dope++)

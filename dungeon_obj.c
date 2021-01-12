@@ -39,6 +39,7 @@
 #include "potion.h"
 #include "scores.h"
 #include "itm.h"
+#include "ularn_game.h"
 
 /* =============================================================================
  * Local functions
@@ -430,6 +431,7 @@ void oaltar(void)
         else
         {
           Print("\nNothing happens.");
+	  nomove = 1; /* XXX trn */
         }
         break;
 

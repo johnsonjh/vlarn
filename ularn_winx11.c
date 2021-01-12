@@ -430,7 +430,7 @@ static char EventChar;
 // Bitmaps for tiles
 //
 
-static char *TileFilename = LIBDIR "/ularn_gfx.xpm";
+static char *TileFilename = LIBDIR "/vlarn_gfx.xpm";
 
 /* Tiles for different character classes, (female, male) */
 static int PlayerTiles[8][2] =
@@ -1509,9 +1509,10 @@ static void Resize(void)
   XWindowAttributes win_attr;
   int ClientWidth;
   int ClientHeight;
-  Status rc;
+  /* XXX trn - check status rc return val */
+  /*Status rc;
 
-  rc = XGetWindowAttributes(display, ularn_window, &win_attr);
+  rc = */XGetWindowAttributes(display, ularn_window, &win_attr);
   
 
   LarnWindowWidth = win_attr.width;
@@ -1997,10 +1998,11 @@ void MakeTileMasks(void)
 int init_app(char *DisplayName)
 {
   int x, y;
-  Visual *visual;
+/* XXX trn */
+  /*Visual *visual;*/
   int rc;
   char *LoadingText = "Loading data...";
-  char *UlarnText = "ULarn";
+  char *UlarnText = "VLarn";
   XTextProperty xtext;
 
   display = XOpenDisplay(DisplayName);
@@ -2008,7 +2010,8 @@ int init_app(char *DisplayName)
   if (display == NULL)
     {
       fprintf(stderr, "Error: Cannot connect to X server %s\n", DisplayName);
-      return 0;
+      /*return 0;*/
+      exit(1);
     }
 
   screen_num = DefaultScreen(display);
@@ -2072,7 +2075,7 @@ int init_app(char *DisplayName)
 
   /* Get colours required */
 
-  visual = DefaultVisual(display, DefaultScreen(display));
+  /*visual = */DefaultVisual(display, DefaultScreen(display));
   colormap = XDefaultColormap(display, screen_num);
 
   LtGrey.red = 192 * 256;

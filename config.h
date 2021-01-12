@@ -35,7 +35,7 @@
  */
 
 //#define UNIX_TTY
-#define UNIX_X11
+//#define UNIX_X11
 //#define WINDOWS
 //#define W32_TTY
 //#define AMIGA_WIN

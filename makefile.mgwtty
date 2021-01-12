@@ -3,7 +3,7 @@ CC=gcc
 LD=gcc
 RC=windres
 
-CFLAGS=-Wall -I C:/pdcurses
+CFLAGS=-Wall -Wextra -g -I C:/pdcurses
 LDFLAGS=-L C:/pdcurses/pdcurses
 LIB=-l pdcurses
 
@@ -12,30 +12,33 @@ LIB_PATH=/usr/games/lib
 
 OBJECT=ularn.o ularn_wintty.o ularn_game.o ularn_ask.o store.o sphere.o spell.o show.o scroll.o scores.o saveutils.o savegame.o potion.o player.o object.o monster.o itm.o help.o getopt.o fortune.o dungeon_obj.o dungeon.o diag.o action.o
 
-ularn: $(OBJECT)
-	$(LD) $(LDFLAGS) -o ularn $(OBJECT) $(LIB)
+all: vlarn
+vlarn: $(OBJECT)
+	$(LD) $(LDFLAGS) -o vlarn $(OBJECT) $(LIB)
 
-install: ularn lib/ularn_gfx.xpm lib/Uhelp lib/Ufortune lib/Umap 
-	cp ularn $(INSTALL_PATH)
-	chmod 555 $(INSTALL_PATH)/ularn
+install: vlarn lib/vlarn_gfx.xpm lib/Vhelp lib/Vfortune lib/Vmaps
+	cp vlarn $(INSTALL_PATH)
+	chmod 555 $(INSTALL_PATH)/vlarn
 	mkdir $(LIB_PATH)
-	cp lib/ularn_gfx.xpm $(LIB_PATH)
-	chmod 544 $(LIB_PATH)/ularn_gfx.xpm
-	cp lib/Uhelp $(LIB_PATH)
-	chmod 544 $(LIB_PATH)/Uhelp
-	cp lib/Ufortune $(LIB_PATH)
-	chmod 544 $(LIB_PATH)/Ufortune
-	cp lib/Umaps $(LIB_PATH)
-	chmod 544 $(LIB_PATH)/Umaps
+	cp lib/vlarn_gfx.xpm $(LIB_PATH)
+	chmod 544 $(LIB_PATH)/vlarn_gfx.xpm
+	cp lib/Vhelp $(LIB_PATH)
+	chmod 544 $(LIB_PATH)/Vhelp
+	cp lib/Vfortune $(LIB_PATH)
+	chmod 544 $(LIB_PATH)/Vfortune
+	cp lib/Vmaps $(LIB_PATH)
+	chmod 544 $(LIB_PATH)/Vmaps
+
+rebuild: archive vlarn
 
 clean:
-	rm *.o
+	rm -f vlarn *.o
 
 archive: clean
-	rm lib/Uscore
-	rm lib/ularn.pid
-	rm ularn.ini
-	rm ularn.opt
+	rm -f lib/Vscore
+	rm -f lib/vlarn.pid
+	rm -f vlarn.ini
+	rm -f vlarn.opt
 
 ularn.o: ularn.c patchlevel.h ularn_game.h ularn_win.h ularn_ask.h getopt.h savegame.h scores.h header.h dungeon_obj.h dungeon.h player.h monster.h action.h object.h potion.h scroll.h spell.h show.h help.h diag.h itm.h
 	$(CC) $(CFLAGS) -c ularn.c

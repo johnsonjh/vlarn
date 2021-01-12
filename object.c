@@ -734,7 +734,7 @@ void lookforobject(void)
 
     case OSCHOOL:
       if (nearbymonst()) return;
-      Print("\n\nYou have found the College of Ularn.");
+      Print("\n\nYou have found the College of VLarn.");
 
       i = get_prompt_input(
             "\nDo you (g) go inside, or (i) stay here? ",
@@ -761,11 +761,11 @@ void lookforobject(void)
       if (nearbymonst()) return;
       if (i==OBANK)
       {
-        Print("\n\nYou have found the bank of Ularn.");
+        Print("\n\nYou have found the bank of VLarn.");
       }
       else
       {
-        Print("\n\nYou have found a branch office of the bank of Ularn.");
+        Print("\n\nYou have found a branch office of the bank of VLarn.");
       }
 
       j = get_prompt_input(
@@ -1017,7 +1017,7 @@ void lookforobject(void)
 
     case OTRADEPOST:
       if (nearbymonst()) return;
-      Print("\nYou have found the Ularn trading Post.");
+      Print("\nYou have found the VLarn trading Post.");
       i = get_prompt_input(
             "\nDo you (g) go inside, or (i) stay here? ",
             "gi\033", 1);

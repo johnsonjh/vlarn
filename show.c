@@ -70,6 +70,7 @@ static int count;
  */
 static void t_setup (int count)
 {
+  (void) count;
   set_display(DISPLAY_TEXT);
   ClearText();
   MoveCursor(1, 1);
@@ -91,7 +92,8 @@ static void t_setup (int count)
  */
 static void t_endup (int count)
 {
-  set_display(DISPLAY_MAP);
+	(void) count;
+	set_display(DISPLAY_MAP);
 }
 
 /* =============================================================================

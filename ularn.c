@@ -58,20 +58,21 @@
 #define MAX_CMDLINE_PARAM 255
 
 static char copyright[]=
-  "\nUlarn created by Phil Cordier -- based on Larn by Noah Morgan\n"
+  "\nVLarn by Jeffrey H. Johnson\n"
+  "  Ularn created by Phil Cordier -- based on Larn by Noah Morgan\n"
   "  Updated by Josh Brandt and David Richerby\n"
   "  Rewrite and Windows32/X11/Amiga graphics conversion by Julian Olds";
 
 static char cmdhelp[] = "\
-Cmd line format: Ularn [-sicnh] [-o <optsfile>] [-d #] [-r]\n\
+Cmd line format: vlarn [-sicnh] [-o <optsfile>] [-d #] [-r]\n\
   -s   show the scoreboard\n\
-  -i   show scoreboard with inventories\n\
+  -i   show the scoreboard with inventories\n\
   -c   create new scoreboard (wizard only)\n\
-  -n   suppress welcome message on starting game\n\
-  -h   print this help text\n\
-  -o <optsfile> specify .Ularnopts file to be used instead of \"~/.Ularnopts\"\n\
-  -d # specify level of difficulty (example: Ularn -d 5)\n\
-  -r   restore checkpoint (.ckp) file\n";
+  -n   suppress welcome message when starting game\n\
+  -h   display this help message\n\
+  -o <optsfile> specify options file to be used instead of \"~/vlarn.opt\"\n\
+  -d # specify level of difficulty (example: vlarn -d 5)\n\
+  -r   restore checkpoint (vlarn.ckp) file\n";
 
 static char *optstring = "sicnhro:d:";
 
@@ -383,10 +384,10 @@ void ULarnSetup(int argc, char *argv[])
   sprintf(fortfile, "%s/%s", libdir, FORTSNAME);
 
   /* save file name in home directory */
-  sprintf(savefilename, "%s/ularn_%s.sav", savedir, loginname);
+  sprintf(savefilename, "%s/vlarn_%s.sav", savedir, loginname);
 
   /* the checkpoint file */
-  sprintf(ckpfile, "%s/ularn_%s.ckp", home, loginname);
+  sprintf(ckpfile, "%s/vlarn_%s.ckp", home, loginname);
 
   if (restore_ckp)
   {
@@ -414,6 +415,8 @@ void ULarnSetup(int argc, char *argv[])
   if (restorflag == 0)
   {
     /* make the character that will play */
+	  /* XXX trn */
+	  wizard = 0;
     makeplayer();
     /* make the dungeon */
     newcavelevel(0);
@@ -873,7 +876,7 @@ void parse (ActionType Action)
 
     case ACTION_VERSION:
       yrepcount=0;
-      Printf("\nThe Addiction of Ularn -- Version %s.%s (%s)\nDifficulty level %d",
+      Printf("\nVLarn %s.%s (%s) - Difficulty level %d",
               LARN_VERSION,
               LARN_PATCHLEVEL,
               LARN_DATE,

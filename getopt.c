@@ -301,7 +301,7 @@ int ugetopt (int argc, char **argv, const char *optstring)
     int exact = 0;
     int ambig = 0;
     const struct option *pfound = 0;
-    int indfound;
+    int indfound = NULL;
 
     while (*s && (*s != '=')) s++;
 
@@ -312,7 +312,7 @@ int ugetopt (int argc, char **argv, const char *optstring)
     {
       if (!strncmp (p->name, nextchar, s - nextchar))
       {
-        if (s - nextchar == strlen (p->name))
+        if (s - nextchar == (unsigned)strlen (p->name))
         {
           /* Exact match found.  */
           pfound = p;
