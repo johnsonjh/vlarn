@@ -1,0 +1,105 @@
+#include <windows.h>
+#include "ularnpc.rh"
+
+IDM_MENU1 MENU 
+{
+ POPUP "&Game"
+ {
+  MENUITEM "&Save", IDM_GAME_SAVE
+  MENUITEM SEPARATOR
+  MENUITEM "&Quit", IDM_GAME_QUIT
+ }
+
+ POPUP "&Commands"
+ {
+  MENUITEM "Wait", IDM_COMMANDS_WAIT
+  MENUITEM "&wield", IDM_COMMANDS_WIELD
+  MENUITEM "&Wear", IDM_COMMANDS_WEAR
+  MENUITEM "&Take off", IDM_COMMANDS_TAKEOFF
+  MENUITEM "&Quaff", IDM_COMMANDS_QUAFF
+  MENUITEM "&Read", IDM_COMMANDS_READ
+  MENUITEM "&Cast", IDM_COMMANDS_CAST
+  MENUITEM "&Eat", IDM_COMMANDS_EAT
+  MENUITEM "&Drop", IDM_COMMANDS_DROP
+  MENUITEM "&Close door", IDM_COMMAND_CLOSE
+ }
+
+ POPUP "&Show"
+ {
+  MENUITEM "&Discoveries", IDM_SHOW_DISCOVERIES
+  MENUITEM "&Inventory", IDM_SHOW_INV
+  MENUITEM "&Tax", IDM_SHOW_TAX
+  MENUITEM "&Pack weight", IDM_SHOW_PACKWEIGHT
+ }
+
+ POPUP "&Display"
+ {
+  MENUITEM "&Redraw", IDM_DISPLAY_REDRAW
+  MENUITEM "&Beep", IDM_DISPLAY_BEEP
+  MENUITEM "&Font", IDM_DISPLAY_FONT
+ }
+
+ POPUP "&Help", HELP
+ {
+  MENUITEM "&Help", IDM_HELP_HELP
+  MENUITEM "&Version", IDM_HELP_VERSION
+  MENUITEM SEPARATOR
+  MENUITEM "&About", IDM_HELP_ABOUT
+ }
+
+}
+
+
+STRINGTABLE 
+{
+ IDM_GAME_QUIT, "Quit ULarn"
+ IDM_GAME_SAVE, "Save the game and exit."
+ IDM_COMMANDS_WAIT, "Wait for a turn."
+ IDM_COMMANDS_WIELD, "Wield a weapon."
+ IDM_COMMANDS_WEAR, "Wear some armour or a shield."
+ IDM_COMMANDS_TAKEOFF, "Take of your armour or shield."
+ IDM_COMMANDS_QUAFF, "Quaff a potion."
+ IDM_COMMANDS_READ, "Read a book or scroll."
+ IDM_COMMANDS_CAST, "Cast a spell."
+ IDM_COMMANDS_EAT, "Eat something from your inventory."
+ IDM_COMMANDS_DROP, "Drop something from your inventory."
+ IDM_COMMAND_CLOSE, "Close an open door."
+ IDM_DISPLAY_REDRAW, "Redraw the screen."
+ IDM_DISPLAY_BEEP, "Toggle beep."
+ IDM_DISPLAY_FONT, "Set the font to use for messages and status line."
+ IDM_HELP_HELP, "How to play ularn."
+ IDM_HELP_VERSION, "Show the version info."
+ IDM_HELP_ABOUT, "About ularn."
+ IDM_SHOW_DISCOVERIES, "Show magic items and spells discovered."
+ IDM_SHOW_TAX, "Show the amount of tax outstanding."
+ IDM_SHOW_INV, "Show your current inventory."
+ IDM_SHOW_PACKWEIGHT, "Show the weight of items carried."
+}
+
+IDD_DIALOG1 DIALOG 0, 0, 109, 37
+EXSTYLE WS_EX_DLGMODALFRAME  | WS_EX_CONTEXTHELP
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Who are you?"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "", IDC_EDIT_NAME, "edit", ES_LEFT | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 4, 4, 100, 12, 0
+ CONTROL "OK", IDOK, "BUTTON", BS_DEFPUSHBUTTON | BS_CENTER | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 4, 20, 50, 14
+ CONTROL "Cancel", IDCANCEL, "BUTTON", BS_PUSHBUTTON | BS_CENTER | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 56, 20, 50, 14
+}
+
+IDD_ABOUT DIALOG 0, 0, 240, 120
+EXSTYLE WS_EX_DLGMODALFRAME | WS_EX_CONTEXTHELP
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "About ularn..."
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "OK", IDOK, "BUTTON", BS_PUSHBUTTON | BS_CENTER | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 96, 100, 50, 14
+ CONTROL "Frame1", -1, "static", SS_ETCHEDFRAME | WS_CHILD | WS_VISIBLE, 8, 9, 224, 82, 0
+ CONTROL "ULarn 1.6", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 20, 208, 11, 0
+ CONTROL "Rewrite and Windows 32 graphics conversion by Julian Olds", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 64, 208, 10, 0
+ CONTROL "Created by Phil Cordier -- based on Larn by Noah Morgan", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 40, 208, 10, 0
+ CONTROL "Updated by Josh Brandt and David Richerby", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 52, 208, 10, 0
+}
+
+
+

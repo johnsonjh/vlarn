@@ -1,0 +1,114 @@
+
+CC=gcc
+LD=gcc
+RC=windres
+
+CFLAGS=-Wall -I/usr/include/X11R6
+LDFLAGS=-L/usr/X11R6/lib -lX11
+
+INSTALL_PATH=/usr/games
+LIB_PATH=/usr/games/lib
+
+OBJECT=ularn.o ularn_winx11.o ularn_game.o ularn_ask.o store.o sphere.o spell.o show.o scroll.o scores.o saveutils.o savegame.o potion.o player.o object.o monster.o itm.o help.o getopt.o fortune.o dungeon_obj.o dungeon.o diag.o action.o x11_simple_menu.o
+
+ularn: $(OBJECT)
+	$(LD) $(LDFLAGS) -o ularn $(OBJECT) -lXpm
+
+install: ularn lib/ularn_gfx.xpm lib/Uhelp lib/Ufortune lib/Umap 
+	cp ularn $(INSTALL_PATH)
+	chmod 555 $(INSTALL_PATH)/ularn
+	mkdir $(LIB_PATH)
+	cp lib/ularn_gfx.xpm $(LIB_PATH)
+	chmod 544 $(LIB_PATH)/ularn_gfx.xpm
+	cp lib/Uhelp $(LIB_PATH)
+	chmod 544 $(LIB_PATH)/Uhelp
+	cp lib/Ufortune $(LIB_PATH)
+	chmod 544 $(LIB_PATH)/Ufortune
+	cp lib/Umaps $(LIB_PATH)
+	chmod 544 $(LIB_PATH)/Umaps
+
+clean:
+	rm *.o
+
+archive: clean
+	rm lib/Uscore
+	rm lib/ularn.pid
+	rm ularn.ini
+	rm ularn.opt
+
+ularn.o: ularn.c patchlevel.h ularn_game.h ularn_win.h ularn_ask.h getopt.h savegame.h scores.h header.h dungeon_obj.h dungeon.h player.h monster.h action.h object.h potion.h scroll.h spell.h show.h help.h diag.h itm.h
+	$(CC) $(CFLAGS) -c ularn.c
+
+x11_simple_menu.o: x11_simple_menu.c x11_simple_menu.h
+	$(CC) $(CFLAGS) -c x11_simple_menu.c
+
+ularn_winx11.o: ularn_winx11.c ularn_win.h header.h ularn_game.h config.h dungeon.h player.h monster.h itm.h x11_simple_menu.h
+	$(CC) $(CFLAGS) -c ularn_winx11.c
+
+ularn_game.o: ularn_game.c ularn_game.h config.h monster.h player.h
+	$(CC) $(CFLAGS) -c ularn_game.c
+
+ularn_ask.o: ularn_ask.c ularn_ask.h ularn_game.h ularn_win.h header.h player.h dungeon.h
+	$(CC) $(CFLAGS) -c ularn_ask.c
+
+store.o: store.c store.h ularn_game.h ularn_win.h ularn_ask.h saveutils.h header.h player.h potion.h scroll.h dungeon.h scores.h show.h itm.h
+	$(CC) $(CFLAGS) -c store.c
+
+sphere.o: sphere.c sphere.h ularn_game.h ularn_win.h saveutils.h header.h monster.h player.h itm.h
+	$(CC) $(CFLAGS) -c sphere.c
+
+spell.o: spell.c spell.h header.h ularn_game.h ularn_win.h ularn_ask.h sphere.h show.h dungeon.h monster.h player.h itm.h
+	$(CC) $(CFLAGS) -c spell.c
+
+show.o: show.c show.h header.h ularn_game.h ularn_win.h ularn_ask.h dungeon.h player.h potion.h scroll.h spell.h itm.h
+	$(CC) $(CFLAGS) -c show.c
+
+scroll.o: scroll.c scroll.h ularn_win.h header.h potion.h spell.h player.h dungeon.h dungeon_obj.h monster.h itm.h
+	$(CC) $(CFLAGS) -c scroll.c
+
+scores.o: scores.c scores.h header.h ularn_game.h ularn_win.h ularn_ask.h monster.h itm.h dungeon.h player.h potion.h scroll.h store.h sphere.h show.h 
+	$(CC) $(CFLAGS) -c scores.c
+
+saveutils.o: saveutils.c saveutils.h ularn_win.h scores.h
+	$(CC) $(CFLAGS) -c saveutils.c
+
+savegame.o: savegame.c savegame.h header.h saveutils.h ularn_game.h ularn_win.h monster.h player.h spell.h dungeon.h sphere.h store.h scores.h itm.h
+	$(CC) $(CFLAGS) -c savegame.c
+
+potion.o: potion.c potion.h header.h player.h monster.h dungeon.h itm.h ularn_win.h
+	$(CC) $(CFLAGS) -c potion.c
+
+player.o: player.c player.h ularn_game.h ularn_win.h ularn_ask.h header.h saveutils.h scores.h monster.h dungeon.h dungeon_obj.h scroll.h potion.h spell.h show.h itm.h 
+	$(CC) $(CFLAGS) -c player.c
+
+object.o: object.c object.h ularn_game.h ularn_win.h header.h player.h monster.h itm.h potion.h scroll.h spell.h dungeon.h dungeon_obj.h store.h fortune.h scores.h
+	$(CC) $(CFLAGS) -c object.c
+
+monster.o: monster.c monster.h header.h ularn_win.h ularn_game.h saveutils.h itm.h player.h dungeon.h sphere.h show.h
+	$(CC) $(CFLAGS) -c monster.c
+
+itm.o: itm.c itm.h
+	$(CC) $(CFLAGS) -c itm.c
+
+help.o: help.c help.h header.h ularn_game.h ularn_win.h player.h
+	$(CC) $(CFLAGS) -c help.c
+
+getopt.o: getopt.c getopt.h
+	$(CC) $(CFLAGS) -c getopt.c
+
+fortune.o: fortune.c fortune.h header.h
+	$(CC) $(CFLAGS) -c fortune.c
+
+dungeon_obj.o: dungeon_obj.c dungeon_obj.h ularn_win.h header.h player.h monster.h potion.h scores.h itm.h
+	$(CC) $(CFLAGS) -c dungeon_obj.c
+
+dungeon.o: dungeon.c dungeon.h ularn_game.h ularn_win.h header.h monster.h itm.h player.h potion.h scroll.h saveutils.h scores.h
+	$(CC) $(CFLAGS) -c dungeon.c
+
+diag.o: diag.c diag.h header.h ularn_game.h itm.h dungeon.h monster.h player.h potion.h scroll.h spell.h ularn_win.h
+	$(CC) $(CFLAGS) -c diag.c
+
+action.o: action.c action.h ularn_game.h ularn_win.h header.h savegame.h itm.h player.h monster.h dungeon.h dungeon_obj.h potion.h scroll.h show.h fortune.h
+	$(CC) $(CFLAGS) -c action.c
+
+

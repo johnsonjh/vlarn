@@ -1,0 +1,2 @@
+c0w32.obj ularn.obj ularn_win.obj ularn_game.obj ularn_ask.obj store.obj sphere.obj spell.obj show.obj scroll.obj scores.obj saveutils.obj savegame.obj potion.obj player.obj object.obj monster.obj itm.obj help.obj getopt.obj fortune.obj dungeon_obj.obj dungeon.obj diag.obj action.obj , ularn.exe, ularn.map, cw32.lib import32.lib ,ularn.def, ularnpc.res
+

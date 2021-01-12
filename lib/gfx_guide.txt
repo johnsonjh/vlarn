@@ -1,0 +1,129 @@
+ULARN Graphics file specification.
+----------------------------------
+
+This file contains a very wide table It requires a display of about 170 characters across
+to be displayed correctly and should be viewed using a fixed width font (eg Courier).
+
+The graphics tile file for ULarn is a 24 bit windows '.bmp' file.
+The bitmap is 512x704 pixels and is divided into 32x32 pixel tiles.
+The tile images are in a 16 x 22 matrix (352 tiles)
+
+The object int each location is location of the tile file is:
+
+       0         1         2         3         4         5         6         7         8         9        10        11        12        13        14        15
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+  |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |
+0 | Lemming | Gnome   | Hob-    | Jackal  | Kobold  | Orc     | Snake   | Centi-  | Jaculi  | Trog-   | Giant   | Floating| Leprech-| Nymph   | Quasit  | Rust    |
+  |         |         | goblin  |         |         |         |         | pede    |         | lodyte  | ant     | Eye     | aun     |         |         | Monster |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+  |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |
+1 | Zombie  | Assassin| Bugbear | Hell    | Ice     | Centaur | Troll   | Yeti    | White   | Elf     | Galatin | Meta-   | Vortex  | Ziller  | Violet  | Wraith  |
+6 |         | Bug     |         | Hound   | Lizard  |         |         |         | Dragon  |         | Cube    | morph   |         |         | Fungi   |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+  |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |
+3 | Forva-  | Lamanobe| Osequip | Rothe   | Xorn    | Vampire | Invis   | Polter- | Disench-| Shamblin| Yellow  | Umber   | Gnome   | Mimic   | Water   | Bronze  |
+2 | laka    |         |         |         |         |         | Stalker | geist   | antress | Mound   | Mold    | hulk    | King    |         | Lord    | Dragon  |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+  |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |Monster: |
+4 | Green   | Purple  | Xvart   | Spirit  | Silver  | Platinum| Green   | Red     | DemonLrd| DemonLrd| Demonlrd| Demonlrd| Demonlrd| Demonlrd| Demon   | King of |
+8 | Dragon  | Worm    |         | Naga    | Dragon  | Dragon  | Urchin  | Dragon  | I/II    |  III    |  IV     |  V      |  VI     |  VII    | Prince  | Hell    |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+  |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    | 
+6 | Altar   | Throne  | Orb of  | Pit     | Stairs  | Elevator| Fountain| Statue  | Teleport| College | Mirror  | DnD     | Stairs  | Elevator| Bank    | 8th     |
+4 |         |         | Enlight |         | Up      | Up      |         |         | Trap    | of Larn |         | Store   | Down    | Down    |         | Bank    |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+  |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    | 
+8 | Dead    | Gold    | Open    | Closed  | Wall    | Eye of  | Plate   | Chain   | Leather | Sword of| Bessman | Sun     | 2 hand  | Spear   | Dagger  | Ring    |
+0 | Fountain|         | Door    | Door    |         | Larn    | Mail    | Mail    | Armour  | Slashing| Hammer  | Sword   | sword   |         |         | ExtRegen|
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+  |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    | 
+9 | Ring    | Ring    | Ring    | Ring    | Ring    | Ring    | Ring    | Belt of | Scroll  | Potion  | Book    | Chest   | Amulet  | Orb     | Scarab  | Cube    |
+6 | Regen   | Protect | Energy  | Dex     | Str     | Clever  | Inc Dam | Striking|         |         |         |         | Invis   | Dragon  | Spirit  | Undead  |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+1 |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    | 
+1 | Device  | Diamond | Ruby    | Emerald | Sapphire| Dungeon | Volcano | Lava    | Axe     | Long    | Flail   | Ring    | Studded | Splint  | Plate   | Stainles|
+2 | no Theft|         |         |         |         | Entrance|         | Tube    |         | Sword   |         | Mail    | Leather | Mail    | Armour  | Plate   |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+1 |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    | 
+2 | Lance of| Arrow   | Arrow   | Shiled  | Home    | Gold    | Gold    | Gold    | Dart    | Dart    | Trapdoor| Trapdoor| Trading | Teleport| Throne  | Sphere  |
+8 | Death   | Trap    | Trap(i) |         |         | x10     | x1000   | x100    | Trap    | Drap(i) |         | (i)     | Post    | Trap(i) |         | Annihil |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+1 |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    |Item:    | 
+4 | Throne  | LRS     | Fortune | Gold    | Magic   | Hand of | Amulet  | Wand    | Staff   | Vorpal  | Slayer  | Elven   | Speed   | LSD     | Hash    | Mush-   |
+4 |         |         | Cookie  | Urn     | Lamp    | Fear    | Sphere  | Wonder  | Power   | Blade   |         | Chain   |         |         |         | rooms   |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+1 |Item:    |Item:    |Item:    |Spare    |Spare    |Char:    |Char:    |Char:    |Char:    |Char:    |Char:    |Char:    |Char:    |Spare    |Cursor   |Item:    | 
+6 | Coke    | McDope's| Amulet  |         |         | Ogre    | Wizard  | Klingon |Elf      | Rogue   | Advent  | Dwarf   | Rambo   |         | AND     | Unknown |
+0 |         | Pad     | LifePres|         |         | Female  | Female  | Female  |Female   | Female  | Female  | Female  | Female  |         |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+1 |Spare    |Spare    |Spare    |Spare    |Spare    |Char:    |Char:    |Char:    |Char:    |Char:    |Char:    |Char:    |Char:    |Spare    |Cursor   |Item:    | 
+7 |         |         |         |         |         | Ogre    | Wizard  | Klingon | Elf     | Rogue   | Advent  | Dwarf   | Rambo   |         | OR      | Empty   |
+6 |         |         |         |         |         | Male    | Male    | Male    | Male    | Male    | Male    | Male    | Male    |         |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+1 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |
+9 | MLE     | MLE     | MLE     | MLE     | MLE     | MLE     | MLE     | MLE     | SSP     | SSP     | SSP     | SSP     | SSP     | SSP     | SSP     | SSP     |
+2 | Dir:W   | Dir:NW  | Dir:N   | Dir:NE  | Dir:E   | Dir:SE  | Dir:S   | Dir:SW  | Dir:W   | Dir:NW  | Dir:N   | Dir:NE  | Dir:E   | Dir:SE  | Dir:S   | Dir:SW  |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+2 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |
+0 | BAL     | BAL     | BAL     | BAL     | BAL     | BAL     | BAL     | BAL     | LIT     | LIT     | LIT     | LIT     | LIT     | LIT     | LIT     | LIT     |
+8 | Dir:W   | Dir:NW  | Dir:N   | Dir:NE  | Dir:E   | Dir:SE  | Dir:S   | Dir:SW  | Dir:W   | Dir:NW  | Dir:N   | Dir:NE  | Dir:E   | Dir:SE  | Dir:S   | Dir:SW  |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+2 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Spare    |Spare    |Spare    |Spare    |Spare    |Spare    |Spare    |Spare    |
+2 | CLD     | CLD     | CLD     | CLD     | CLD     | CLD     | CLD     | CLD     |         |         |         |         |         |         |         |         |
+4 | Dir:W   | Dir:NW  | Dir:N   | Dir:NE  | Dir:E   | Dir:SE  | Dir:S   | Dir:SW  |         |         |         |         |         |         |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+2 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic    |Magic    |Magic    |Magic:   |
+4 | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle | Sparkle |
+0 | AND F:1 | AND F:2 | AND F:3 | AND F:4 | AND F:5 | AND F:6 | AND F:7 | AND F:8 | OR F:1  | OR F:2  | OR F:3  | OR F:4  | OR F:5  | OR F:6  | OR F:7  | OR F:8  |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+2 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Scroll:  |Spare    |Spare    |
+5 | SLE     | WEB     | PHA     | CKL     | VPR     | DRY     | DRL     | FLO     | FGR     | TEL     | MFI     | MKW     | SUM     | Annihil |         |         |
+6 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 | Frame:1 |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+2 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Scroll:  |Spare    |Spare    |
+7 | SLE     | WEB     | PHA     | CKL     | VPR     | DRY     | DRL     | FLO     | FGR     | TEL     | MFI     | MKW     | SUM     | Annihil |         |         |
+2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 | Frame:2 |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+2 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Scroll:  |Spare    |Spare    |
+8 | SLE     | WEB     | PHA     | CKL     | VPR     | DRY     | DRL     | FLO     | FGR     | TEL     | MFI     | MKW     | SUM     | Annihil |         |         |
+8 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 | Frame:3 |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+3 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Scroll:  |Spare    |Spare    |
+0 | SLE     | WEB     | PHA     | CKL     | VPR     | DRY     | DRL     | FLO     | FGR     | TEL     | MFI     | MKW     | SUM     | Annihil |         |         |
+4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 | Frame:4 |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+3 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Scroll:  |Spare    |Spare    |
+2 | SLE     | WEB     | PHA     | CKL     | VPR     | DRY     | DRL     | FLO     | FGR     | TEL     | MFI     | MKW     | SUM     | Annihil |         |         |
+0 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 | Frame:5 |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+3 |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Magic:   |Scroll:  |Spare    |Spare    |
+3 | SLE     | WEB     | PHA     | CKL     | VPR     | DRY     | DRL     | FLO     | FGR     | TEL     | MFI     | MKW     | SUM     | Annihil |         |         |
+6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 | Frame:6 |         |         |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+3 |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |Wall:    |
+5 |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |Connect: |
+2 | ----    | ---W    | --S-    | --SW    | -E--    | -E-W    | -ES-    | -ESW    | N---    | N--W    | N-S-    | N-SW    | NE--    | NE-W    | NES-    | NESW    |
+  +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+
+
+KEY:
+----
+Monster: A monster tile
+         Specifies the monster name
+Item   : An item item
+         Specifies the item name
+Char   : A player character tile
+         Specifies the character class and gender.
+Magic: : A magic spell effect/animation tile
+         Specifies the spell name and either
+           Logic operation for masked tiles and frame number, or
+           Animation frame number for non-masked tiles.
+Scroll : The magic effect for a scroll
+         Specifies The scroll and the animation frame number
+Wall   : A wall tile for wall connections
+       : Specifies the directions in which the tile connects to another wall.
+Spare  : Unused
+
+NOTE: Tiles that are masked on top of other tiles are created using two tiles.
+      The first tile is drawn using the 'AND' operation and the second with the 'OR' operation.
+      The 'AND' tile should have all transparent pixels set to white (RGB = 255, 255, 255).
+      The 'OR' tile should have all transparent pixels set to black (RGB = 0, 0, 0).

@@ -1,0 +1,101 @@
+
+CC=sc
+LD=sc link
+
+CFLAGS= data=far optimize opttime
+LDFLAGS=
+
+OBJECT=ularn.o ularn_winami.o ularn_game.o ularn_ask.o store.o sphere.o spell.o show.o scroll.o scores.o saveutils.o savegame.o potion.o player.o object.o monster.o itm.o help.o getopt.o fortune.o dungeon_obj.o dungeon.o diag.o action.o ifftools.o bio.o smart_menu.o
+
+ularn: $(OBJECT)
+	$(LD) $(LDFLAGS) $(OBJECT) lib:scm.lib ProgramName=ularn
+
+clean:
+	delete #?.o
+
+archive: clean
+	del lib\uscore
+	del lib\ularn.pid
+	del ularn.ini
+	del ularn.opt
+
+ularn.o: ularn.c patchlevel.h ularn_game.h ularn_win.h ularn_ask.h getopt.h savegame.h scores.h header.h dungeon_obj.h dungeon.h player.h monster.h action.h object.h potion.h scroll.h spell.h show.h help.h diag.h itm.h
+	$(CC) $(CFLAGS) ularn.c
+
+ularn_winami.obj: ularn_winami.c ularn_win.h header.h ularn_game.h config.h dungeon.h player.h ularnpc.rh monster.h itm.h ifftools.h
+	$(CC) $(CFLAGS) ularn_winami.c
+
+ularn_game.o: ularn_game.c ularn_game.h config.h monster.h player.h
+	$(CC) $(CFLAGS) ularn_game.c
+
+ularn_ask.o: ularn_ask.c ularn_ask.h ularn_game.h ularn_win.h header.h player.h dungeon.h
+	$(CC) $(CFLAGS) ularn_ask.c
+
+store.o: store.c store.h ularn_game.h ularn_win.h ularn_ask.h saveutils.h header.h player.h potion.h scroll.h dungeon.h scores.h show.h itm.h
+	$(CC) $(CFLAGS) store.c
+
+sphere.o: sphere.c sphere.h ularn_game.h ularn_win.h saveutils.h header.h monster.h player.h itm.h
+	$(CC) $(CFLAGS) sphere.c
+
+spell.o: spell.c spell.h header.h ularn_game.h ularn_win.h ularn_ask.h sphere.h show.h dungeon.h monster.h player.h itm.h
+	$(CC) $(CFLAGS) spell.c
+
+show.o: show.c show.h header.h ularn_game.h ularn_win.h ularn_ask.h dungeon.h player.h potion.h scroll.h spell.h itm.h
+	$(CC) $(CFLAGS) show.c
+
+scroll.o: scroll.c scroll.h ularn_win.h header.h potion.h spell.h player.h dungeon.h dungeon_obj.h monster.h itm.h
+	$(CC) $(CFLAGS) scroll.c
+
+scores.o: scores.c scores.h header.h ularn_game.h ularn_win.h ularn_ask.h monster.h itm.h dungeon.h player.h potion.h scroll.h store.h sphere.h show.h
+	$(CC) $(CFLAGS) scores.c
+
+saveutils.o: saveutils.c saveutils.h ularn_win.h scores.h
+	$(CC) $(CFLAGS) saveutils.c
+
+savegame.o: savegame.c savegame.h header.h saveutils.h ularn_game.h ularn_win.h monster.h player.h spell.h dungeon.h sphere.h store.h scores.h itm.h
+	$(CC) $(CFLAGS) savegame.c
+
+potion.o: potion.c potion.h header.h player.h monster.h dungeon.h itm.h ularn_win.h
+	$(CC) $(CFLAGS) potion.c
+
+player.o: player.c player.h ularn_game.h ularn_win.h ularn_ask.h header.h saveutils.h scores.h monster.h dungeon.h dungeon_obj.h scroll.h potion.h spell.h show.h itm.h
+	$(CC) $(CFLAGS) player.c
+
+object.o: object.c object.h ularn_game.h ularn_win.h header.h player.h monster.h itm.h potion.h scroll.h spell.h dungeon.h dungeon_obj.h store.h fortune.h scores.h
+	$(CC) $(CFLAGS) object.c
+
+monster.o: monster.c monster.h header.h ularn_win.h ularn_game.h saveutils.h itm.h player.h dungeon.h sphere.h show.h
+	$(CC) $(CFLAGS) monster.c
+
+itm.o: itm.c itm.h
+	$(CC) $(CFLAGS) itm.c
+
+help.o: help.c help.h header.h ularn_game.h ularn_win.h player.h
+	$(CC) $(CFLAGS) help.c
+
+getopt.o: getopt.c getopt.h
+	$(CC) $(CFLAGS) getopt.c
+
+fortune.o: fortune.c fortune.h header.h
+	$(CC) $(CFLAGS) fortune.c
+
+dungeon_obj.o: dungeon_obj.c dungeon_obj.h ularn_win.h header.h player.h monster.h potion.h scores.h itm.h
+	$(CC) $(CFLAGS) dungeon_obj.c
+
+dungeon.o: dungeon.c dungeon.h ularn_game.h ularn_win.h header.h monster.h itm.h player.h potion.h scroll.h saveutils.h scores.h
+	$(CC) $(CFLAGS) dungeon.c
+
+diag.o: diag.c diag.h header.h ularn_game.h itm.h dungeon.h monster.h player.h potion.h scroll.h spell.h ularn_win.h
+	$(CC) $(CFLAGS) diag.c
+
+action.o: action.c action.h ularn_game.h ularn_win.h header.h savegame.h itm.h player.h monster.h dungeon.h dungeon_obj.h potion.h scroll.h show.h fortune.h
+	$(CC) $(CFLAGS) action.c
+
+ifftools.o: ifftools.c ifftools.h bio.h
+	$(CC) $(CFLAGS) ifftools.c
+
+bio.o: bio.c bio.h
+	$(CC) $(CFLAGS) bio.c
+
+smart_menu.o: smart_menu.c smart_menu.h
+	$(CC) $(CFLAGS) smart_menu.c

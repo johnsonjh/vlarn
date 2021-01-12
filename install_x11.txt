@@ -1,0 +1,43 @@
+Compiling/Installing X11 ULarn
+------------------------------
+
+ULarn should compile on any Unix like O/S (Linux, NetBSD, solaris etc).
+The code has only been tested on gcc as it is the only compiler I use
+on unix based systems. It may or may not work on other compilers.
+
+I have tested it on the following systems:
+
+Pentium4 running Red Hat linux 7.1
+Amiga 4000/040 running NetBSD 1.5.2
+Sun UltraSparc running Solaris 2.5.2
+
+There is no auto configure script provided. I usually find them more 
+trouble than they are worth. For example, the configure script for 
+ularn 1.5pl4 (the old TTY version) made a right balls up on the
+UltraSparc Solaris system, and I ended up having to manually configure
+everything anyway.
+
+Some unix systems may need dos2unix (or equivalent command to strip ^M)
+to be run on the source files and the makefile before compiling. 
+The Sun Ultrasparc did, linux didn't.
+
+NOTE: Source installation is the only form I support for unix systems.
+      I do not release ULarn executables for the X11 version as there
+      are way too many variants.
+
+To compile and install ULarn:
+
+1. Edit makefile.x11 to set system specific include and library paths.
+   This may not be necessary as the default include path is the most
+   common location for the necessary include files.
+   Change the INSTALL_PATH and LIB_PATH in to specify the desired install 
+   location.
+
+2. Edit config.h
+   a) Set LIBDIR to the install location of the lib directory
+   b) Make sure that only the appropriate O/S define is uncommented.
+      (UNIX_X11 for the X11 version).
+
+4. Compile using make -f makefile.x11
+
+5. install using make -f makefile.x11 install

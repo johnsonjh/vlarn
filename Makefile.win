@@ -1,0 +1,101 @@
+# Project: ularn
+# Makefile created by Dev-C++ 4.9.8.0
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = ularn_private.res
+OBJ  = action.o diag.o dungeon.o dungeon_obj.o fortune.o getopt.o help.o itm.o monster.o object.o player.o potion.o savegame.o saveutils.o scores.o scroll.o show.o spell.o sphere.o store.o ularn.o ularn_ask.o ularn_game.o ularn_win.o $(RES)
+LINKOBJ  = action.o diag.o dungeon.o dungeon_obj.o fortune.o getopt.o help.o itm.o monster.o object.o player.o potion.o savegame.o saveutils.o scores.o scroll.o show.o spell.o sphere.o store.o ularn.o ularn_ask.o ularn_game.o ularn_win.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib" -mwindows 
+INCS =  -I"C:/Dev-Cpp/include" 
+CXXINCS =  -I"C:/Dev-Cpp/include/c++"  -I"C:/Dev-Cpp/include/c++/mingw32"  -I"C:/Dev-Cpp/include/c++/backward"  -I"C:/Dev-Cpp/include" 
+BIN  = ularn.exe
+CXXFLAGS = $(CXXINCS)  -O3
+CFLAGS = $(INCS)-Wpadded -fpack-struct   -O3
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before ularn.exe all-after
+
+
+clean: clean-custom
+	rm -f $(OBJ) $(BIN)
+
+$(BIN): $(LINKOBJ)
+	$(CC) $(LINKOBJ) -o "ularn.exe" $(LIBS)
+
+action.o: action.c
+	$(CC) -c action.c -o action.o $(CFLAGS)
+
+diag.o: diag.c
+	$(CC) -c diag.c -o diag.o $(CFLAGS)
+
+dungeon.o: dungeon.c
+	$(CC) -c dungeon.c -o dungeon.o $(CFLAGS)
+
+dungeon_obj.o: dungeon_obj.c
+	$(CC) -c dungeon_obj.c -o dungeon_obj.o $(CFLAGS)
+
+fortune.o: fortune.c
+	$(CC) -c fortune.c -o fortune.o $(CFLAGS)
+
+getopt.o: getopt.c
+	$(CC) -c getopt.c -o getopt.o $(CFLAGS)
+
+help.o: help.c
+	$(CC) -c help.c -o help.o $(CFLAGS)
+
+itm.o: itm.c
+	$(CC) -c itm.c -o itm.o $(CFLAGS)
+
+monster.o: monster.c
+	$(CC) -c monster.c -o monster.o $(CFLAGS)
+
+object.o: object.c
+	$(CC) -c object.c -o object.o $(CFLAGS)
+
+player.o: player.c
+	$(CC) -c player.c -o player.o $(CFLAGS)
+
+potion.o: potion.c
+	$(CC) -c potion.c -o potion.o $(CFLAGS)
+
+savegame.o: savegame.c
+	$(CC) -c savegame.c -o savegame.o $(CFLAGS)
+
+saveutils.o: saveutils.c
+	$(CC) -c saveutils.c -o saveutils.o $(CFLAGS)
+
+scores.o: scores.c
+	$(CC) -c scores.c -o scores.o $(CFLAGS)
+
+scroll.o: scroll.c
+	$(CC) -c scroll.c -o scroll.o $(CFLAGS)
+
+show.o: show.c
+	$(CC) -c show.c -o show.o $(CFLAGS)
+
+spell.o: spell.c
+	$(CC) -c spell.c -o spell.o $(CFLAGS)
+
+sphere.o: sphere.c
+	$(CC) -c sphere.c -o sphere.o $(CFLAGS)
+
+store.o: store.c
+	$(CC) -c store.c -o store.o $(CFLAGS)
+
+ularn.o: ularn.c
+	$(CC) -c ularn.c -o ularn.o $(CFLAGS)
+
+ularn_ask.o: ularn_ask.c
+	$(CC) -c ularn_ask.c -o ularn_ask.o $(CFLAGS)
+
+ularn_game.o: ularn_game.c
+	$(CC) -c ularn_game.c -o ularn_game.o $(CFLAGS)
+
+ularn_win.o: ularn_win.c
+	$(CC) -c ularn_win.c -o ularn_win.o $(CFLAGS)
+
+ularn_private.res: ularn_private.rc ularnpc.rc 
+	$(WINDRES) -i ularn_private.rc -I rc -o ularn_private.res -O coff 

@@ -1,0 +1,277 @@
+;    Welcome to the game of Ularn.  At this moment, you face a great problem.
+Your daughter has contracted a strange disease and none of your home remedies
+seems to have any effect.  You sense that she is in mortal danger and you must
+try to save her.  Time ago you heard of a land of great danger and opportunity.
+Perhaps here is the solution you need.
+
+    It has been said that there once was a great magician who called himself
+Polinneaus.  Many years ago, after having many miraculous successes, Polinneaus
+retired to the caverns of Ularn, where he devoted most of his time to the
+creation of magic.   Rumors have it that one day Polinneaus set out to dispel
+an attacking army in a forest some distance to the north.  It is believed that
+there he met his demise.
+
+    The caverns of Ularn, it is thought, must be magnificent in design
+and contain much magic and treasure.  One option you have is to undertake a
+journey into these caverns.
+
+
+    Good Luck!  (You're going to need it.)
+
+
+
+
+              ^[[7mHelp File for The Caverns of Ularn^[[m
+
+                     ^[[7mStandard Commands^[[m
+h  move to the left    H  run left              .  stay here
+j  move down           J  run down              Z  teleport yourself
+k  move up             K  run up                c  cast a spell
+l  move to the right   L  run right             r  read a scroll
+y  move northwest      Y  run northwest         q  quaff a potion
+u  move northeast      U  run northeast         W  wear armor
+b  move southwest      B  run southwest         T  take off armor
+n  move southeast      N  run southeast         w  wield a weapon
+^  identify a trap     g  present pack weight   P  give tax status
+d  drop an item        i  inventory             Q  quit the game
+v  program version     S  save the game         \  list all items found
+?  this help screen    C  close an open door    e  eat something
+The keypad and arrow keys may also be used to move the character around.
+Keypad 5 can be used to run in next entered direction.
+
+               ^[[7mEnhanced Interface Commands^[[m
+These commands are only available if the ^[[7menhanced_interface^[[m option is set in
+the ularn.opt file.
+
+o  open a closed door  O  open a chest here
+                  ^[[7mCommand Line Options^[[m
+ularn -s            list the scoreboard
+ularn -i            list scores with inventories
+ularn -n            suppress welcome message when beginning a game
+ularn -r            restore checkpointed game
+ularn -d <number>   specify difficulty level
+ularn -o <optsfile> specify the ularn.opt file to be used
+ularn -c            create new scoreboard (requires wizard password)
+ularn -h            print out all the command line options
+
+                     ^[[7mSpecial Notes^[[m
+When dropping gold, if you type '*' as your amount, all your gold gets dropped.
+In general, typing in '*' means all of what your interested in.  This is true
+when visiting the bank, or when contributing at altars.
+
+When in the store, trading post, school, or home, an ^[[7m<escape>^[[m will get you out.
+
+When casting a spell, if you need a list of spells you can cast, type '^[[7mD^[[m' as
+the first letter of your spell.  The available list of spells will be shown,
+after which you may enter the spell code.  This only works on the 1st letter
+of the spell you are casting.  You may also type '^[[7\^[[m' at any time - this will
+show all the spells you know, as well as all the potions and scrolls you have
+encountered and identified so far.
+            ^[[7mUlarn Spell Descriptions^[[m
+Following are the Ularn Spells. Some are well understood, others less so.
+They are listed in order of their circle with:
+  ^[[7mName^[[m ^[[9m(Code) [Target] {Duration}^[[m and Description.
+
+            ^[[8mSpells of the Ekh-awd Mish-paw-khaw (First Circle)^[[m
+^[[7mProtection^[[m ^[[9m(pro) [Self] {Long}^[[m
+  Generates a +2 protection field
+  Non-cumulative, repetition increases duration
+^[[7mMagic Missile^[[m ^[[9m(mle) [Range] {Instant}^[[m
+  Creates and hurls a magic missile equivalent to a +1 magic arrow
+  Improves with experience
+^[[7mDexterity^[[m ^[[9m(dex) [Self] {Long}^[[m
+  Adds +2 to the caster's dexterity
+  Non-cumulative, repetition increases duration
+^[[7mSleep^[[m ^[[9m(sle) [Touch] {Instant}^[[m
+  Causes some monsters to go to sleep so you can get some quick easy hits in
+^[[7mCharm Monster^[[m ^[[9m(chm) [Self] {Short}^[[m
+  Increases your charm so some monsters may be awed at your magnificence
+  Non-cumulative, repetition increases duration
+^[[7mSonic Spear^[[m ^[[9m(ssp) [Range] {Instant}^[[m
+  Causes the caster's hands to emit a screeching sound
+  Improves with experience
+            ^[[8mSpells of the Shay-nee Mish-paw-khaw (Second Circle)^[[m
+^[[7mWeb^[[m ^[[9m(web) [Touch] {Instant}^[[m
+  Web entangles your enemy so you can get some easy hits in
+^[[7mStrength^[[m ^[[9m(str) [Self] {Long}^[[m
+  Adds +2 to the caster's strength for a time
+  Non-cumulative, repetition increases duration
+^[[7mEnlightenment^[[m ^[[9m(enl) [Level] {Permament}^[[m
+  The caster becomes aware of the area around them
+^[[7mHealing^[[m ^[[9m(hel) [Self] {Instant}^[[m
+  Restores some of the caster's health
+  Good healing that improves with experience
+^[[7mCure Blindness^[[m ^[[9m(cbl) [Self] {Instant}^[[m
+  Restores sight to one so unfortunate as to be blinded
+^[[7mCreate Monster^[[m ^[[9m(cre) [Next to] {Instant}^[[m
+  Creates a monster near to the caster
+^[[7mPhantasmal Forces^[[m ^[[9m(pha) [Touch] {Instant}^[[m
+  Creates illusions which if believed cause monsters to die
+  Greater wisdom brings greater effectiveness
+^[[7mInvisibility^[[m ^[[9m(inv) [Self] {Long}^[[m
+  The caster becomes invisible
+  Repetition increases duration
+
+
+            ^[[8mSpells of the Shel-ee-shee Mish-paw-khaw (Third Circle)^[[m
+^[[7mFireball^[[m ^[[9m(bal) [Range] {Instant}^[[m
+  Creates a ball of fire that burns whatever it hits
+^[[7mCold^[[m ^[[9m(cld) [Range] {Instant}^[[m
+  Sends forth a cone of cold which freezes whatever it touches
+^[[7mPolymorph^[[m ^[[9m(ply) [Touch] {Permanent}^[[m
+  Change the nature of your attacker, for better or for worse is up to fate
+^[[7mCancellation^[[m ^[[9m(can) [Self] {Long}^[[m
+  Creates an aura that stops a monster from using its special abilities
+  Repetition increases duration, and it improves with experience
+^[[7mHaste Self^[[m ^[[9m(has) [Self] {Long}^[[m
+  Speeds up the caster's movements
+  Repetition increases duration, and it improves with experience
+^[[7mCloud Kill^[[m ^[[9m(ckl) [Surrounds] {Instant}^[[m
+  A fog of poisonous gas which damages all that is within it
+  A strong spell
+^[[7mVaporize Rock^[[m ^[[9m(vpr) [Surrounds] {Instant}^[[m
+  Changes rock to air
+
+
+
+
+
+            ^[[8mSpells of the Reb-ee-ee Mish-paw-khaw (Fourth Circle)^[[m
+^[[7mDehydration^[[m ^[[9m(dry) [Touch] {Instant}^[[m
+  Dries up water in the immediate vicinity
+  A very powerful spell that improves with experience
+^[[7mLightning^[[m ^[[9m(lit) [Range] {Instant}^[[m
+  Causes the caster's finger to emit lightning bolts
+^[[7mDrain Life^[[m ^[[9m(drl) [Touch] {Instant}^[[m
+  Subtracts hit points from both you and a monster
+  A powerful and dangerous spell
+^[[7mInvulnerability^[[m ^[[9m(glo) [Self] {Long}^[[m
+  This globe helps to protect the player from physical attack
+  Boosts your defense for a time, at a cost
+^[[7mFlood^[[m ^[[9m(flo) [Surrounds] {Instant}^[[m
+  Creates a deluge of water flooding the immediate chamber
+  A powerful spell that improves with experience
+^[[7mFinger of Death^[[m ^[[9m(fgr) [Touch] {Instant}^[[m
+  A holy spell calling on your god to back you up
+  An extremely powerful, though potentially deadly spell
+
+
+
+
+
+            ^[[8mSpells of the Kham-ee-shee Mish-paw-khaw (Fifth Circle)^[[m
+^[[7mScare Monster^[[m ^[[9m(sca) [Self] {Short}^[[m
+  Creates an aura that terrifies monsters so they may not hit you
+  Improves with experience
+^[[7mHold Monster^[[m ^[[9m(hld) [Level] {Short}^[[m
+  Freezes monsters in their tracks
+  Improves with experience
+^[[7mTime Stop^[[m ^[[9m(stp) [Level] {Short}^[[m
+  All movement in the caverns ceases for a limited duration
+  Improves with experience
+^[[7mTeleport Away^[[m ^[[9m(tel) [Touch] {Instant}^[[m
+  Teleports a monster
+^[[7mMagic Fire^[[m ^[[9m(mfi) [Surrounds] {Instant}^[[m
+  Creates a curtain of fire around the caster
+
+
+
+
+
+
+
+
+
+            ^[[8mSpells of the Shish-shee Mish-paw-khaw (Sixth Circle)^[[m
+^[[7mMake a Wall^[[m ^[[9m(mkw) [Touch] {Permanent}^[[m
+  Makes a wall in the specified place
+  A powerful spell that improves with experience
+^[[7mSphere of Annihilation^[[m ^[[9m(sph) [Next to] {Short}^[[m
+  Anything caught in this sphere is instantly killed.
+^[[7mGenocide^[[m ^[[9m(gen) [Game] {Permanent}^[[m
+  Eliminates a species of monster from the game
+^[[7mSummon Demon^[[m ^[[9m(sum) [Touch] {Instant}^[[m
+  Summons a demon who may help you out
+  An extremely powerful spell that may backfire
+^[[7mWalk Through Walls^[[m ^[[9m(wtw) [Self] {Short}^[[m
+  Allows the player to walk through walls for a short period of time
+^[[7mAlter Reality^[[m ^[[9m(alt) [Level] {Permanent}^[[m
+  This will restructure reality as you currently know it
+^[[7mPermanence^[[m ^[[9m(per) [Self] {Permanent}^[[m
+  Makes a character spell permanent, e.g. protection, strength, etc.
+
+
+
+
+
+
+		   ^[[7mHow to use the ularn.opt option file^[[m
+The file "ularn.opt", if used, should be in your home directory or
+specified on the command line (see -o).
+Lines in the options file starting with a '#' are comments and are ignored.
+Game options are specified with the word 'OPTION=' and are followed by a
+comma separated list of options (Multiple option lines are allowed).
+Options to enable features may be prefixed with no to disable that feature.
+Options that specify a value are in the form <option word>:<value>.
+
+	^[[7mOption word^[[m             ^[[7mMeaning^[[m
+  (no)welcome             dis/enable display of intro message
+  (no)nap                 eliminate/use delays when playing game
+  (no)enhanced_interface  dis/enable enhanced interface
+  (no)beep                dis/enable beeps during game
+  name:<name>             set the players name to <name>
+  class:<class>           play a character of <class> (the name of the class)
+  gender:<male/female>    specify the gender of the characeter
+
+Some path names used by the game can also be specified in the options file.
+  LIBDIR:<location of the lib directory>
+  SAVEDIR:<location of the directory to hold saved games>
+If these are not specified then games will be saved in the current directory
+and the game will look in ./lib for the library files.
+	             ^[[7mExample ularn.opt file^[[m
+
+# Example ularn options file
+#
+# Set character data here
+#
+OPTION=name:Fred,gender:male
+# nap/nonap - add time delays
+OPTION=nap
+# welcome/nowelcome - Show the introduction message
+OPTION=welcome
+OPTION=noenhanced_interface
+OPTION=beep
+
+
+
+
+
+
+
+
+
+
+	       ^[[7mExplanation of the Ularn scoreboard facility^[[m
+
+    Ularn supports TWO scoreboards, one for winners, and one for deceased
+characters.  Each player is allowed one slot on each scoreboard, if the score
+is in the top ten for that scoreboard.  This design helps ensure that frequent 
+players of Ularn do not hog the scoreboard and gives more players a chance 
+for glory.  Level of difficulty is also noted on the scoreboards and this 
+takes precedence over score for determining what entry is on the scoreboard.  
+For example: if "Satyr, the Ularn God" has a score of 128003 on the scoreboard 
+at diff 0, then his game at diff 1 and a score of 4112 would replace his 
+previous entry on the scoreboard.  Note that when a player dies, his inventory 
+is stored in the scoreboard so that everyone can see what items the player had
+at the time of his death.
+
+
+
+
+
+         Ularn was written in 1987 by Phil Cordier at UC Santa Cruz.
+                    It was updated in 2001 by Josh Brandt
+         Contact him at mute@gweep.net for info regarding the game.
+        Windows 32 conversion + Tiles support in 2003 by Julian Olds
+
+
