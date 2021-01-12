@@ -32,7 +32,7 @@ with all system-dependent code isolated in separate modules.
 
 ## History
 
-**VLarn** is a fork of Julian Olds' _ULarn 1.6_ branch.
+**VLarn** is a direct descendant of Julian Olds' _ULarn 1.6_ branch.
 
 ## Distribution
 
