@@ -2,14 +2,16 @@ ULarn 1.6pl3 Copyright
 ----------------------
 
 ULarn as a whole is released under the GNU General Public License.
-A copy of the GPL should be included in the distribution.
 
-Some source files used in the program are not GPL.
+A copy of the GPL should be included with the distribution.
+
+Some source files used in the program are not GPL licensed.
 
 This version is based loosely on ULarn 1.5pl4, but the changes it has
-undergone have been so substantial that identifying changes to the original
-version is now meaningless. Basically, almost everything has changed in some
-way.
+undergone have been so substantial that identifying changes from the original
+version would be meaningless. 
+
+Basically, almost everything has changed in some way.
 
 
 NON-GPL MODULES
@@ -28,6 +30,6 @@ bio        : Buffered I/O module.
 ifftools   : IFF ILBM reader
 smart_menu : Intuition menu helper module.
 
-These modules are licensed under a license created using Berkeley License Template. 
-See the source code for license details.
+These modules are licensed under BSD license.
 
+See the source code for license details.

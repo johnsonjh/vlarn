@@ -1,4 +1,4 @@
-Compiling/Installing X11 ULarn
+Compiling/Installing TTY ULarn
 ------------------------------
 
 ULarn should compile on any Unix like O/S (Linux, NetBSD, solaris etc).
@@ -7,8 +7,8 @@ on unix based systems. It may or may not work on other compilers.
 
 I have tested it on the following systems:
 
-Pentium4 running Red Hat linux 7.1
-Amiga 4000/040 running NetBSD 1.5.2
+Pentium-4 running Red Hat Linux 7.1
+Amiga A4000/040 running NetBSD 1.5.2
 Sun UltraSparc running Solaris 2.5.2
 
 There is no auto configure script provided. I usually find them more 
@@ -27,17 +27,19 @@ NOTE: Source installation is the only form I support for unix systems.
 
 To compile and install ULarn:
 
-1. Edit makefile.x11 to set system specific include and library paths.
+1. Edit makefile.tty to set system specific include and library paths.
    This may not be necessary as the default include path is the most
    common location for the necessary include files.
    Change the INSTALL_PATH and LIB_PATH in to specify the desired install 
    location.
+   Set LIB to the curses library you are using (probably -lncurses for linux
+   or -lcurses for other unix variants).
 
 2. Edit config.h
    a) Set LIBDIR to the install location of the lib directory
    b) Make sure that only the appropriate O/S define is uncommented.
-      (UNIX_X11 for the X11 version).
+      (UNIX_TTY for the TTY version).
 
-4. Compile using make -f makefile.x11
+4. Compile using make -f Makefile.tty
 
-5. install using make -f makefile.x11 install
+5. Install using make -f Makefile.tty install
