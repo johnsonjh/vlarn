@@ -1,6 +1,11 @@
-# VLarn
+# **VLarn**
 
-*VLarn* is a free ***roguelike*** dungeon crawl adventure game, similar
+[![DeepSourceA](https://deepsource.io/gh/johnsonjh/vlarn.svg/?label=active+issues)](https://deepsource.io/gh/johnsonjh/vlarn/?ref=repository-badge)
+[![DeepSourceR](https://deepsource.io/gh/johnsonjh/vlarn.svg/?label=resolved+issues)](https://deepsource.io/gh/johnsonjh/vlarn/?ref=repository-badge)
+
+---------
+
+**VLarn** is a free ***roguelike*** dungeon crawl adventure game, similar
 in concept to *Hack*, *Rogue*, or *Moria*, but with a different philosophy,
 feel, and winning criteria.
 
@@ -19,24 +24,37 @@ classic ASCII text UI, with optional menu items for most commands.
 
 ## Availability
 
-*VLarn* is currently available for Unix, Windows, and Amiga systems.
-Ports are currently planned for Atari ST, OpenVMS, and z/OS TOS/E.
+**VLarn** is currently available for *Unix*, *Windows*, and *Amiga* systems.
+Ports are currently planned for *Multics*, *Atari ST*, *OpenVMS*, and *z/OS TOS/E*.
 
-Like *ULarn* 1.6, *VLarn* is easily portable to different systems,
-with all system dependent code isolated into separate modules.
+Like *ULarn* 1.6, **VLarn** is easily portable to different systems,
+with all system-dependent code isolated in separate modules.
 
 ## History
 
-VLarn is a fork of Julian Olds' *ULarn 1.6* branch.
+**VLarn** is a fork of Julian Olds' *ULarn 1.6* branch.
 
-Please contact the current maintainer — Jeffrey Johnson
+## Distribution
+
+* [Gridfinity Gitlab](https://gitlab.gridfinity.com/jeff/vlarn)
+* [SourceHut](https://sr.ht/~trn/vlarn/)
+* [GitHub](https://github.com/johnsonjh/vlarn)
+
+## Issue Tracking
+
+* [Gridfinity Gitlab Issues](https://gitlab.gridfinity.com/jeff/vlarn/-/issues)
+
+* Alternately, you may contact the current maintainer — Jeffrey Johnson
 \<[jhj@trnsz.com](mailto:jhj@trnsz.com)\> — with any bug reports or
 questions. Please include '*VLarn*' in the Subject line.
 
-To avoid user confusion and version clashes with other *Larn*/*ULarn*
-derivatives, the next release of *VLarn* will be **VLarn 5.0**. It will
-incorporate changes and additions from Josh Bressers' *ULarn 1.7*,
-as well as Nathan Tenny's '*Variant ULarn*' release 1.5.4.
+## Branding
+
+To avoid user confusion or version clashes with other *Larn*/*ULarn*
+derivatives, the next release of *VLarn* will be **VLarn 5.0**. 
+
+This release will incorporate changes and additions from Josh Bressers'
+*ULarn 1.7*, as well as Nathan Tenny's '*Variant ULarn*' release 1.5.4.
 
 ## New features in VLarn 5
 
