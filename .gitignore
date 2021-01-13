@@ -4,6 +4,9 @@
 .cvsignore
 */.cvsignore
 
+### VSCode ###
+.vscode/
+
 ### Patch ###
 *.rej
 *.orig
