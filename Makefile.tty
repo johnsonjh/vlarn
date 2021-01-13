@@ -1,14 +1,13 @@
-
-CC=gcc
-LD=gcc
+CC=cc
+LD=cc
 RC=windres
 
-CFLAGS=-Wall -Wextra -g -DUNIX_TTY
+CFLAGS=-Wall -DUNIX_TTY
 LDFLAGS=
-LIB=-lcurses
+LIB=-lncurses
 
-INSTALL_PATH=/usr/games
-LIB_PATH=/usr/games/lib
+INSTALL_PATH=/opt/vlarn/bin
+LIB_PATH=/opt/vlarn/lib
 
 OBJECT=ularn.o ularn_wintty.o ularn_game.o ularn_ask.o store.o sphere.o spell.o show.o scroll.o scores.o saveutils.o savegame.o potion.o player.o object.o monster.o itm.o help.o getopt.o fortune.o dungeon_obj.o dungeon.o diag.o action.o
 
@@ -16,10 +15,11 @@ all: vlarn
 vlarn: $(OBJECT)
 	$(LD) $(LDFLAGS) -o vlarn $(OBJECT) $(LIB)
 
-install: vlarn lib/vlarn_gfx.xpm lib/Vhelp lib/Vfortune lib/Vmaps 
+install: vlarn lib/vlarn_gfx.xpm lib/Vhelp lib/Vfortune lib/Vmaps
+	mkdir -p $(INSTALL_PATH)
+	mkdir -p $(LIB_PATH)
 	cp vlarn $(INSTALL_PATH)
 	chmod 555 $(INSTALL_PATH)/vlarn
-	mkdir $(LIB_PATH)
 	cp lib/vlarn_gfx.xpm $(LIB_PATH)
 	chmod 544 $(LIB_PATH)/vlarn_gfx.xpm
 	cp lib/Vhelp $(LIB_PATH)
@@ -112,5 +112,4 @@ diag.o: diag.c diag.h header.h ularn_game.h itm.h dungeon.h monster.h player.h p
 
 action.o: action.c action.h ularn_game.h ularn_win.h header.h savegame.h itm.h player.h monster.h dungeon.h dungeon_obj.h potion.h scroll.h show.h fortune.h
 	$(CC) $(CFLAGS) -c action.c
-
 

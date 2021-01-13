@@ -16,7 +16,7 @@
  *   5. When processing an X event the main event loop should call
  *      XMENU_HandleEvent.
  *      This function will return either:
- *      . -1 if the menu didn't handle this   event, in which case the 
+ *      . -1 if the menu didn't handle this   event, in which case the
  *        application needs to handle it, or
  *      . The selected menu item id if the event was handled by the menu.
  *        In this case the application shouldn't process this event, but should
@@ -30,30 +30,30 @@
  * Copyright (c) 2003, Julian Olds
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
  * are met:
  *
  *   . Redistributions of source code must retain the above copyright notice,
- *     this list of conditions and the following disclaimer. 
+ *     this list of conditions and the following disclaimer.
  *
  *   . Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution. 
+ *     documentation and/or other materials provided with the distribution.
  *
- * The name of the author may not be used to endorse or promote products 
- * derived from this software without specific prior written permission. 
+ * The name of the author may not be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * =============================================================================
@@ -86,7 +86,7 @@
 static char *menu_default_font = "*-helvetica-medium-r-*-12-*";
 
 static Display *MenuDisplay;
-static Window  MenuWindow;
+static Window MenuWindow;
 
 static GC menu_gc;
 static XGCValues menu_gc_values;
@@ -132,39 +132,37 @@ static int ItemHeight;
  */
 static void XMENU_PaintPopup(Window Popup, struct XMENU_Menu *Menu)
 {
-  struct XMENU_Item *Item;
-  int Top;
+	struct XMENU_Item *Item;
+	int Top;
 
-  XSetForeground(MenuDisplay, menu_gc, menu_white_pixel);
-  XFillRectangle(MenuDisplay, Popup, menu_gc, 
-		 0, 0, PopupWidth, PopupHeight);
- 
-  XSetForeground(MenuDisplay, menu_gc, menu_black_pixel);
-  XSetBackground(MenuDisplay, menu_gc, menu_white_pixel);
+	XSetForeground(MenuDisplay, menu_gc, menu_white_pixel);
+	XFillRectangle(MenuDisplay, Popup, menu_gc,
+		       0, 0, PopupWidth, PopupHeight);
 
-  Top = 0;
-  Item = Menu->ItemList;
- 
-  while (Item != NULL)
-  {
-    if (Item->Checked)
-      {
-	XCopyPlane(MenuDisplay, CheckPixmap, Popup, menu_gc,
-		   0, 0,
-		   checkmark_width, checkmark_height,
-		   menu_font_info->max_bounds.width / 2, 
-		   Top + (ItemHeight / 2) - (checkmark_height / 2) , 1);
-      }
+	XSetForeground(MenuDisplay, menu_gc, menu_black_pixel);
+	XSetBackground(MenuDisplay, menu_gc, menu_white_pixel);
 
-    XDrawString(MenuDisplay, Popup, menu_gc, 
-		checkmark_width + menu_font_info->max_bounds.width,  
-		Top + menu_font_info->max_bounds.ascent + 2,
-		Item->Text, strlen(Item->Text));
-    
-    Top += ItemHeight;
-    
-    Item = Item->Next;
-  }
+	Top = 0;
+	Item = Menu->ItemList;
+
+	while (Item != NULL) {
+		if (Item->Checked) {
+			XCopyPlane(MenuDisplay, CheckPixmap, Popup, menu_gc,
+				   0, 0,
+				   checkmark_width, checkmark_height,
+				   menu_font_info->max_bounds.width / 2,
+				   Top + (ItemHeight / 2) - (checkmark_height / 2), 1);
+		}
+
+		XDrawString(MenuDisplay, Popup, menu_gc,
+			    checkmark_width + menu_font_info->max_bounds.width,
+			    Top + menu_font_info->max_bounds.ascent + 2,
+			    Item->Text, strlen(Item->Text));
+
+		Top += ItemHeight;
+
+		Item = Item->Next;
+	}
 }
 
 /* =============================================================================
@@ -179,50 +177,43 @@ static void XMENU_PaintPopup(Window Popup, struct XMENU_Menu *Menu)
  *
  *  ItemId    : The item to be (un)highlighted
  *
- *  Highlight : True if the highlight is to be drawn, 
+ *  Highlight : True if the highlight is to be drawn,
  *              False if the highlight is to be removed.
  *
  * RETURN VALUE:
  *
  *  None.
  */
-static void XMENU_HighlightItem(Window Popup, 
-				struct XMENU_Menu *Menu, 
+static void XMENU_HighlightItem(Window Popup,
+				struct XMENU_Menu *Menu,
 				int ItemId,
 				int Highlight)
 {
-  struct XMENU_Item *Item;
-  int Count;
+	struct XMENU_Item *Item;
+	int Count;
 
-  Item = Menu->ItemList;  
-  Count = 0;
+	Item = Menu->ItemList;
+	Count = 0;
 
-  while ((Item != NULL) && (Item->ItemId != ItemId))
-    {
-      Count++;
-      Item = Item->Next;
-    }
+	while ((Item != NULL) && (Item->ItemId != ItemId)) {
+		Count++;
+		Item = Item->Next;
+	}
 
-  if (Item == NULL)
-    {
-      return;
-    }
+	if (Item == NULL)
+		return;
 
-  if (Highlight)
-    {
-      XSetForeground(MenuDisplay, menu_gc, menu_black_pixel);
-    }
-  else
-    {
-      XSetForeground(MenuDisplay, menu_gc, menu_white_pixel);
-    }
+	if (Highlight)
+		XSetForeground(MenuDisplay, menu_gc, menu_black_pixel);
+	else
+		XSetForeground(MenuDisplay, menu_gc, menu_white_pixel);
 
-  XDrawRectangle(MenuDisplay, Popup, menu_gc,
-		 0, Count * ItemHeight,
-		 PopupWidth - 1, ItemHeight - 1);  
+	XDrawRectangle(MenuDisplay, Popup, menu_gc,
+		       0, Count * ItemHeight,
+		       PopupWidth - 1, ItemHeight - 1);
 
-  XFlush(MenuDisplay);
-  XSync(MenuDisplay, 0);  
+	XFlush(MenuDisplay);
+	XSync(MenuDisplay, 0);
 
 }
 
@@ -246,32 +237,25 @@ static void XMENU_HighlightItem(Window Popup,
  */
 static int XMENU_ItemHit(struct XMENU_Menu *Menu, int x, int y)
 {
-  struct XMENU_Item *Item;
-  int ItemNo;
+	struct XMENU_Item *Item;
+	int ItemNo;
 
-  if ((x < 0) || (x > PopupWidth) || (y < 0) || (y > PopupHeight))
-    {
-      return XMENU_NULLID;      
-    }
+	if ((x < 0) || (x > PopupWidth) || (y < 0) || (y > PopupHeight))
+		return XMENU_NULLID;
 
-  ItemNo = y / ItemHeight;
+	ItemNo = y / ItemHeight;
 
-  Item = Menu->ItemList;
+	Item = Menu->ItemList;
 
-  while ((Item != NULL) && (ItemNo > 0))
-    {
-      Item = Item->Next;
-      ItemNo--;
-    }
+	while ((Item != NULL) && (ItemNo > 0)) {
+		Item = Item->Next;
+		ItemNo--;
+	}
 
-  if (Item != NULL)
-    {
-      return Item->ItemId;
-    }
-  else
-    {
-      return XMENU_NULLID;
-    }
+	if (Item != NULL)
+		return Item->ItemId;
+	else
+		return XMENU_NULLID;
 }
 
 /* =============================================================================
@@ -294,26 +278,21 @@ static int XMENU_ItemHit(struct XMENU_Menu *Menu, int x, int y)
  */
 static struct XMENU_Menu *XMENU_MenuHit(struct XMENU_Menu *Menu, int x, int y)
 {
-  struct XMENU_Menu *Pos;
-  int FoundHit;
+	struct XMENU_Menu *Pos;
+	int FoundHit;
 
-  Pos = Menu;
-  FoundHit = 0;
+	Pos = Menu;
+	FoundHit = 0;
 
-  while ((Pos != NULL) && !FoundHit)
-    {
-      if ((x >= Pos->HitLeft) && (x < Pos->HitLeft + Pos->HitWidth) &&
-	  (y >= Pos->HitTop) && (y < Pos->HitTop + Pos->HitHeight))
-	{
-	  FoundHit = 1;
+	while ((Pos != NULL) && !FoundHit) {
+		if ((x >= Pos->HitLeft) && (x < Pos->HitLeft + Pos->HitWidth) &&
+		    (y >= Pos->HitTop) && (y < Pos->HitTop + Pos->HitHeight))
+			FoundHit = 1;
+		else
+			Pos = Pos->Next;
 	}
-      else
-	{
-	  Pos = Pos->Next;
-	}
-    }
 
-  return Pos;
+	return Pos;
 }
 
 /* =============================================================================
@@ -332,85 +311,82 @@ static struct XMENU_Menu *XMENU_MenuHit(struct XMENU_Menu *Menu, int x, int y)
  */
 static void XMENU_ActivatePopup(struct XMENU_Menu *Menu)
 {
-  int Direction, Ascent, Descent;
-  XCharStruct Extents;
+	int Direction, Ascent, Descent;
+	XCharStruct Extents;
 
-  XSetWindowAttributes Attributes;
+	XSetWindowAttributes Attributes;
 
-  struct XMENU_Item *Item;
-  int rc;
-  Window Root;
-  Window Child;
-  int winx, winy;
-  int winwidth, winheight;
-  int winborder, windepth;
-  
-  /* Calculate the popup menu size */
+	struct XMENU_Item *Item;
+	int rc;
+	Window Root;
+	Window Child;
+	int winx, winy;
+	int winwidth, winheight;
+	int winborder, windepth;
 
-  PopupWidth = 0;
-  PopupHeight = 0;
+	/* Calculate the popup menu size */
 
-  Item = Menu->ItemList;
-  while (Item != NULL)
-    {
-      XTextExtents(menu_font_info, Item->Text, strlen(Item->Text),
-		   &Direction, &Ascent, &Descent, &Extents);
-      
-      if (Extents.width > PopupWidth)
-	{
-	  PopupWidth = Extents.width;
+	PopupWidth = 0;
+	PopupHeight = 0;
+
+	Item = Menu->ItemList;
+	while (Item != NULL) {
+		XTextExtents(menu_font_info, Item->Text, strlen(Item->Text),
+			     &Direction, &Ascent, &Descent, &Extents);
+
+		if (Extents.width > PopupWidth)
+			PopupWidth = Extents.width;
+
+		PopupHeight += ItemHeight;
+
+		Item = Item->Next;
 	}
 
-      PopupHeight += ItemHeight;
+	PopupWidth += checkmark_width + menu_font_info->max_bounds.width * 2;
 
-      Item = Item->Next;
-    }
+	/* Find the popup menu position */
 
-  PopupWidth += checkmark_width + menu_font_info->max_bounds.width * 2;
+	rc = XGetGeometry(MenuDisplay, MenuWindow, &Root, &winx, &winy,
+			  &winwidth, &winheight, &winborder, &windepth);
 
-  /* Find the popup menu position */
+	winx = 0;
+	winy = 0;
 
-  rc = XGetGeometry(MenuDisplay, MenuWindow, &Root, &winx, &winy, 
-		    &winwidth, &winheight, &winborder, &windepth);
+	XTranslateCoordinates(MenuDisplay,
+			      MenuWindow, Root,
+			      winx, winy, &winx, &winy, &Child);
 
-  winx = 0;
-  winy = 0;
+	/* Create the popup menu window */
 
-  XTranslateCoordinates(MenuDisplay, 
-			MenuWindow, Root, 
-			winx, winy, &winx, &winy, &Child);
+	Attributes.border_pixel = menu_black_pixel;
+	Attributes.backing_pixel = menu_white_pixel;
+	Attributes.backing_store = WhenMapped;
+	Attributes.save_under = 1;
+	Attributes.override_redirect = 1;
 
-  /* Create the popup menu window */
-  
-  Attributes.border_pixel = menu_black_pixel;
-  Attributes.backing_pixel = menu_white_pixel;
-  Attributes.backing_store = WhenMapped;
-  Attributes.save_under = 1;
-  Attributes.override_redirect = 1;
+	Popup = XCreateWindow
+			(MenuDisplay,
+			RootWindow(MenuDisplay, DefaultScreen(MenuDisplay)),
+			winx + Menu->HitLeft,
+			winy + Menu->HitTop + Menu->HitHeight,
+			PopupWidth, PopupHeight,
+			1,              /* Border width */
+			CopyFromParent, /* Depth */
+			InputOutput,    /* Class */
+			DefaultVisual(MenuDisplay, DefaultScreen(MenuDisplay)),
+			CWBorderPixel | CWBackingStore | CWSaveUnder | CWOverrideRedirect,
+			&Attributes);
 
-  Popup = XCreateWindow
-    (MenuDisplay,
-     RootWindow(MenuDisplay, DefaultScreen(MenuDisplay)),
-     winx + Menu->HitLeft, 
-     winy + Menu->HitTop + Menu->HitHeight,
-     PopupWidth, PopupHeight,
-     1,              /* Border width */
-     CopyFromParent, /* Depth */ 
-     InputOutput,    /* Class */
-     DefaultVisual(MenuDisplay, DefaultScreen(MenuDisplay)),
-     CWBorderPixel | CWBackingStore | CWSaveUnder | CWOverrideRedirect,
-     &Attributes);
-
-  XSelectInput(MenuDisplay, 
-	       Popup, 
-	       ExposureMask | 
-	       ButtonPressMask | ButtonReleaseMask | 
-	       Button1MotionMask);
+	XSelectInput(MenuDisplay,
+		     Popup,
+		     ExposureMask |
+		     ButtonPressMask | ButtonReleaseMask |
+		     Button1MotionMask);
 
 
-  XMapRaised(MenuDisplay, Popup);
-  XFlush(MenuDisplay);
-  XSync(MenuDisplay, 0);  
+	XMapRaised(MenuDisplay, Popup);
+	XFlush(MenuDisplay);
+	XSync(MenuDisplay, 0);
 
 }
 
@@ -436,176 +412,146 @@ static void XMENU_ActivatePopup(struct XMENU_Menu *Menu)
  */
 static int XMENU_HandleSelection(struct XMENU_Menu *Menu,  int x, int y)
 {
-  struct XMENU_Menu *Current;
-  struct XMENU_Menu *NewMenu;
-  int Done;
-  int Dragging;
-  Window Child;
-  int winx, winy;
-  XEvent xevent;
-  int SelectId;
-  int OldId;
+	struct XMENU_Menu *Current;
+	struct XMENU_Menu *NewMenu;
+	int Done;
+	int Dragging;
+	Window Child;
+	int winx, winy;
+	XEvent xevent;
+	int SelectId;
+	int OldId;
 
-  /* Activate the Popup menu for the initially selected menu */
-  Current = XMENU_MenuHit(Menu, x, y);
+	/* Activate the Popup menu for the initially selected menu */
+	Current = XMENU_MenuHit(Menu, x, y);
 
-  if (Current != NULL)
-    {
-      XMENU_ActivatePopup(Current);
-    }
+	if (Current != NULL)
+		XMENU_ActivatePopup(Current);
 
-  /* Prepare for event handling */
+	/* Prepare for event handling */
 
-  Done = 0;
-  Dragging = 0;
-  SelectId = XMENU_NULLID;
+	Done = 0;
+	Dragging = 0;
+	SelectId = XMENU_NULLID;
 
-  /* 
-   * Handle events until either a menu item is selected of the menu is
-   * Deactivated.
-   */
+	/*
+	 * Handle events until either a menu item is selected of the menu is
+	 * Deactivated.
+	 */
 
-  while (!Done)
-    {
-      XNextEvent(MenuDisplay, &xevent);
-      
-      switch (xevent.type)
-	{
-	case Expose:
-	  if (xevent.xexpose.window == Popup)
-	    {
-	      XMENU_PaintPopup(Popup, Current);
-	    }
-	  else if (xevent.xexpose.window == MenuWindow)
-	    {
-	      RepaintWindow();
-	    }
-	  break;
-	
-	case ButtonPress:
-	  winx = xevent.xbutton.x;
-	  winy = xevent.xbutton.y;
+	while (!Done) {
+		XNextEvent(MenuDisplay, &xevent);
 
-	  if (xevent.xbutton.window != Popup)
-	    {
-	      XTranslateCoordinates(MenuDisplay, 
-				    xevent.xbutton.window, Popup, 
-				    winx, winy, &winx, &winy, &Child);
-	    }
+		switch (xevent.type) {
+		case Expose:
+			if (xevent.xexpose.window == Popup)
+				XMENU_PaintPopup(Popup, Current);
+			else if (xevent.xexpose.window == MenuWindow)
+				RepaintWindow();
+			break;
 
-	  SelectId = XMENU_ItemHit(Current, winx, winy);
-	  if (SelectId != XMENU_NULLID)
-	    {
-	      XMENU_HighlightItem(Popup, Current, SelectId, 1);
-	    }
-	  else
-	    {
-	      winx = xevent.xmotion.x;
-	      winy = xevent.xmotion.y;
-	      
-	      if (xevent.xmotion.window != MenuWindow)
-		{
-		  XTranslateCoordinates(MenuDisplay, 
-					xevent.xmotion.window, MenuWindow, 
-					winx, winy, &winx, &winy, &Child);
-		}
-	      
-	      NewMenu = XMENU_MenuHit(The_Menu, winx, winy);
-	      
-	      if ((NewMenu != Current) && (NewMenu != NULL))
-		{
-		  XUnmapWindow(MenuDisplay, Popup);
-		  XDestroyWindow(MenuDisplay, Popup);
-		  
-		  Current = NewMenu;
-		  XMENU_ActivatePopup(Current);
-		}	
-	      else
-		{
-		  Done = 1;
-		}
-	    }
-	  break;
+		case ButtonPress:
+			winx = xevent.xbutton.x;
+			winy = xevent.xbutton.y;
 
-	case ButtonRelease:
-	  
-	  if (Dragging)
-	    {
-	      Done = 1;
-	    }
-	  else
-	    {
-	      if (SelectId != XMENU_NULLID)
-		{
-		  Done = 1;
-		}
-	    }
-	  break;
+			if (xevent.xbutton.window != Popup) {
+				XTranslateCoordinates(MenuDisplay,
+						      xevent.xbutton.window, Popup,
+						      winx, winy, &winx, &winy, &Child);
+			}
 
-	case MotionNotify:
-	  Dragging = 1;
+			SelectId = XMENU_ItemHit(Current, winx, winy);
+			if (SelectId != XMENU_NULLID)
+				XMENU_HighlightItem(Popup, Current, SelectId, 1);
+			else{
+				winx = xevent.xmotion.x;
+				winy = xevent.xmotion.y;
 
-	  winx = xevent.xmotion.x;
-	  winy = xevent.xmotion.y;
+				if (xevent.xmotion.window != MenuWindow) {
+					XTranslateCoordinates(MenuDisplay,
+							      xevent.xmotion.window, MenuWindow,
+							      winx, winy, &winx, &winy, &Child);
+				}
 
-	  if (xevent.xmotion.window != Popup)
-	    {
-	      XTranslateCoordinates(MenuDisplay, 
-				    xevent.xmotion.window, Popup, 
-				    winx, winy, &winx, &winy, &Child);
-	    }
+				NewMenu = XMENU_MenuHit(The_Menu, winx, winy);
 
-	  OldId = SelectId;
-	  SelectId = XMENU_ItemHit(Current, winx, winy);
-	  if (SelectId != OldId)
-	    {
-	      XMENU_HighlightItem(Popup, Current, OldId, 0);
-	      
-	      if (SelectId != XMENU_NULLID)
-		{
-		  XMENU_HighlightItem(Popup, Current, SelectId, 1);
-		}
-	    }
-	  
-	  if (SelectId == XMENU_NULLID)
-	    {
-	      /* Pointer not over a menu item, so check for menu change */
-	  
-	      winx = xevent.xmotion.x;
-	      winy = xevent.xmotion.y;
-	      
-	      if (xevent.xmotion.window != MenuWindow)
-		{
-		  XTranslateCoordinates(MenuDisplay, 
-					xevent.xmotion.window, MenuWindow, 
-					winx, winy, &winx, &winy, &Child);
+				if ((NewMenu != Current) && (NewMenu != NULL)) {
+					XUnmapWindow(MenuDisplay, Popup);
+					XDestroyWindow(MenuDisplay, Popup);
+
+					Current = NewMenu;
+					XMENU_ActivatePopup(Current);
+				}else
+					Done = 1;
+			}
+			break;
+
+		case ButtonRelease:
+
+			if (Dragging)
+				Done = 1;
+			else if (SelectId != XMENU_NULLID)
+				Done = 1;
+
+			break;
+
+		case MotionNotify:
+			Dragging = 1;
+
+			winx = xevent.xmotion.x;
+			winy = xevent.xmotion.y;
+
+			if (xevent.xmotion.window != Popup) {
+				XTranslateCoordinates(MenuDisplay,
+						      xevent.xmotion.window, Popup,
+						      winx, winy, &winx, &winy, &Child);
+			}
+
+			OldId = SelectId;
+			SelectId = XMENU_ItemHit(Current, winx, winy);
+			if (SelectId != OldId) {
+				XMENU_HighlightItem(Popup, Current, OldId, 0);
+
+				if (SelectId != XMENU_NULLID)
+					XMENU_HighlightItem(Popup, Current, SelectId, 1);
+			}
+
+			if (SelectId == XMENU_NULLID) {
+				/* Pointer not over a menu item, so check for menu change */
+
+				winx = xevent.xmotion.x;
+				winy = xevent.xmotion.y;
+
+				if (xevent.xmotion.window != MenuWindow) {
+					XTranslateCoordinates(MenuDisplay,
+							      xevent.xmotion.window, MenuWindow,
+							      winx, winy, &winx, &winy, &Child);
+				}
+
+				NewMenu = XMENU_MenuHit(The_Menu, winx, winy);
+
+				if ((NewMenu != Current) && (NewMenu != NULL)) {
+					XUnmapWindow(MenuDisplay, Popup);
+					XDestroyWindow(MenuDisplay, Popup);
+
+					Current = NewMenu;
+					XMENU_ActivatePopup(Current);
+				}
+
+			}
+
+			break;
+
+		default:
+			break;
 		}
 
-	      NewMenu = XMENU_MenuHit(The_Menu, winx, winy);
-	      
-	      if ((NewMenu != Current) && (NewMenu != NULL))
-		{
-		  XUnmapWindow(MenuDisplay, Popup);
-		  XDestroyWindow(MenuDisplay, Popup);
-		  
-		  Current = NewMenu;
-		  XMENU_ActivatePopup(Current);
-		}	      
 
-	    }
-
-	  break;
-
-	default:
-	  break;
 	}
 
-      
-    }
+	XDestroyWindow(MenuDisplay, Popup);
 
-  XDestroyWindow(MenuDisplay, Popup);
-
-  return SelectId;
+	return SelectId;
 }
 
 /* =============================================================================
@@ -615,63 +561,57 @@ static int XMENU_HandleSelection(struct XMENU_Menu *Menu,  int x, int y)
 /* =============================================================================
  * FUNCTION: XMENU_SetMenu
  */
-void XMENU_SetMenu(Display *dpy, 
-		   Window win, 
-		   struct XMENU_Menu *Menu, 
+void XMENU_SetMenu(Display *dpy,
+		   Window win,
+		   struct XMENU_Menu *Menu,
 		   char *FontSpec,
 		   void (*Repaint)(void))
 {
-  int screen_num;
+	int screen_num;
 
-  MenuDisplay = dpy;
-  MenuWindow = win;
+	MenuDisplay = dpy;
+	MenuWindow = win;
 
-  The_Menu = Menu;
-  RepaintWindow = Repaint;
+	The_Menu = Menu;
+	RepaintWindow = Repaint;
 
-  menu_gc_values.cap_style = CapButt;
-  menu_gc_values.join_style = JoinBevel;
-  menu_gc_values_mask = GCCapStyle | GCJoinStyle;
-  menu_gc = XCreateGC(MenuDisplay, MenuWindow, 
-		      menu_gc_values_mask, &menu_gc_values);
+	menu_gc_values.cap_style = CapButt;
+	menu_gc_values.join_style = JoinBevel;
+	menu_gc_values_mask = GCCapStyle | GCJoinStyle;
+	menu_gc = XCreateGC(MenuDisplay, MenuWindow,
+			    menu_gc_values_mask, &menu_gc_values);
 
-  if (CheckPixmap == None)
-    {
-      CheckPixmap = XCreateBitmapFromData
-	(MenuDisplay, MenuWindow, 
-	 checkmark_bits, checkmark_width, checkmark_height);
-    }
+	if (CheckPixmap == None) {
+		CheckPixmap = XCreateBitmapFromData
+				      (MenuDisplay, MenuWindow,
+				      checkmark_bits, checkmark_width, checkmark_height);
+	}
 
-  screen_num = DefaultScreen(MenuDisplay);
-  menu_white_pixel = WhitePixel(MenuDisplay, screen_num);
-  menu_black_pixel = BlackPixel(MenuDisplay, screen_num);
+	screen_num = DefaultScreen(MenuDisplay);
+	menu_white_pixel = WhitePixel(MenuDisplay, screen_num);
+	menu_black_pixel = BlackPixel(MenuDisplay, screen_num);
 
-  if (FontSpec != NULL)
-    {
-      menu_font_name = FontSpec;
-    }
-  else
-    {
-      menu_font_name = menu_default_font;
-    }
+	if (FontSpec != NULL)
+		menu_font_name = FontSpec;
+	else
+		menu_font_name = menu_default_font;
 
-  menu_font_info = XLoadQueryFont(MenuDisplay, menu_font_name);
-  if (!menu_font_info)
-    {
-      fprintf(stderr, 
-	      "Error: XLoadQueryFont: failed loading font '%s'\n", 
-	      menu_font_name);
-      return;
-    }
+	menu_font_info = XLoadQueryFont(MenuDisplay, menu_font_name);
+	if (!menu_font_info) {
+		fprintf(stderr,
+			"Error: XLoadQueryFont: failed loading font '%s'\n",
+			menu_font_name);
+		return;
+	}
 
-  XSetFont(MenuDisplay, menu_gc, menu_font_info->fid);
+	XSetFont(MenuDisplay, menu_gc, menu_font_info->fid);
 
-  ItemHeight = menu_font_info->max_bounds.ascent +
-    menu_font_info->max_bounds.descent + 4;
+	ItemHeight = menu_font_info->max_bounds.ascent +
+		     menu_font_info->max_bounds.descent + 4;
 
-  /* Draw the menu */
+	/* Draw the menu */
 
-  XMENU_Redraw();
+	XMENU_Redraw();
 }
 
 /* =============================================================================
@@ -679,30 +619,27 @@ void XMENU_SetMenu(Display *dpy,
  */
 void XMENU_SetCheck(int ItemId, XMENU_CheckState CheckState)
 {
-  struct XMENU_Menu *Menu;
-  struct XMENU_Item *Item;
-  int Found;
+	struct XMENU_Menu *Menu;
+	struct XMENU_Item *Item;
+	int Found;
 
-  Found = False;
-  Menu = The_Menu;
+	Found = False;
+	Menu = The_Menu;
 
-  while ((Menu != NULL) && !Found)
-    {
-      Item = Menu->ItemList;
+	while ((Menu != NULL) && !Found) {
+		Item = Menu->ItemList;
 
-      while ((Item != NULL) && !Found)
-	{
-	  if (Item->ItemId == ItemId)
-	    {
-	      Item->Checked = CheckState;
-	      Found = 1;
-	    }
+		while ((Item != NULL) && !Found) {
+			if (Item->ItemId == ItemId) {
+				Item->Checked = CheckState;
+				Found = 1;
+			}
 
-	  Item = Item->Next;
+			Item = Item->Next;
+		}
+
+		Menu = Menu->Next;
 	}
-
-      Menu = Menu->Next;
-    }
 }
 
 /* =============================================================================
@@ -710,12 +647,12 @@ void XMENU_SetCheck(int ItemId, XMENU_CheckState CheckState)
  */
 int XMENU_GetMenuHeight(void)
 {
-  int CharHeight;
+	int CharHeight;
 
-  CharHeight = 
-    menu_font_info->max_bounds.ascent + menu_font_info->max_bounds.descent;
+	CharHeight =
+		menu_font_info->max_bounds.ascent + menu_font_info->max_bounds.descent;
 
-  return CharHeight + 10;
+	return CharHeight + 10;
 
 }
 
@@ -724,65 +661,64 @@ int XMENU_GetMenuHeight(void)
  */
 void XMENU_Redraw(void)
 {
-  struct XMENU_Menu *Pos;
-  XWindowAttributes win_attr;
-  XCharStruct Extents;
-  int MenuWidth;
-  int MenuHeight;
-  int MenuLeft;
-  int MenuTop;
-  int Direction;
-  int Ascent;
-  int Descent;
-  Status rc;
+	struct XMENU_Menu *Pos;
+	XWindowAttributes win_attr;
+	XCharStruct Extents;
+	int MenuWidth;
+	int MenuHeight;
+	int MenuLeft;
+	int MenuTop;
+	int Direction;
+	int Ascent;
+	int Descent;
+	Status rc;
 
-  rc = XGetWindowAttributes(MenuDisplay, MenuWindow, &win_attr);
-  
-  MenuWidth = win_attr.width;
-  MenuHeight = XMENU_GetMenuHeight();
+	rc = XGetWindowAttributes(MenuDisplay, MenuWindow, &win_attr);
 
-  /* Clear the menu area */
+	MenuWidth = win_attr.width;
+	MenuHeight = XMENU_GetMenuHeight();
 
-  XSetForeground(MenuDisplay, menu_gc, menu_white_pixel);
-  XFillRectangle(MenuDisplay, MenuWindow, menu_gc,
-		 0, 0,
-		 MenuWidth, MenuHeight);
-  
+	/* Clear the menu area */
 
-  /* Draw the menu bottom line */
-
-  XSetForeground(MenuDisplay, menu_gc, menu_black_pixel);
-  XFillRectangle(MenuDisplay, MenuWindow, menu_gc,
-		 0, MenuHeight -2,
-		 MenuWidth, 2);  
+	XSetForeground(MenuDisplay, menu_gc, menu_white_pixel);
+	XFillRectangle(MenuDisplay, MenuWindow, menu_gc,
+		       0, 0,
+		       MenuWidth, MenuHeight);
 
 
-  Pos = The_Menu;
-  MenuLeft = 8;
-  MenuTop = 4;
+	/* Draw the menu bottom line */
 
-  while (Pos != NULL)
-    {
-           
-      XDrawString(MenuDisplay, MenuWindow, menu_gc, 
-		  MenuLeft,  MenuTop + menu_font_info->max_bounds.ascent,
-		  Pos->Text, strlen(Pos->Text));
+	XSetForeground(MenuDisplay, menu_gc, menu_black_pixel);
+	XFillRectangle(MenuDisplay, MenuWindow, menu_gc,
+		       0, MenuHeight - 2,
+		       MenuWidth, 2);
 
-      XTextExtents(menu_font_info, Pos->Text, strlen(Pos->Text),
-		   &Direction, &Ascent, &Descent, &Extents);
 
-      Pos->HitLeft = MenuLeft;
-      Pos->HitTop = MenuTop;
+	Pos = The_Menu;
+	MenuLeft = 8;
+	MenuTop = 4;
 
-      Pos->HitWidth = Extents.width;
-      Pos->HitHeight = 
-	menu_font_info->max_bounds.ascent +
-	menu_font_info->max_bounds.descent;
+	while (Pos != NULL) {
 
-      MenuLeft += Extents.width + 8;
-      Pos = Pos->Next;
- 
-    }
+		XDrawString(MenuDisplay, MenuWindow, menu_gc,
+			    MenuLeft,  MenuTop + menu_font_info->max_bounds.ascent,
+			    Pos->Text, strlen(Pos->Text));
+
+		XTextExtents(menu_font_info, Pos->Text, strlen(Pos->Text),
+			     &Direction, &Ascent, &Descent, &Extents);
+
+		Pos->HitLeft = MenuLeft;
+		Pos->HitTop = MenuTop;
+
+		Pos->HitWidth = Extents.width;
+		Pos->HitHeight =
+			menu_font_info->max_bounds.ascent +
+			menu_font_info->max_bounds.descent;
+
+		MenuLeft += Extents.width + 8;
+		Pos = Pos->Next;
+
+	}
 }
 
 /* =============================================================================
@@ -790,33 +726,28 @@ void XMENU_Redraw(void)
  */
 int XMENU_HandleEvent(XEvent *Event)
 {
-  int Selected;
-  int x, y;
+	int Selected;
+	int x, y;
 
-  Selected = XMENU_NULLID;
+	Selected = XMENU_NULLID;
 
-  switch (Event->type)
-    {
-    case ButtonPress:
-      x = Event->xbutton.x;
-      y = Event->xbutton.y;
+	switch (Event->type) {
+	case ButtonPress:
+		x = Event->xbutton.x;
+		y = Event->xbutton.y;
 
-      if (Event->xbutton.button != Button1)
-	{
-	  return 0;
+		if (Event->xbutton.button != Button1)
+			return 0;
+
+		if (XMENU_MenuHit(The_Menu, x, y) != NULL)
+			Selected = XMENU_HandleSelection(The_Menu, x, y);
+
+
+		return Selected;
+
+	default:
+		break;
 	}
-      
-      if (XMENU_MenuHit(The_Menu, x, y) != NULL)
-	{
-	  Selected = XMENU_HandleSelection(The_Menu, x, y);
-	}
 
-      
-      return Selected;
-
-    default:
-      break;
-    }
-
-  return -1;
+	return -1;
 }

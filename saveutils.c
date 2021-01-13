@@ -31,7 +31,7 @@
  * Local variables
  */
 
- /* The number of characters written */
+/* The number of characters written */
 static int w = 0;
 
 /* The number of characters read */
@@ -52,21 +52,20 @@ int FileSum;
  */
 unsigned int sum(unsigned char *data, int n)
 {
-  unsigned int sum;
-  int c, nb;
+	unsigned int sum;
+	int c, nb;
 
-  sum = nb = 0;
-  while (nb++ < n)
-  {
-    c = *data++;
-    if (sum & 01)
-      sum = (sum >> 1) + 0x8000;
-    else
-      sum >>= 1;
-    sum += c;
-    sum &= 0xFFFF;
-  }
-  return(sum);
+	sum = nb = 0;
+	while (nb++ < n) {
+		c = *data++;
+		if (sum & 01)
+			sum = (sum >> 1) + 0x8000;
+		else
+			sum >>= 1;
+		sum += c;
+		sum &= 0xFFFF;
+	}
+	return sum;
 }
 
 /* =============================================================================
@@ -74,27 +73,26 @@ unsigned int sum(unsigned char *data, int n)
  */
 void bwrite(FILE *fp, char *buf, long num)
 {
-  int nwrote;
-  static int ncalls = 0;
+	int nwrote;
+	static int ncalls = 0;
 
-  ncalls++;
-  nwrote = fwrite(buf, 1, num, fp);
+	ncalls++;
+	nwrote = fwrite(buf, 1, num, fp);
 
-  w += nwrote;
+	w += nwrote;
 
-  if (nwrote != num)
-  {
-    Printf("Error writing to save file\n");
-    Printf("wrote %d, wanted %d\n", nwrote, num);
-    //    Printf("errno = %d\t[%s]\n", errno, sys_errlist[errno]);
-    Printf("    Wrote %d bytes so far\n", w);
-    Printf("        Call: %d\n", ncalls);
+	if (nwrote != num) {
+		Printf("Error writing to save file\n");
+		Printf("wrote %d, wanted %d\n", nwrote, num);
+		//    Printf("errno = %d\t[%s]\n", errno, sys_errlist[errno]);
+		Printf("    Wrote %d bytes so far\n", w);
+		Printf("        Call: %d\n", ncalls);
 
-    nap(4000);
-    died(DIED_POST_MORTEM_DEATH, 0);
-  }
+		nap(4000);
+		died(DIED_POST_MORTEM_DEATH, 0);
+	}
 
-  FileSum += sum((unsigned char *)buf, num);
+	FileSum += sum((unsigned char *)buf, num);
 }
 
 /* =============================================================================
@@ -102,26 +100,25 @@ void bwrite(FILE *fp, char *buf, long num)
  */
 void bread(FILE *fp, char *buf, long num)
 {
-  int nread;
-  static int ncalls = 0;
+	int nread;
+	static int ncalls = 0;
 
-  ncalls++;
-  nread = fread(buf, 1, num, fp);
+	ncalls++;
+	nread = fread(buf, 1, num, fp);
 
-  r += nread;
+	r += nread;
 
-  if (nread != num)
-  {
-    Printf("Error reading from save file\n");
-    Printf("  Got %d, wanted %d bytes\n", nread, num);
-    //    Printf("errno = %d\t[%s]\n",errno,sys_errlist[errno]);
-    Printf("    Read %d bytes so far\n", w);
-    Printf("        Call: %d\n", ncalls);
+	if (nread != num) {
+		Printf("Error reading from save file\n");
+		Printf("  Got %d, wanted %d bytes\n", nread, num);
+		//    Printf("errno = %d\t[%s]\n",errno,sys_errlist[errno]);
+		Printf("    Read %d bytes so far\n", w);
+		Printf("        Call: %d\n", ncalls);
 
-    nap(4000);
-    died(DIED_POST_MORTEM_DEATH, 0);
-  }
+		nap(4000);
+		died(DIED_POST_MORTEM_DEATH, 0);
+	}
 
-  FileSum += sum((unsigned char *)buf, num);
+	FileSum += sum((unsigned char *)buf, num);
 }
 

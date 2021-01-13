@@ -1,4 +1,4 @@
-;    Welcome to the game of Ularn.  At this moment, you face a great problem.
+;    Welcome to the game of VLarn.  At this moment, you face a great problem.
 Your daughter has contracted a strange disease and none of your home remedies
 seems to have any effect.  You sense that she is in mortal danger and you must
 try to save her.  Time ago you heard of a land of great danger and opportunity.
@@ -6,12 +6,12 @@ Perhaps here is the solution you need.
 
     It has been said that there once was a great magician who called himself
 Polinneaus.  Many years ago, after having many miraculous successes, Polinneaus
-retired to the caverns of Ularn, where he devoted most of his time to the
+retired to the caverns of VLarn, where he devoted most of his time to the
 creation of magic.   Rumors have it that one day Polinneaus set out to dispel
 an attacking army in a forest some distance to the north.  It is believed that
 there he met his demise.
 
-    The caverns of Ularn, it is thought, must be magnificent in design
+    The caverns of VLarn, it is thought, must be magnificent in design
 and contain much magic and treasure.  One option you have is to undertake a
 journey into these caverns.
 
@@ -21,7 +21,7 @@ journey into these caverns.
 
 
 
-              ^[[7mHelp File for The Caverns of Ularn^[[m
+              ^[[7mHelp File for The Caverns of VLarn^[[m
 
                      ^[[7mStandard Commands^[[m
 h  move to the left    H  run left              .  stay here
@@ -48,7 +48,7 @@ o  open a closed door  O  open a chest here
 ularn -s            list the scoreboard
 ularn -i            list scores with inventories
 ularn -n            suppress welcome message when beginning a game
-ularn -r            restore checkpointed game
+ularn -r            restore check-pointed game
 ularn -d <number>   specify difficulty level
 ularn -o <optsfile> specify the ularn.opt file to be used
 ularn -c            create new scoreboard (requires wizard password)
@@ -67,8 +67,8 @@ after which you may enter the spell code.  This only works on the 1st letter
 of the spell you are casting.  You may also type '^[[7\^[[m' at any time - this will
 show all the spells you know, as well as all the potions and scrolls you have
 encountered and identified so far.
-            ^[[7mUlarn Spell Descriptions^[[m
-Following are the Ularn Spells. Some are well understood, others less so.
+            ^[[7mVLarn Spell Descriptions^[[m
+Following are the VLarn Spells. Some are well understood, others less so.
 They are listed in order of their circle with:
   ^[[7mName^[[m ^[[9m(Code) [Target] {Duration}^[[m and Description.
 
@@ -96,7 +96,7 @@ They are listed in order of their circle with:
 ^[[7mStrength^[[m ^[[9m(str) [Self] {Long}^[[m
   Adds +2 to the caster's strength for a time
   Non-cumulative, repetition increases duration
-^[[7mEnlightenment^[[m ^[[9m(enl) [Level] {Permament}^[[m
+^[[7mEnlightenment^[[m ^[[9m(enl) [Level] {Permanent}^[[m
   The caster becomes aware of the area around them
 ^[[7mHealing^[[m ^[[9m(hel) [Self] {Instant}^[[m
   Restores some of the caster's health
@@ -221,7 +221,7 @@ Options that specify a value are in the form <option word>:<value>.
   (no)beep                dis/enable beeps during game
   name:<name>             set the players name to <name>
   class:<class>           play a character of <class> (the name of the class)
-  gender:<male/female>    specify the gender of the characeter
+  gender:<male/female>    specify the gender of the character
 
 Some path names used by the game can also be specified in the options file.
   LIBDIR:<location of the lib directory>
@@ -251,15 +251,15 @@ OPTION=beep
 
 
 
-	       ^[[7mExplanation of the Ularn scoreboard facility^[[m
+	       ^[[7mExplanation of the VLarn scoreboard facility^[[m
 
-    Ularn supports TWO scoreboards, one for winners, and one for deceased
+    VLarn supports TWO scoreboards, one for winners, and one for deceased
 characters.  Each player is allowed one slot on each scoreboard, if the score
 is in the top ten for that scoreboard.  This design helps ensure that frequent 
-players of Ularn do not hog the scoreboard and gives more players a chance 
+players of VLarn do not hog the scoreboard and gives more players a chance 
 for glory.  Level of difficulty is also noted on the scoreboards and this 
 takes precedence over score for determining what entry is on the scoreboard.  
-For example: if "Satyr, the Ularn God" has a score of 128003 on the scoreboard 
+For example: if "Satyr, the VLarn God" has a score of 128003 on the scoreboard 
 at diff 0, then his game at diff 1 and a score of 4112 would replace his 
 previous entry on the scoreboard.  Note that when a player dies, his inventory 
 is stored in the scoreboard so that everyone can see what items the player had
@@ -269,9 +269,9 @@ at the time of his death.
 
 
 
-         Ularn was written in 1987 by Phil Cordier at UC Santa Cruz.
-                    It was updated in 2001 by Josh Brandt
-         Contact him at mute@gweep.net for info regarding the game.
-        Windows 32 conversion + Tiles support in 2003 by Julian Olds
+         VLarn began as Ularn by Phil Cordier, in 1987, at U.C.S.C.,
+         based on Noah Morgan's Larn, with James McNamara's patches.
+         Updated by David Richerby, Josh Brandt, Josh Bressers, and
+         Jeff Johnson, with significant refactoring by Julian Olds.
 
 

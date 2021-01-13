@@ -45,19 +45,19 @@ system-dependent code isolated in separate modules.
 
 - [Gridfinity Gitlab Issues](https://gitlab.gridfinity.com/jeff/vlarn/-/issues)
 
-- Alternately, you may contact the current maintainer — Jeffrey Johnson
-  \<[jhj@trnsz.com](mailto:jhj@trnsz.com)\> — with any bug reports or questions.
+- Alternately, you may contact the VLarn maintainer, Jeffrey H. Johnson
+  \<[jhj@trnsz.com](mailto:jhj@trnsz.com)\>, with bug reports or questions.
   Please include '_VLarn_' in the Subject line.
 
-## Branding
+## Name and Branding
 
 To avoid user confusion or version clashes with other _Larn_/_ULarn_
 derivatives, the next release of _VLarn_ will be **VLarn 5.0**.
 
-This release will incorporate changes and additions from Josh Bressers' _ULarn
-1.7_, as well as Nathan Tenny's '_Variant ULarn_' release 1.5.4.
+This future release will incorporate changes and additions from Josh Bressers'
+_ULarn 1.7_, as well as Nathan Tenny's '_Variant ULarn_' release 1.5.4.
 
-## New features in VLarn 5
+## New features in VLarn 5-alpha
 
 - Adjusted maps to not require diagonal movements.
 - Extended time limits
@@ -68,6 +68,7 @@ This release will incorporate changes and additions from Josh Bressers' _ULarn
 - Removed Dealer McDope's pad
 - Negative score prevention
 - Various bits of code clean-up
+- Default to ncurses (legacy curses remains supported)
 
 ## New features in ULarn 1.6 Patchlevel 3a
 

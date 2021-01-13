@@ -57,18 +57,18 @@
  */
 static void greedy(void)
 {
-  if (wizard)
-    return;
+	if (wizard)
+		return;
 
-  Print("\n\nI am so sorry but your character is a little TOO good!  Since this\n");
-  Print("cannot normally happen from an honest game, I must assume that you cheated.\n");
-  Print("Since you are GREEDY as well as a CHEATER, I cannot allow this game\n");
-  Print("to continue.\n");
-  nap(5000);
-  cheat = 1;
-  c[GOLD] = c[BANKACCOUNT] = 0;
-  died(DIED_GREEDY_CHEATER, 0);
-  return;
+	Print("\n\nI am so sorry but your character is a little TOO good!  Since this\n");
+	Print("cannot normally happen from an honest game, I must assume that you cheated.\n");
+	Print("Since you are GREEDY as well as a CHEATER, I cannot allow this game\n");
+	Print("to continue.\n");
+	nap(5000);
+	cheat = 1;
+	c[GOLD] = c[BANKACCOUNT] = 0;
+	died(DIED_GREEDY_CHEATER, 0);
+	return;
 }
 
 /* =============================================================================
@@ -89,14 +89,14 @@ static void greedy(void)
  */
 static void fsorry(void)
 {
-  if (cheat)
-    return;
+	if (cheat)
+		return;
 
-  Print("\nSorry but your savefile has been altered.\n");
-  Print("However, since I am a good sport, I will let you play.\n");
-  Print("Be advised, though, that you won't be placed on the scoreboard.");
-  cheat = 1;
-  nap(4000);
+	Print("\nSorry but your savefile has been altered.\n");
+	Print("However, since I am a good sport, I will let you play.\n");
+	Print("Be advised, though, that you won't be placed on the scoreboard.");
+	cheat = 1;
+	nap(4000);
 }
 
 
@@ -117,19 +117,19 @@ static void fsorry(void)
  */
 static void fcheat(void)
 {
-  if (wizard)
-    return;
-  if (cheat)
-    return;
+	if (wizard)
+		return;
+	if (cheat)
+		return;
 
-  Print("\nSorry but your savefile can't be deleted.  This can only mean\n");
-  Print("that you tried to CHEAT by protecting the directory the savefile\n");
-  Print("is in.  Since this is unfair to the rest of the VLarn community, I\n");
-  Print("cannot let you play this game.\n");
-  nap(5000);
-  c[GOLD] = c[BANKACCOUNT] = 0;
-  died(DIED_PROTECTED_SAVE_FILE, 0);
-  return;
+	Print("\nSorry but your savefile can't be deleted.  This can only mean\n");
+	Print("that you tried to CHEAT by protecting the directory the savefile\n");
+	Print("is in.  Since this is unfair to the rest of the VLarn community, I\n");
+	Print("cannot let you play this game.\n");
+	nap(5000);
+	c[GOLD] = c[BANKACCOUNT] = 0;
+	died(DIED_PROTECTED_SAVE_FILE, 0);
+	return;
 }
 
 /* =============================================================================
@@ -141,44 +141,43 @@ static void fcheat(void)
  */
 int savegame(char *fname)
 {
-  FILE *fp;
+	FILE *fp;
 
-  nosignal = 1;
+	nosignal = 1;
 
-  /* Save the current level to storage */
-  savelevel();
+	/* Save the current level to storage */
+	savelevel();
 
-  /* make sure the interest on bank deposits is up to date */
-  ointerest();
+	/* make sure the interest on bank deposits is up to date */
+	ointerest();
 
-  /*
-   * try and create the save file
-   */
-  fp = fopen(fname, "wb");
+	/*
+	 * try and create the save file
+	 */
+	fp = fopen(fname, "wb");
 
-  if (fp == NULL)
-  {
-    Printf("Can't open file <%s> to save game\n", fname);
-    nosignal = 0;
-    return(-1);
-  }
+	if (fp == NULL) {
+		Printf("Can't open file <%s> to save game\n", fname);
+		nosignal = 0;
+		return -1;
+	}
 
-  FileSum = 0;
+	FileSum = 0;
 
-  write_player(fp);
-  write_levels(fp);
-  write_store(fp);
-  write_monster_data(fp);
-  write_spheres(fp);
+	write_player(fp);
+	write_levels(fp);
+	write_store(fp);
+	write_monster_data(fp);
+	write_spheres(fp);
 
-  /* file sum */
-  bwrite(fp, (char *) &FileSum, sizeof(FileSum));
+	/* file sum */
+	bwrite(fp, (char *)&FileSum, sizeof(FileSum));
 
-  fclose(fp);
+	fclose(fp);
 
-  nosignal = 0;
+	nosignal = 0;
 
-  return(0);
+	return 0;
 }
 
 /* =============================================================================
@@ -186,103 +185,84 @@ int savegame(char *fname)
  */
 void restoregame(char *fname)
 {
-  int i;
-  unsigned int thesum;
-  unsigned int asum;
-  int TotalAttr;
-  FILE *fp;
+	int i;
+	unsigned int thesum;
+	unsigned int asum;
+	int TotalAttr;
+	FILE *fp;
 
-  fp = fopen(fname, "rb");
+	fp = fopen(fname, "rb");
 
-  if (fp == NULL)
-  {
-    Printf("Can't open file <%s> to restore game\n", fname);
-    nap(4000);
-    c[GOLD] = c[BANKACCOUNT] = 0;
-    died(DIED_MISSING_SAVE_FILE, 0);
-    return;
-  }
+	if (fp == NULL) {
+		Printf("Can't open file <%s> to restore game\n", fname);
+		nap(4000);
+		c[GOLD] = c[BANKACCOUNT] = 0;
+		died(DIED_MISSING_SAVE_FILE, 0);
+		return;
+	}
 
-  Printf(" Reading data...");
-  init_cells();
+	Printf(" Reading data...");
+	init_cells();
 
-  FileSum = 0;
+	FileSum = 0;
 
-  read_player(fp);
-  read_levels(fp);
-  read_store(fp);
-  read_monster_data(fp);
-  read_spheres(fp);
+	read_player(fp);
+	read_levels(fp);
+	read_store(fp);
+	read_monster_data(fp);
+	read_spheres(fp);
 
-  /* sum of everything so far */
-  thesum = FileSum;
+	/* sum of everything so far */
+	thesum = FileSum;
 
-  bread(fp, (char *)&asum, sizeof(asum));
-  if (asum != thesum)
-  {
-    fsorry();
-  }
+	bread(fp, (char *)&asum, sizeof(asum));
+	if (asum != thesum)
+		fsorry();
 
-  fclose(fp);
+	fclose(fp);
 
-  lastpx = 0;
-  lastpy = 0;
+	lastpx = 0;
+	lastpy = 0;
 
-  if (strcmp(fname, ckpfile) == 0)
-  {
-    fp = fopen(fname, "ab+");
+	if (strcmp(fname, ckpfile) == 0) {
+		fp = fopen(fname, "ab+");
 
-    if (fp == NULL)
-    {
-      /*
-       * Hmmm. We should be able to write to this file, something fishy
-       * is going on.
-       */
-      fcheat();
-    }
-    else
-    {
-      fclose(fp);
-    }
-  }
-  else if (unlink(fname) == -1)
-  {
-    /* can't unlink save file */
-    fcheat();
-  }
+		if (fp == NULL)
+			/*
+			 * Hmmm. We should be able to write to this file, something fishy
+			 * is going on.
+			 */
+			fcheat();
+		else
+			fclose(fp);
+	}else if (unlink(fname) == -1)
+		/* can't unlink save file */
+		fcheat();
 
-  /*  for the greedy cheater checker  */
-  TotalAttr = 0;
-  for (i = ABILITY_FIRST ; i < ABILITY_LAST ; i++)
-  {
-    TotalAttr += c[i];
-    if (c[i] > 300)
-    {
-      greedy();
-    }
-  }
-  
-  if (TotalAttr > 600)
-  {
-    greedy();
-  }
+	/*  for the greedy cheater checker  */
+	TotalAttr = 0;
+	for (i = ABILITY_FIRST; i < ABILITY_LAST; i++) {
+		TotalAttr += c[i];
+		if (c[i] > 300)
+			greedy();
+	}
 
-  if ((c[HPMAX] > 999) || (c[SPELLMAX] > 125))
-  {
-    greedy();
-  }
+	if (TotalAttr > 600)
+		greedy();
 
-  /* XP has been boosted in the save file, so fix character level */
-  if ((c[LEVEL] == 25) && (c[EXPERIENCE] > skill[24]))
-  {
-    long tmp_xp = c[EXPERIENCE]-skill[24]; /* amount to go up */
-    c[EXPERIENCE] = skill[24];
-    raiseexperience((long) tmp_xp);
-  }
+	if ((c[HPMAX] > 999) || (c[SPELLMAX] > 125))
+		greedy();
 
-  /* Get the current dungeon level from storage */
+	/* XP has been boosted in the save file, so fix character level */
+	if ((c[LEVEL] == 25) && (c[EXPERIENCE] > skill[24])) {
+		long tmp_xp = c[EXPERIENCE] - skill[24]; /* amount to go up */
+		c[EXPERIENCE] = skill[24];
+		raiseexperience((long)tmp_xp);
+	}
 
-  getlevel();
+	/* Get the current dungeon level from storage */
+
+	getlevel();
 
 }
 

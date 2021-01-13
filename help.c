@@ -49,11 +49,10 @@
 /*
  * Help file escape sequence states.
  */
-typedef enum
-{
-  HELP_NORMAL,
-  HELP_ESC,
-  HELP_COUNT
+typedef enum {
+	HELP_NORMAL,
+	HELP_ESC,
+	HELP_COUNT
 } HelpStateType;
 
 /*
@@ -79,14 +78,14 @@ static FILE *help_fp;
  *
  *   None.
  */
-static void retcont (void)
+static void retcont(void)
 {
-  MoveCursor(1, 24);
-  Print("Press ");
-  Standout("return");
-  Print(" to continue: ");
+	MoveCursor(1, 24);
+	Print("Press ");
+	Standout("return");
+	Print(" to continue: ");
 
-  get_prompt_input("", "\015\033", 0);
+	get_prompt_input("", "\015\033", 0);
 }
 
 /* =============================================================================
@@ -104,19 +103,18 @@ static void retcont (void)
  *
  *   The number of pages in the help file as specified by the first character.
  */
-static int openhelp (void)
+static int openhelp(void)
 {
-  help_fp = fopen(helpfile, "r");
+	help_fp = fopen(helpfile, "r");
 
-  if (help_fp == NULL)
-  {
-    Printf("Can't open help file \"%s\" ", helpfile);
+	if (help_fp == NULL) {
+		Printf("Can't open help file \"%s\" ", helpfile);
 
-    nap(4000);
-    return -1;
-  }
+		nap(4000);
+		return -1;
+	}
 
-  return (fgetc(help_fp) - '0');
+	return fgetc(help_fp) - '0';
 }
 
 /* =============================================================================
@@ -135,77 +133,63 @@ static int openhelp (void)
  */
 static void show_help_page(void)
 {
-  HelpStateType state;
-  int line;
-  int line_len;
-  int line_pos;
-  char tmbuf[128];
+	HelpStateType state;
+	int line;
+	int line_len;
+	int line_pos;
+	char tmbuf[128];
 
-  ClearText();
+	ClearText();
 
-  for (line = 0; line < 23 ; line++)
-  {
-    fgets(tmbuf, 128, help_fp);
+	for (line = 0; line < 23; line++) {
+		fgets(tmbuf, 128, help_fp);
 
-    line_len = strlen(tmbuf);
+		line_len = strlen(tmbuf);
 
-    state = HELP_NORMAL;
+		state = HELP_NORMAL;
 
-    line_pos = 0;
-    while (line_pos < line_len)
-    {
-      switch (state)
-      {
-        case HELP_NORMAL:
-          if ((tmbuf[line_pos] == '^') &&
-              ((line_pos + 3) < line_len))
-          {
-            if ((tmbuf[line_pos + 1] == '[') &&
-                (tmbuf[line_pos + 2] == '['))
-            {
-              state = HELP_ESC;
-              line_pos += 3;
-            }
-          }
+		line_pos = 0;
+		while (line_pos < line_len) {
+			switch (state) {
+			case HELP_NORMAL:
+				if ((tmbuf[line_pos] == '^') &&
+				    ((line_pos + 3) < line_len)) {
+					if ((tmbuf[line_pos + 1] == '[') &&
+					    (tmbuf[line_pos + 2] == '[')) {
+						state = HELP_ESC;
+						line_pos += 3;
+					}
+				}
 
-          if (state == HELP_NORMAL)
-          {
-            Printc(tmbuf[line_pos]);
-            line_pos++;
-          }
-          break;
+				if (state == HELP_NORMAL) {
+					Printc(tmbuf[line_pos]);
+					line_pos++;
+				}
+				break;
 
-        case HELP_ESC:
-          if (tmbuf[line_pos] == '7')
-          {
-            SetFormat(FORMAT_STANDOUT);
-            line_pos++;
-          }
-          else if (tmbuf[line_pos] == '8')
-          {
-            SetFormat(FORMAT_STANDOUT2);
-            line_pos++;
-          }
-          else if (tmbuf[line_pos] == '9')
-          {
-            SetFormat(FORMAT_STANDOUT3);
-            line_pos++;
-          }
-          else if (tmbuf[line_pos] == 'm')
-          {
-            SetFormat(FORMAT_NORMAL);
-          }
+			case HELP_ESC:
+				if (tmbuf[line_pos] == '7') {
+					SetFormat(FORMAT_STANDOUT);
+					line_pos++;
+				}else if (tmbuf[line_pos] == '8') {
+					SetFormat(FORMAT_STANDOUT2);
+					line_pos++;
+				}else if (tmbuf[line_pos] == '9') {
+					SetFormat(FORMAT_STANDOUT3);
+					line_pos++;
+				}else if (tmbuf[line_pos] == 'm')
+					SetFormat(FORMAT_NORMAL);
 
-          line_pos++;
-          state = HELP_NORMAL;
-          break;
+				line_pos++;
+				state = HELP_NORMAL;
+				break;
 
-        default:
-          break;
-      }
+			default:
+				break;
+			}
 
-    }
-  }
+		}
+	}
 
 }
 
@@ -216,83 +200,77 @@ static void show_help_page(void)
 /* =============================================================================
  * FUNCTION: help
  */
-void help (void)
+void help(void)
 {
-  int num_pages;
-  int page;
-  int i;
-  char tmbuf[128];
+	int num_pages;
+	int page;
+	int i;
+	char tmbuf[128];
 
-  set_display(DISPLAY_TEXT);
+	set_display(DISPLAY_TEXT);
 
-  /* open the help file and get # pages */
-  num_pages = openhelp();
+	/* open the help file and get # pages */
+	num_pages = openhelp();
 
-  if (num_pages < 0)
-  {
-    set_display(DISPLAY_MAP);
-    return;
-  }
+	if (num_pages < 0) {
+		set_display(DISPLAY_MAP);
+		return;
+	}
 
-  /* skip over intro message */
-  for (i = 0; i < 23 ; i++)
-  {
-    fgets(tmbuf, 128, help_fp);
-  }
+	/* skip over intro message */
+	for (i = 0; i < 23; i++)
+		fgets(tmbuf, 128, help_fp);
 
-  for (page = num_pages ; page > 0 ; page--)
-  {
-    show_help_page();
+	for (page = num_pages; page > 0; page--) {
+		show_help_page();
 
-    /* intercept ESC's */
-    if (page > 1)
-    {
-      Print("    ---- Press ");
-      Standout("return");
-      Print(" to exit, ");
-      Standout("space");
-      Print(" for more help ---- ");
+		/* intercept ESC's */
+		if (page > 1) {
+			Print("    ---- Press ");
+			Standout("return");
+			Print(" to exit, ");
+			Standout("space");
+			Print(" for more help ---- ");
 
-      i = get_prompt_input("", " \015\033", 0);
+			i = get_prompt_input("", " \015\033", 0);
 
-      if ((i == '\015') || (i == ESC))
-      {
-        fclose(help_fp);
-        set_display(DISPLAY_MAP);
+			if ((i == '\015') || (i == ESC)) {
+				fclose(help_fp);
+				set_display(DISPLAY_MAP);
 
-        return;
-      }
-    }
-  }
+				return;
+			}
+		}
+	}
 
-  fclose(help_fp);
-  retcont();
+	fclose(help_fp);
+	retcont();
 
-  set_display(DISPLAY_MAP);
+	set_display(DISPLAY_MAP);
 
 }
 
 /* =============================================================================
  * FUNCTION: welcome
  */
-void welcome (void)
+void welcome(void)
 {
-  int num_pages;
+	int num_pages;
 
-  set_display(DISPLAY_TEXT);
+	set_display(DISPLAY_TEXT);
 
-  /* open the help file */
-  num_pages = openhelp();
-  if (num_pages < 0) return;
+	/* open the help file */
+	num_pages = openhelp();
+	if (num_pages < 0) return;
 
-  show_help_page();
+	show_help_page();
 
-  fclose(help_fp);
+	fclose(help_fp);
 
-  /* press return to continue */
-  retcont();
+	/* press return to continue */
+	retcont();
 
-  set_display(DISPLAY_MAP);
+	set_display(DISPLAY_MAP);
 
 
 }

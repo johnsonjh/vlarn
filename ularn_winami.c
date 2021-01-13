@@ -1,6 +1,6 @@
 /* =============================================================================
  * PROGRAM:  ularn
- * FILENAME: ularn_win.c
+ * FILENAME: ularn_winami.c
  *
  * DESCRIPTION:
  * This module contains all operating system dependant code for input and
@@ -8,7 +8,7 @@
  * Each version of ularn should provide a different implementation of this
  * module.
  *
- * This is the Windows 32 window display and input module.
+ * This is the Amiga window display and input module.
  *
  * =============================================================================
  * EXPORTED VARIABLES
@@ -51,34 +51,52 @@
  * magic_effect_frames    : Get the number of animation frames in a magic fx
  * magic_effect           : Draw a frame in a magic fx
  * nap                    : Delay for a specified number of milliseconds
- * GetUser                : Get teh username and user id.
+ * GetUser                : Get the username and user id.
  *
  * =============================================================================
  */
 
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
-#include <X11/xpm.h>
 #include <stdio.h>
 #include <stdarg.h>
 
-#include "cursor.bm"
+#include <intuition/intuitionbase.h>
+#include <intuition/intuition.h>
+#include <intuition/screens.h>
+#include <graphics/gfxbase.h>
+#include <graphics/modeid.h>
+#include <proto/exec.h>
+#include <proto/asl.h>
+#include <proto/intuition.h>
+#include <proto/graphics.h>
+#include <proto/diskfont.h>
 
 #include "header.h"
 #include "ularn_game.h"
-
-#include "x11_simple_menu.h"
 
 #include "config.h"
 #include "dungeon.h"
 #include "player.h"
 #include "ularn_win.h"
+#include "ularnpc.rh"
 #include "monster.h"
 #include "itm.h"
 
+#include "ifftools.h"
+#include "smart_menu.h"
+
+//
+// Defines for windows
+//
+#define BLACK_PEN 0
+#define RED_PEN   1
+#define GREEN_PEN 2
+#define BLUE_PEN  3
+#define DARK_PEN  252
+#define MID_PEN   253
+#define LIGHT_PEN 254
+#define WHITE_PEN 255
+
 // Default size of the ularn window in characters
-#define WINDOW_WIDTH    80
-#define WINDOW_HEIGHT   25
 #define SEPARATOR_WIDTH   8
 #define SEPARATOR_HEIGHT  8
 #define BORDER_SIZE       8
@@ -98,10 +116,13 @@ int yrepcount = 0;
  * Local variables
  */
 
+extern void Delay(long TickCount);
+
 #define M_NONE 0
 #define M_SHIFT 1
 #define M_CTRL  2
-#define M_ASCII 255
+#define M_NUMPAD 4
+#define M_ASCII 8
 
 #define MAX_KEY_BINDINGS 3
 
@@ -127,296 +148,116 @@ static ActionType DirActions[NUM_DIRS] =
 /* Allow up to MAX_KEY_BINDINGS per action */
 static struct KeyCodeType KeyMap[ACTION_COUNT][MAX_KEY_BINDINGS] =
 {
-	{ { 0,	  0	  },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_NULL
-	{ { '~',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_DIAG
-	{ { 'h',  M_ASCII },	     { XK_KP_Left,	M_NONE	   },  { XK_Left,  M_NONE } },  // ACTION_MOVE_WEST
-	{ { 'H',  M_ASCII },	     { XK_Left,		M_SHIFT	   },  { 0,	   0	  } },  // ACTION_RUN_WEST
-	{ { 'l',  M_ASCII },	     { XK_KP_Right,	M_NONE	   },  { XK_Right, M_NONE } },  // ACTION_MOVE_EAST,
-	{ { 'L',  M_ASCII },	     { XK_Right,	M_SHIFT	   },  { 0,	   0	  } },  // ACTION_RUN_EAST,
-	{ { 'j',  M_ASCII },	     { XK_KP_Down,	M_NONE	   },  { XK_Down,  M_NONE } },  // ACTION_MOVE_SOUTH,
-	{ { 'J',  M_ASCII },	     { XK_Down,		M_SHIFT	   },  { 0,	   0	  } },  // ACTION_RUN_SOUTH,
-	{ { 'k',  M_ASCII },	     { XK_KP_Up,	M_NONE	   },  { XK_Up,	   M_NONE } },  // ACTION_MOVE_NORTH,
-	{ { 'K',  M_ASCII },	     { XK_Up,		M_SHIFT	   },  { 0,	   0	  } },  // ACTION_RUN_NORTH,
-	{ { 'u',  M_ASCII },	     { XK_KP_Page_Up,	M_NONE	   },  { XK_Prior, M_NONE } },  // ACTION_MOVE_NORTHEAST,
-	{ { 'U',  M_ASCII },	     { XK_Prior,	M_SHIFT	   },  { 0,	   0	  } },  // ACTION_RUN_NORTHEAST,
-	{ { 'y',  M_ASCII },	     { XK_KP_Home,	M_NONE	   },  { XK_Home,  M_NONE } },  // ACTION_MOVE_NORTHWEST,
-	{ { 'Y',  M_ASCII },	     { XK_Home,		M_SHIFT	   },  { 0,	   0	  } },  // ACTION_RUN_NORTHWEST,
-	{ { 'n',  M_ASCII },	     { XK_KP_Page_Down, M_NONE	   },  { XK_Next,  M_NONE } },  // ACTION_MOVE_SOUTHEAST,
-	{ { 'N',  M_ASCII },	     { XK_Next,		M_SHIFT	   },  { 0,	   0	  } },  // ACTION_RUN_SOUTHEAST,
-	{ { 'b',  M_ASCII },	     { XK_KP_End,	M_NONE	   },  { XK_End,   M_NONE } },  // ACTION_MOVE_SOUTHWEST,
-	{ { 'B',  M_ASCII },	     { XK_End,		M_SHIFT	   },  { 0,	   0	  } },  // ACTION_RUN_SOUTHWEST,
-	{ { '.',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_WAIT,
-	{ { ' ',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_NONE,
-	{ { 'w',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_WIELD,
-	{ { 'W',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_WEAR,
-	{ { 'r',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_READ,
-	{ { 'q',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_QUAFF,
-	{ { 'd',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_DROP,
-	{ { 'c',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_CAST_SPELL,
-	{ { 'o',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_OPEN_DOOR
-	{ { 'C',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_CLOSE_DOOR,
-	{ { 'O',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_OPEN_CHEST
-	{ { 'i',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_INVENTORY,
-	{ { 'e',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_EAT_COOKIE,
-	{ { '\\', M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_LIST_SPELLS,
-	{ { '?',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_HELP,
-	{ { 'S',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_SAVE,
-	{ { 'Z',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_TELEPORT,
-	{ { '^',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_IDENTIFY_TRAPS,
-	{ { '_',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_BECOME_CREATOR,
-	{ { '+',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_CREATE_ITEM,
-	{ { '-',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_TOGGLE_WIZARD,
-	{ { '`',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_DEBUG_MODE,
-	{ { 'T',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_REMOVE_ARMOUR,
-	{ { 'g',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_PACK_WEIGHT,
-	{ { 'v',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_VERSION,
-	{ { 'Q',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_QUIT,
-	{ { 'r',  M_CTRL  },	     { 0,		0	   },  { 0,	   0	  } },  // ACTION_REDRAW_SCREEN,
-	{ { 'P',  M_ASCII },	     { 0,		0	   },  { 0,	   0	  } } // ACTION_SHOW_TAX
+	{ { 0,	  0	  },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_NULL
+	{ { '~',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_DIAG
+	{ { 'h',  M_ASCII },	     { 0x4f, M_NONE		}, { '4', M_NUMPAD	     } },       // ACTION_MOVE_WEST
+	{ { 'H',  M_ASCII },	     { 0x4f, M_SHIFT		}, { '4', M_NUMPAD | M_SHIFT } },       // ACTION_RUN_WEST
+	{ { 'l',  M_ASCII },	     { 0x4e, M_NONE		}, { '6', M_NUMPAD	     } },       // ACTION_MOVE_EAST,
+	{ { 'L',  M_ASCII },	     { 0x4e, M_SHIFT		}, { '6', M_NUMPAD | M_SHIFT } },       // ACTION_RUN_EAST,
+	{ { 'j',  M_ASCII },	     { 0x4d, M_NONE		}, { '2', M_NUMPAD	     } },       // ACTION_MOVE_SOUTH,
+	{ { 'J',  M_ASCII },	     { 0x4d, M_SHIFT		}, { '2', M_NUMPAD | M_SHIFT } },       // ACTION_RUN_SOUTH,
+	{ { 'k',  M_ASCII },	     { 0x4c, M_NONE		}, { '8', M_NUMPAD	     } },       // ACTION_MOVE_NORTH,
+	{ { 'K',  M_ASCII },	     { 0x4c, M_SHIFT		}, { '8', M_NUMPAD | M_SHIFT } },       // ACTION_RUN_NORTH,
+	{ { 'u',  M_ASCII },	     { '9',  M_NUMPAD		}, { 0,	  0		     } },       // ACTION_MOVE_NORTHEAST,
+	{ { 'U',  M_ASCII },	     { '9',  M_NUMPAD | M_SHIFT }, { 0,	  0		     } },       // ACTION_RUN_NORTHEAST,
+	{ { 'y',  M_ASCII },	     { '7',  M_NUMPAD		}, { 0,	  0		     } },       // ACTION_MOVE_NORTHWEST,
+	{ { 'Y',  M_ASCII },	     { '7',  M_NUMPAD | M_SHIFT }, { 0,	  0		     } },       // ACTION_RUN_NORTHWEST,
+	{ { 'n',  M_ASCII },	     { '3',  M_NUMPAD		}, { 0,	  0		     } },       // ACTION_MOVE_SOUTHEAST,
+	{ { 'N',  M_ASCII },	     { '3',  M_NUMPAD | M_SHIFT }, { 0,	  0		     } },       // ACTION_RUN_SOUTHEAST,
+	{ { 'b',  M_ASCII },	     { '1',  M_NUMPAD		}, { 0,	  0		     } },       // ACTION_MOVE_SOUTHWEST,
+	{ { 'B',  M_ASCII },	     { '1',  M_NUMPAD | M_SHIFT }, { 0,	  0		     } },       // ACTION_RUN_SOUTHWEST,
+	{ { '.',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_WAIT,
+	{ { ' ',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_NONE,
+	{ { 'w',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_WIELD,
+	{ { 'W',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_WEAR,
+	{ { 'r',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_READ,
+	{ { 'q',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_QUAFF,
+	{ { 'd',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_DROP,
+	{ { 'c',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_CAST_SPELL,
+	{ { 'o',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_OPEN_DOOR,
+	{ { 'C',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_CLOSE_DOOR,
+	{ { 'O',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_OPEN_CHEST,
+	{ { 'i',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_INVENTORY,
+	{ { 'e',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_EAT_COOKIE,
+	{ { '\\', M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_LIST_SPELLS,
+	{ { '?',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_HELP,
+	{ { 'S',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_SAVE,
+	{ { 'Z',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_TELEPORT,
+	{ { '^',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_IDENTIFY_TRAPS,
+	{ { '_',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_BECOME_CREATOR,
+	{ { '+',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_CREATE_ITEM,
+	{ { '-',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_TOGGLE_WIZARD,
+	{ { '`',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_DEBUG_MODE,
+	{ { 'T',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_REMOVE_ARMOUR,
+	{ { 'g',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_PACK_WEIGHT,
+	{ { 'v',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_VERSION,
+	{ { 'Q',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_QUIT,
+	{ { 0x12, M_ASCII },	     { 0,    0			}, { 0,	  0		     } },       // ACTION_REDRAW_SCREEN,
+	{ { 'P',  M_ASCII },	     { 0,    0			}, { 0,	  0		     } } // ACTION_SHOW_TAX
 };
 
-static struct KeyCodeType RunKeyMap = { XK_KP_Begin, M_NONE };
-
+static struct KeyCodeType RunKeyMap = { '5', M_NUMPAD };
 
 //
-// Variables for X11
+// Amiga stuff
 //
 
-#define MENU_GAME_SAVE        101
-#define MENU_GAME_QUIT        102
+struct IntuitionBase *IntuitionBase = NULL;
+struct GfxBase *GfxBase = NULL;
+struct Library *AslBase = NULL;
 
-#define MENU_ACTION_WAIT      201
-#define MENU_ACTION_WIELD     202
-#define MENU_ACTION_WEAR      203
-#define MENU_ACTION_TAKEOFF   204
-#define MENU_ACTION_QUAFF     205
-#define MENU_ACTION_READ      206
-#define MENU_ACTION_CAST      207
-#define MENU_ACTION_EAT       208
-#define MENU_ACTION_DROP      209
-#define MENU_ACTION_CLOSEDOOR 210
+struct Screen *UlarnScreen = NULL;
+struct Window *UlarnWindow = NULL;
+struct RastPort *UlarnRP = NULL;
 
-#define MENU_SHOW_DISCOVERIES 301
-#define MENU_SHOW_INVENTORY   302
-#define MENU_SHOW_TAX         303
-#define MENU_SHOW_PACKWEIGHT  304
+static struct BitMap *UlarnGfx = NULL;
+static ULONG UlarnPalette[256];
 
-#define MENU_DISPLAY_REDRAW   401
-#define MENU_DISPLAY_BEEP     402
-#define MENU_DISPLAY_FONT     403
-
-#define MENU_HELP_HELP        501
-#define MENU_HELP_VERSION     502
-#define MENU_HELP_ABOUT       503
-
-/* Help menu definitions */
-
-struct XMENU_Item Help_About_Item = /* unused */
+static struct TextAttr UlarnTextAttr =
 {
-	"About", MENU_HELP_ABOUT,  XMENU_UNCHECKED, NULL
+	"topaz.font",
+	8,
+	0,
+	NULL
 };
 
-struct XMENU_Item Help_Version_Item =
-{
-	"Version", MENU_HELP_VERSION,  XMENU_UNCHECKED, NULL
+static struct TextFont *UlarnFont = NULL;
+
+UWORD UlarnPens[NUMDRIPENS + 1] =
+{ 255,          // DETAILPEN
+  253,          // BLOCKPEN
+  255,          // TEXTPEN
+  254,          // SHINEPEN
+  252,          // SHADOWPEN
+  1,            // FILLPEN
+  2,            // FILLTEXTPEN
+  253,          // BACKGROUNDPEN
+  0,            // HIGHLIGHTPEN
+  255,          // BARDETAILPEN
+  253,          // PARBLOCKPEN
+  252,          // BARTRIMPEN
+  0xFFFF        // Terminator
 };
 
-struct XMENU_Item Help_Help_Item =
-{
-	"Help", MENU_HELP_HELP,	 XMENU_UNCHECKED, &Help_Version_Item
-};
-
-struct XMENU_Menu Help_Menu =
-{
-	"Help",
-	NULL,
-	&Help_Help_Item,
-	0,		0,0, 0
-};
-
-/* Display menu definitions */
-
-struct XMENU_Item Display_Font_Item = /* unused */
-{
-	"Font", MENU_DISPLAY_FONT,  XMENU_UNCHECKED, NULL
-};
-
-struct XMENU_Item Display_Beep_Item =
-{
-	"Beep", MENU_DISPLAY_BEEP,  XMENU_UNCHECKED, NULL
-};
-
-struct XMENU_Item Display_Redraw_Item =
-{
-	"Redraw", MENU_DISPLAY_REDRAW,	XMENU_UNCHECKED, &Display_Beep_Item
-};
-
-struct XMENU_Menu Display_Menu =
-{
-	"Display",
-	&Help_Menu,
-	&Display_Redraw_Item,
-	0,		     0,0, 0
-};
-
-/* Show menu definitions */
-
-struct XMENU_Item Show_Packweight_Item =
-{
-	"Pack weight", MENU_SHOW_PACKWEIGHT,  XMENU_UNCHECKED, NULL
-};
-
-struct XMENU_Item Show_Tax_Item =
-{
-	"Tax", MENU_SHOW_TAX,  XMENU_UNCHECKED, &Show_Packweight_Item
-};
-
-struct XMENU_Item Show_Inventory_Item =
-{
-	"Inventory", MENU_SHOW_INVENTORY,  XMENU_UNCHECKED, &Show_Tax_Item
-};
-
-struct XMENU_Item Show_Discoveries_Item =
-{
-	"Discoveries", MENU_SHOW_DISCOVERIES,  XMENU_UNCHECKED, &Show_Inventory_Item
-};
-
-struct XMENU_Menu Show_Menu =
-{
-	"Show",
-	&Display_Menu,
-	&Show_Discoveries_Item,
-	0,		       0,0, 0
-};
-
-/* Action Menu definitions */
-
-struct XMENU_Item Action_Closedoor_Item =
-{
-	"Close door", MENU_ACTION_CLOSEDOOR,  XMENU_UNCHECKED, NULL
-};
-
-struct XMENU_Item Action_Drop_Item =
-{
-	"Drop", MENU_ACTION_DROP,  XMENU_UNCHECKED, &Action_Closedoor_Item
-};
-
-struct XMENU_Item Action_Eat_Item =
-{
-	"Eat", MENU_ACTION_EAT,	 XMENU_UNCHECKED, &Action_Drop_Item
-};
-
-struct XMENU_Item Action_Cast_Item =
-{
-	"Cast", MENU_ACTION_CAST,  XMENU_UNCHECKED, &Action_Eat_Item
-};
-
-struct XMENU_Item Action_Read_Item =
-{
-	"Read", MENU_ACTION_READ,  XMENU_UNCHECKED, &Action_Cast_Item
-};
-
-struct XMENU_Item Action_Quaff_Item =
-{
-	"Quaff", MENU_ACTION_QUAFF,  XMENU_UNCHECKED, &Action_Read_Item
-};
-
-struct XMENU_Item Action_Takeoff_Item =
-{
-	"Take off", MENU_ACTION_TAKEOFF,  XMENU_UNCHECKED, &Action_Quaff_Item
-};
-
-struct XMENU_Item Action_Wear_Item =
-{
-	"Wear", MENU_ACTION_WEAR,  XMENU_UNCHECKED, &Action_Takeoff_Item
-};
-
-struct XMENU_Item Action_Wield_Item =
-{
-	"Wield", MENU_ACTION_WIELD,  XMENU_UNCHECKED, &Action_Wear_Item
-};
-
-struct XMENU_Item Action_Wait_Item =
-{
-	"Wait", MENU_ACTION_WAIT,  XMENU_UNCHECKED, &Action_Wield_Item
-};
-
-struct XMENU_Menu Action_Menu =
-{
-	"Action",
-	&Show_Menu,
-	&Action_Wait_Item,
-	0,		  0,0, 0
-};
-
-/* Game menu definitions */
-
-struct XMENU_Item Game_Quit_Item =
-{
-	"Quit", MENU_GAME_QUIT,	 XMENU_UNCHECKED, NULL
-};
-
-struct XMENU_Item Game_Save_Item =
-{
-	"Save", MENU_GAME_SAVE, XMENU_UNCHECKED, &Game_Quit_Item
-};
-
-struct XMENU_Menu Game_Menu =
-{
-	"Game",
-	&Action_Menu,
-	&Game_Save_Item,
-	0,		0,0, 0
-};
-
-int ularn_menu_height;
+//
+// Variables for windows
+//
 
 #define INITIAL_WIDTH 400
 #define INITIAL_HEIGHT 300
-
-static Display *display = NULL;
-
-static int screen_num;
-static int screen_width;
-static int screen_height;
-
-static Window root_window = None;
-
-static Window ularn_window = None;
-
-static GC ularn_gc = None;
-static XGCValues gc_values;
-static unsigned long gc_values_mask;
-
-static unsigned long white_pixel;
-static unsigned long black_pixel;
-
-static Colormap colormap;
-static XColor LtGrey;
-static XColor MidGrey;
-static XColor DkGrey;
-static XColor Red;
-static XColor Green;
-static XColor Blue;
-
-static XFontStruct *font_info;
-char * font_name = "*-courier-medium-r-*-12-*";
-
-static Pixmap TilePixmap = None;
-static Pixmap TilePShape = None;
-static XpmAttributes TileAttributes;
-
-static Pixmap CursorPixmap = None;
 
 static int CaretActive = 0;
 
 static int TileWidth = 32;
 static int TileHeight = 32;
-static int CharHeight;
-static int CharWidth;
-static int CharAscent;
+static int CharHeight = 8;
+static int CharWidth = 8;
+static int CharBaseline = 6;
+static int LarnWindowLeft = 0;
+static int LarnWindowTop = 0;
 static int LarnWindowWidth = INITIAL_WIDTH;
 static int LarnWindowHeight = INITIAL_HEIGHT;
+static int LarnWindowMaximized = 0;
 static int MinWindowWidth;
 static int MinWindowHeight;
 
@@ -426,10 +267,165 @@ static int GotChar;
 static char EventChar;
 
 //
+// Smartmenu structures and handling functions.
+//
+
+static void DoMenuSave(void)
+{
+	Event = ACTION_SAVE;
+}
+static void DoMenuQuit(void)
+{
+	Event = ACTION_QUIT;
+}
+
+static void DoMenuWait(void)
+{
+	Event = ACTION_WAIT;
+}
+static void DoMenuWield(void)
+{
+	Event = ACTION_WIELD;
+}
+static void DoMenuWear(void)
+{
+	Event = ACTION_WEAR;
+}
+static void DoMenuTakeoff(void)
+{
+	Event = ACTION_REMOVE_ARMOUR;
+}
+static void DoMenuQuaff(void)
+{
+	Event = ACTION_QUAFF;
+}
+static void DoMenuRead(void)
+{
+	Event = ACTION_READ;
+}
+static void DoMenuCast(void)
+{
+	Event = ACTION_CAST_SPELL;
+}
+static void DoMenuEat(void)
+{
+	Event = ACTION_EAT_COOKIE;
+}
+static void DoMenuDrop(void)
+{
+	Event = ACTION_DROP;
+}
+static void DoMenuClose(void)
+{
+	Event = ACTION_CLOSE_DOOR;
+}
+
+static void DoMenuDiscoveries(void)
+{
+	Event = ACTION_LIST_SPELLS;
+}
+static void DoMenuInventory(void)
+{
+	Event = ACTION_INVENTORY;
+}
+static void DoMenuTax(void)
+{
+	Event = ACTION_SHOW_TAX;
+}
+static void DoMenuPackweight(void)
+{
+	Event = ACTION_PACK_WEIGHT;
+}
+
+static void DoMenuRedraw(void)
+{
+	Event = ACTION_REDRAW_SCREEN;
+}
+static void DoMenuBeep(void)
+{
+	if (nobeep) nobeep = 0; else nobeep = 1;
+}
+
+static void DoMenuHelp(void)
+{
+	Event = ACTION_HELP;
+}
+static void DoMenuVersion(void)
+{
+	Event = ACTION_VERSION;
+}
+
+static struct SmartMenuItem UlarnGameMenu[3] =
+{
+	{ "Save", 'S', 255, 253, DoMenuSave, NULL },
+	{ "Quit", 'Q', 255, 253, DoMenuQuit, NULL },
+	{ NULL,	  0,   0,   0,	 NULL,	     NULL }
+};
+
+static struct SmartMenuItem UlarnCommandMenu[11] =
+{
+	{ "Wait",     0, 255, 253, DoMenuWait,	  NULL },
+	{ "Wield",    0, 255, 253, DoMenuWield,	  NULL },
+	{ "Wear",     0, 255, 253, DoMenuWear,	  NULL },
+	{ "Take off", 0, 255, 253, DoMenuTakeoff, NULL },
+	{ "Quaff",    0, 255, 253, DoMenuQuaff,	  NULL },
+	{ "Read",     0, 255, 253, DoMenuRead,	  NULL },
+	{ "Cast",     0, 255, 253, DoMenuCast,	  NULL },
+	{ "Eat",      0, 255, 253, DoMenuEat,	  NULL },
+	{ "Drop",     0, 255, 253, DoMenuDrop,	  NULL },
+	{ "Close",    0, 255, 253, DoMenuClose,	  NULL },
+	{ NULL,	      0, 0,   0,   NULL,	  NULL }
+};
+
+static struct SmartMenuItem UlarnShowMenu[5] =
+{
+	{ "Discoveries", 0, 255, 253, DoMenuDiscoveries, NULL },
+	{ "Inventory",	 0, 255, 253, DoMenuInventory,	 NULL },
+	{ "Tax",	 0, 255, 253, DoMenuTax,	 NULL },
+	{ "Pack weight", 0, 255, 253, DoMenuPackweight,	 NULL },
+	{ NULL,		 0, 0,	 0,   NULL,		 NULL }
+};
+
+static struct SmartMenuItem UlarnDisplayMenu[3] =
+{
+	{ "Redraw", 0, 255, 253, DoMenuRedraw, NULL },
+	{ "Beep",   0, 255, 253, DoMenuBeep,   NULL },
+	{ NULL,	    0, 0,   0,	 NULL,	       NULL }
+};
+
+static struct SmartMenuItem UlarnHelpMenu[3] =
+{
+	{ "Help",    0, 255, 253, DoMenuHelp,	 NULL },
+	{ "Version", 0, 255, 253, DoMenuVersion, NULL },
+	{ NULL,	     0, 0,   0,	  NULL,		 NULL }
+};
+
+static struct SmartMenu UlarnMenu[6] =
+{
+	{ "Game",     UlarnGameMenu	},
+	{ "Commands", UlarnCommandMenu	},
+	{ "Show",     UlarnShowMenu	},
+	{ "Display",  UlarnDisplayMenu	},
+	{ "Help",     UlarnHelpMenu	},
+	{ NULL,	      NULL		}
+};
+
+//
+// player id file
+//
+static char *PIDName = LIBDIR "/vlarn.pid";
+#define FIRST_PID 1001
+
+//
+// ularn.ini file for window position & font selection
+//
+static char *IniName = "vlarn.ini";
+
+//
 // Bitmaps for tiles
 //
 
-static char *TileFilename = LIBDIR "/vlarn_gfx.xpm";
+static char *TileBMName = LIBDIR "/vlarn_gfx.iff";
 
 /* Tiles for different character classes, (female, male) */
 static int PlayerTiles[8][2] =
@@ -598,8 +594,6 @@ DisplayModeType CurrentDisplayMode = DISPLAY_TEXT;
 //
 static int MapLeft;
 static int MapTop;
-static int MapAreaLeft;
-static int MapAreaTop;
 static int MapWidth;
 static int MapHeight;
 
@@ -675,7 +669,7 @@ static int TextCursorY = 1;
 // Generalised text buffer
 // Top left corner is x=1, y=1
 //
-static TextLine   *Text;
+static TextLine   *AText;
 static FormatLine *Format;
 static FormatType CurrentFormat;
 static int CursorX = 1;
@@ -689,7 +683,7 @@ static int THeight;
 //
 // The monster to use for showing mimics. Changes every 10 turns.
 //
-static int mimicmonst = MIMIC;
+static MonsterIdType mimicmonst = MIMIC;
 
 /* =============================================================================
  * Local functions
@@ -743,57 +737,6 @@ static int calc_scroll(void)
 	return (MapTileLeft != ox) || (MapTileTop != oy);
 }
 
-/* =============================================================================
- * FUNCTION: CalcMinWindowSize
- *
- * DESCRIPTION:
- * Calculate the minimum window size.
- * The new minimum windows size is stored in MinWindowWidth and MinWindowHeight.
- * If the current window size is smaller than this then it is resized.
- *
- * PARAMETERS:
- *
- *   None.
- *
- * RETURN VALUE:
- *
- *   None.
- */
-static void CalcMinWindowSize(void)
-{
-	XSizeHints size_hints;
-
-	CharWidth = font_info->max_bounds.width;
-	CharHeight = font_info->max_bounds.ascent + font_info->max_bounds.descent;
-	CharAscent = font_info->max_bounds.ascent;
-
-	MinWindowWidth =
-		WINDOW_WIDTH * CharWidth;
-	MinWindowHeight =
-		WINDOW_HEIGHT * CharHeight  +
-		2 * SEPARATOR_HEIGHT +
-		ularn_menu_height;
-
-	//
-	// Update the window size
-	//
-	if (MinWindowWidth > LarnWindowWidth)
-		LarnWindowWidth = MinWindowWidth;
-	if (MinWindowHeight > LarnWindowHeight)
-		LarnWindowHeight = MinWindowHeight;
-
-	size_hints.flags = PMinSize | PBaseSize;
-	size_hints.min_width = MinWindowWidth;
-	size_hints.min_height = MinWindowHeight;
-	size_hints.base_width = LarnWindowWidth;
-	size_hints.base_height = LarnWindowHeight;
-
-	XSetNormalHints(display, ularn_window, &size_hints);
-
-	XResizeWindow(display, ularn_window, LarnWindowWidth, LarnWindowHeight);
-
-}
-
 /*
  * Repaint flag to force redraw of everything, not just deltas
  */
@@ -807,7 +750,7 @@ static int Repaint = 0;
  *
  * PARAMETERS:
  *
- *   None.
+ *   DC : The device context for the painting
  *
  * RETURN VALUE:
  *
@@ -819,16 +762,18 @@ static void PaintStatus(void)
 	char Buf[81];
 	int i;
 
-	XSetForeground(display, ularn_gc, white_pixel);
-	XSetBackground(display, ularn_gc, black_pixel);
-	XSetFillStyle(display, ularn_gc, FillSolid);
+	if (Repaint) {
 
-	XFillRectangle(display, ularn_window, ularn_gc, StatusLeft, StatusTop, StatusWidth, StatusHeight);
+		SetAPen(UlarnRP, WHITE_PEN);
+		SetDrMd(UlarnRP, JAM1);
+		RectFill(UlarnRP,
+			 StatusLeft, StatusTop,
+			 StatusLeft + StatusWidth - 1, StatusTop + StatusHeight - 1);
 
+	}
 
-	XSetForeground(display, ularn_gc, black_pixel);
-	XSetBackground(display, ularn_gc, white_pixel);
-	XSetFillStyle(display, ularn_gc, FillSolid);
+	SetDrMd(UlarnRP, JAM2);
+	SetAPen(UlarnRP, BLACK_PEN);
 
 	//
 	// Build the top status line
@@ -858,11 +803,8 @@ static void PaintStatus(void)
 	sprintf(Buf, " Exp: %-9ld %s", c[EXPERIENCE], class[c[LEVEL] - 1]);
 	strcat(Line, Buf);
 
-	XDrawString(display, ularn_window, ularn_gc,
-		    StatusLeft,
-		    StatusTop + CharAscent,
-		    Line,
-		    strlen(Line));
+	Move(UlarnRP, StatusLeft, StatusTop + CharBaseline);
+	Text(UlarnRP, Line, strlen(Line));
 
 	//
 	// Format the second line of the status
@@ -889,11 +831,8 @@ static void PaintStatus(void)
 	sprintf(Buf, "  Gold: %-8ld", c[GOLD]);
 	strcat(Line, Buf);
 
-	XDrawString(display, ularn_window, ularn_gc,
-		    StatusLeft,
-		    StatusTop + CharHeight + CharAscent,
-		    Line,
-		    strlen(Line));
+	Move(UlarnRP, StatusLeft, StatusTop + CharHeight + CharBaseline);
+	Text(UlarnRP, Line, strlen(Line));
 
 	//
 	// Mark all character values as displayed.
@@ -901,7 +840,6 @@ static void PaintStatus(void)
 	c[TMP] = c[STRENGTH] + c[STREXTRA];
 	for (i = 0; i < 100; i++)
 		cbak[i] = c[i];
-
 }
 
 /* Effects strings */
@@ -937,7 +875,7 @@ static struct bot_side_def {
  *
  * PARAMETERS:
  *
- *   None.
+ *   DC : The DC to be painted.
  *
  * RETURN VALUE:
  *
@@ -950,12 +888,16 @@ static void PaintEffects(void)
 	int IsSet;
 
 	if (Repaint) {
-		XSetForeground(display, ularn_gc, white_pixel);
-		XSetBackground(display, ularn_gc, black_pixel);
-		XSetFillStyle(display, ularn_gc, FillSolid);
 
-		XFillRectangle(display, ularn_window, ularn_gc, EffectsLeft, EffectsTop, EffectsWidth, EffectsHeight);
+		SetAPen(UlarnRP, WHITE_PEN);
+		SetDrMd(UlarnRP, JAM1);
+		RectFill(UlarnRP,
+			 EffectsLeft, EffectsTop,
+			 EffectsLeft + EffectsWidth - 1, EffectsTop + EffectsHeight - 1);
 	}
+
+	SetAPen(UlarnRP, BLACK_PEN);
+	SetDrMd(UlarnRP, JAM2);
 
 	for (i = 0; i < 17; i++) {
 		idx = bot_data[i].typ;
@@ -964,29 +906,16 @@ static void PaintEffects(void)
 
 		if ((Repaint) || (IsSet != WasSet)) {
 			if (IsSet) {
-				XSetForeground(display, ularn_gc, black_pixel);
-				XSetBackground(display, ularn_gc, white_pixel);
-				XSetFillStyle(display, ularn_gc, FillSolid);
-
-				XDrawString(display, ularn_window, ularn_gc,
-					    EffectsLeft,
-					    EffectsTop + i * CharHeight + CharAscent,
-					    bot_data[i].string, strlen(bot_data[i].string));
+				Move(UlarnRP, EffectsLeft, EffectsTop + i * CharHeight + CharBaseline);
+				Text(UlarnRP, bot_data[i].string, strlen(bot_data[i].string));
 			}else {
-				XSetForeground(display, ularn_gc, white_pixel);
-				XSetBackground(display, ularn_gc, black_pixel);
-				XSetFillStyle(display, ularn_gc, FillSolid);
-
-				XFillRectangle(display, ularn_window, ularn_gc,
-					       EffectsLeft, EffectsTop + i * CharHeight,
-					       EffectsWidth, CharHeight);
-
+				Move(UlarnRP, EffectsLeft, EffectsTop + i * CharHeight + CharBaseline);
+				Text(UlarnRP, "          ", 10);
 			}
 		}
 
 		cbak[idx] = c[idx];
 	}
-
 }
 
 /* =============================================================================
@@ -1078,7 +1007,7 @@ static void GetTile(int x, int y, int *TileId)
  *
  * PARAMETERS:
  *
- *   None.
+ *   DC : The device context to be painted.
  *
  * RETURN VALUE:
  *
@@ -1092,14 +1021,6 @@ static void PaintMap(void)
 	int TileId;
 	int TileX;
 	int TileY;
-
-
-	if (Repaint) {
-		XSetForeground(display, ularn_gc, black_pixel);
-
-		XFillRectangle(display, ularn_window, ularn_gc, MapAreaLeft, MapAreaTop, MapWidth, MapHeight);
-	}
-
 
 	mx = MapTileLeft + MapTileWidth;
 	my = MapTileTop + MapTileHeight;
@@ -1119,10 +1040,13 @@ static void PaintMap(void)
 			TileX = (TileId % 16) * TileWidth;
 			TileY = (TileId / 16) * TileHeight;
 
-			XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-				  TileX, TileY,
-				  TileWidth, TileHeight,
-				  MapLeft + sx * TileWidth, MapTop + sy * TileHeight);
+			BltBitMapRastPort(
+				UlarnGfx,
+				TileX, TileY,
+				UlarnRP,
+				MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+				TileWidth, TileHeight,
+				0xc0);
 
 			sy++;
 		}
@@ -1138,21 +1062,24 @@ static void PaintMap(void)
 		TileId = TILE_CURSOR1;
 		TileX = (TileId % 16) * TileWidth;
 		TileY = (TileId / 16) * TileHeight;
+		BltBitMapRastPort(
+			UlarnGfx,
+			TileX, TileY,
+			UlarnRP,
+			MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+			TileWidth, TileHeight,
+			0x80);
 
-		XSetClipOrigin(display, ularn_gc,
-			       MapLeft + sx * TileWidth - TileX,
-			       MapTop + sy * TileHeight - TileY);
-		XSetClipMask(display, ularn_gc, TilePShape);
-		XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-			  TileX, TileY,
-			  TileWidth, TileHeight,
-			  MapLeft + sx * TileWidth,
-			  MapTop + sy * TileHeight);
-
-
-		XSetClipOrigin(display, ularn_gc, 0, 0);
-		XSetClipMask(display, ularn_gc, None);
-
+		TileId = TILE_CURSOR2;
+		TileX = (TileId % 16) * TileWidth;
+		TileY = (TileId / 16) * TileHeight;
+		BltBitMapRastPort(
+			UlarnGfx,
+			TileX, TileY,
+			UlarnRP,
+			MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+			TileWidth, TileHeight,
+			0xe0);
 	}
 }
 
@@ -1164,7 +1091,7 @@ static void PaintMap(void)
  *
  * PARAMETERS:
  *
- *   None.
+ *   DC : The device contect to be painted.
  *
  * RETURN VALUE:
  *
@@ -1174,106 +1101,19 @@ static void PaintTextWindow(void)
 {
 	int sx, ex, y;
 	FormatType Fmt;
-	int FillX, FillY;
-	int FillWidth, FillHeight;
-	XGCValues values;
 
-	FillX = TLeft;
-	FillY = TTop;
-	FillWidth = TWidth;
-	FillHeight = THeight;
+	SetAPen(UlarnRP, WHITE_PEN);
+	SetDrMd(UlarnRP, JAM1);
+	RectFill(UlarnRP, TLeft, TTop, TLeft + TWidth - 1, TTop + THeight - 1);
 
-	if (CurrentDisplayMode == DISPLAY_TEXT) {
-		if (ShowTextBorder) {
-			//
-			// Clear the drawable area
-			//
-			FillX = 0;
-			FillY = ularn_menu_height;
-			FillWidth = LarnWindowWidth;
-			FillHeight = LarnWindowHeight - ularn_menu_height;
-
-			XSetForeground(display, ularn_gc, black_pixel);
-			XSetBackground(display, ularn_gc, white_pixel);
-			XSetFillStyle(display, ularn_gc, FillSolid);
-
-			XFillRectangle(display, ularn_window, ularn_gc,
-				       FillX, FillY, FillWidth, FillHeight);
-
-			XSetForeground(display, ularn_gc, white_pixel);
-			XSetBackground(display, ularn_gc, black_pixel);
-
-			values.line_width = 2;
-			XChangeGC(display, ularn_gc, GCLineWidth, &values);
-
-			XDrawArc(display, ularn_window, ularn_gc,
-				 TLeft - 8, TTop - 8, 16, 16,
-				 90 * 64, 90 * 64);
-
-			XDrawArc(display, ularn_window, ularn_gc,
-				 TLeft - 8, TTop + THeight - 8, 16, 16,
-				 180 * 64, 90 * 64);
-
-			XDrawArc(display, ularn_window, ularn_gc,
-				 TLeft + TWidth - 8, TTop - 8, 16, 16,
-				 0 * 64, 90 * 64);
-
-			XDrawArc(display, ularn_window, ularn_gc,
-				 TLeft + TWidth - 8, TTop + THeight - 8, 16, 16,
-				 270 * 64, 90 * 64);
-
-			XDrawLine(display, ularn_window, ularn_gc,
-				  TLeft, TTop - 8,
-				  TLeft + TWidth, TTop - 8);
-
-			XDrawLine(display, ularn_window, ularn_gc,
-				  TLeft, TTop + THeight +  8,
-				  TLeft + TWidth, TTop + THeight + 8);
-
-			XDrawLine(display, ularn_window, ularn_gc,
-				  TLeft - 8, TTop,
-				  TLeft - 8, TTop + THeight);
-
-			XDrawLine(display, ularn_window, ularn_gc,
-				  TLeft + TWidth + 8, TTop,
-				  TLeft + TWidth + 8, TTop + THeight);
-
-			values.line_width = 0;
-			XChangeGC(display, ularn_gc, GCLineWidth, &values);
-
-			FillX = TLeft;
-			FillY = TTop;
-			FillWidth = TWidth;
-			FillHeight = THeight;
-
-		}else {
-			//
-			// Not enough space around the text area for a border
-			// Fill the entire drawable area
-			//
-			FillX = 0;
-			FillY = ularn_menu_height;
-			FillWidth = LarnWindowWidth;
-			FillHeight = LarnWindowHeight - ularn_menu_height;
-
-		}
-	}
-
-	XSetForeground(display, ularn_gc, white_pixel);
-	XSetBackground(display, ularn_gc, black_pixel);
-	XSetFillStyle(display, ularn_gc, FillSolid);
-
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       FillX, FillY, FillWidth, FillHeight);
-
-	XSetForeground(display, ularn_gc, black_pixel);
-	XSetBackground(display, ularn_gc, white_pixel);
-	XSetFillStyle(display, ularn_gc, FillSolid);
+	SetDrMd(UlarnRP, JAM2);
 
 	for (y = 0; y < MaxLine; y++) {
+
 		sx = 0;
 
 		while (sx < LINE_LENGTH) {
+
 			Fmt = Format[y][sx];
 			ex = sx;
 
@@ -1281,26 +1121,23 @@ static void PaintTextWindow(void)
 
 			switch (Fmt) {
 			case FORMAT_NORMAL:
-				XSetForeground(display, ularn_gc, black_pixel);
+				SetAPen(UlarnRP, BLACK_PEN);
 				break;
 			case FORMAT_STANDOUT:
-				XSetForeground(display, ularn_gc, Red.pixel);
+				SetAPen(UlarnRP, RED_PEN);
 				break;
 			case FORMAT_STANDOUT2:
-				XSetForeground(display, ularn_gc, Green.pixel);
+				SetAPen(UlarnRP, GREEN_PEN);
 				break;
 			case FORMAT_STANDOUT3:
-				XSetForeground(display, ularn_gc, Blue.pixel);
+				SetAPen(UlarnRP, BLUE_PEN);
 				break;
 			default:
 				break;
 			}
 
-			XDrawString(display, ularn_window, ularn_gc,
-				    TLeft + sx * CharWidth,
-				    TTop + y * CharHeight + CharAscent,
-				    Text[y] + sx,
-				    ex - sx);
+			Move(UlarnRP, TLeft + sx * CharWidth, TTop + y * CharHeight + CharBaseline);
+			Text(UlarnRP, AText[y] + sx, ex - sx);
 
 			sx = ex;
 		}
@@ -1316,7 +1153,7 @@ static void PaintTextWindow(void)
  *
  * PARAMETERS:
  *
- *   None.
+ *   DC : The device context to be painted.
  *
  * RETURN VALUE:
  *
@@ -1324,70 +1161,81 @@ static void PaintTextWindow(void)
  */
 static void PaintMapWindow(void)
 {
-
-	//
-	// Draw separators between the different window areas
-	//
+	int RectLeft;
+	int RectTop;
+	int RectRight;
+	int RectBottom;
 
 	//
 	// Message area
 	//
-	XSetForeground(display, ularn_gc, LtGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       MessageLeft, MessageTop - SEPARATOR_HEIGHT,
-		       MessageWidth, 2);
 
-	XSetForeground(display, ularn_gc, MidGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       MessageLeft, MessageTop - SEPARATOR_HEIGHT + 2,
-		       MessageWidth, 4);
+	RectLeft = MessageLeft;
+	RectTop = MessageTop - SEPARATOR_HEIGHT;
+	RectRight = MessageLeft + MessageWidth;
+	RectBottom = RectTop + 2;
+	SetAPen(UlarnRP, LIGHT_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
 
-	XSetForeground(display, ularn_gc, DkGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       MessageLeft, MessageTop - SEPARATOR_HEIGHT + 6,
-		       MessageWidth, 2);
+	RectTop = RectBottom;
+	RectBottom = RectTop + 4;
+	SetAPen(UlarnRP, MID_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
+
+	RectTop = RectBottom;
+	RectBottom = RectTop + 2;
+	SetAPen(UlarnRP, DARK_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
 
 	//
 	// Status area
 	//
-	XSetForeground(display, ularn_gc, LtGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       StatusLeft, StatusTop - SEPARATOR_HEIGHT,
-		       StatusWidth, 2);
+	RectLeft = StatusLeft;
+	RectTop = StatusTop - SEPARATOR_HEIGHT;
+	RectRight = StatusLeft + StatusWidth;
+	RectBottom = RectTop + 2;
 
-	XSetForeground(display, ularn_gc, MidGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       StatusLeft, StatusTop - SEPARATOR_HEIGHT + 2,
-		       StatusWidth, 4);
+	SetAPen(UlarnRP, LIGHT_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
 
-	XSetForeground(display, ularn_gc, DkGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       StatusLeft, StatusTop - SEPARATOR_HEIGHT + 6,
-		       StatusWidth, 2);
+	RectTop = RectBottom;
+	RectBottom = RectTop + 4;
+	SetAPen(UlarnRP, MID_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
+
+	RectTop = RectBottom;
+	RectBottom = RectTop + 2;
+	SetAPen(UlarnRP, DARK_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
 
 	//
 	// Effects area
 	//
-	XSetForeground(display, ularn_gc, LtGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       EffectsLeft - SEPARATOR_WIDTH, EffectsTop,
-		       2, EffectsHeight);
+	RectLeft = EffectsLeft - SEPARATOR_WIDTH;
+	RectTop = EffectsTop;
+	RectRight = RectLeft + 2;
+	RectBottom = EffectsTop + EffectsHeight;
 
-	XSetForeground(display, ularn_gc, MidGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       EffectsLeft - SEPARATOR_WIDTH + 2, EffectsTop,
-		       4, EffectsHeight + 2);
+	SetAPen(UlarnRP, LIGHT_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
 
-	XSetForeground(display, ularn_gc, DkGrey.pixel);
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       EffectsLeft - SEPARATOR_WIDTH + 6, EffectsTop,
-		       2, EffectsHeight);
+	RectLeft = RectRight;
+	RectRight = RectLeft + 4;
+	RectBottom = EffectsTop + EffectsHeight + 2;
+	SetAPen(UlarnRP, MID_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
 
+	RectLeft = RectRight;
+	RectRight = RectLeft + 2;
+	RectBottom = EffectsTop + EffectsHeight;
+	SetAPen(UlarnRP, DARK_PEN);
+	RectFill(UlarnRP, RectLeft, RectTop, RectRight - 1, RectBottom - 1);
 
 	PaintStatus();
 	PaintEffects();
 	PaintMap();
 	PaintTextWindow();
+
 }
 
 /* =============================================================================
@@ -1398,7 +1246,7 @@ static void PaintMapWindow(void)
  *
  * PARAMETERS:
  *
- *   None.
+ *   DC : The device context to be painted
  *
  * RETURN VALUE:
  *
@@ -1409,7 +1257,11 @@ static void PaintWindow(void)
 
 	Repaint = 1;
 
-	XMENU_Redraw();
+	SetAPen(UlarnRP, WHITE_PEN);
+	RectFill(UlarnRP, 0, 0, UlarnScreen->Width - 1, UlarnScreen->Height - 1);
+
+	SetBPen(UlarnRP, WHITE_PEN);
+	SetDrMd(UlarnRP, JAM2);
 
 	if (CurrentDisplayMode == DISPLAY_MAP)
 		PaintMapWindow();
@@ -1428,7 +1280,7 @@ static void PaintWindow(void)
  *
  * PARAMETERS:
  *
- *   None.
+ *   hwnd : The handle of the window being resized
  *
  * RETURN VALUE:
  *
@@ -1436,27 +1288,17 @@ static void PaintWindow(void)
  */
 static void Resize(void)
 {
-	XWindowAttributes win_attr;
-	int ClientWidth;
-	int ClientHeight;
+	int ClientWidth = 0;
+	int ClientHeight = 0;
 
-	/* XXX trn - check status rc return val */
-	/*Status rc;
-
-	   rc = */XGetWindowAttributes(display, ularn_window, &win_attr);
-
-
-	LarnWindowWidth = win_attr.width;
-	LarnWindowHeight = win_attr.height;
-
-	ClientWidth = LarnWindowWidth;
-	ClientHeight = LarnWindowHeight;
+	ClientWidth = UlarnScreen->Width;
+	ClientHeight = UlarnScreen->Height;
 
 	//
 	// Calculate the message window size and position
 	//
 	MessageWidth = ClientWidth;
-	MessageHeight = CharHeight * MAX_MSG_LINES;
+	MessageHeight = CharHeight * MAX_MSG_LINES + 2;
 	MessageLeft = 0;
 	MessageTop = ClientHeight - MessageHeight - 1;
 
@@ -1464,27 +1306,25 @@ static void Resize(void)
 	// Calculate the Status window size and position
 	//
 	StatusLeft = 0;
-	StatusTop = (MessageTop - SEPARATOR_HEIGHT) - CharHeight * 2;
+	StatusHeight = CharHeight * 2 + 2;
+	StatusTop = (MessageTop - SEPARATOR_HEIGHT) - StatusHeight;
 	StatusWidth = ClientWidth;
-	StatusHeight = CharHeight * 2;
 
 	//
 	// Calculate the Effects window size and position
 	//
 	EffectsLeft = ClientWidth - CharWidth * 10;
-	EffectsTop = ularn_menu_height;
+	EffectsTop = 0;
 	EffectsWidth = CharWidth * 10;
-	EffectsHeight = StatusTop - SEPARATOR_HEIGHT - EffectsTop;
+	EffectsHeight = StatusTop - SEPARATOR_HEIGHT;
 
 	//
 	// Calculate the size and position of the map window
 	//
-	MapAreaLeft = 0;
-	MapAreaTop = ularn_menu_height;
 	MapLeft = 0;
-	MapTop = MapAreaTop;
+	MapTop = UlarnScreen->BarHeight;
 	MapWidth = EffectsLeft - SEPARATOR_WIDTH;
-	MapHeight = StatusTop - SEPARATOR_HEIGHT - MapAreaTop;
+	MapHeight = (StatusTop - SEPARATOR_HEIGHT) - MapTop;
 	MapTileWidth = MapWidth / TileWidth;
 	MapTileHeight = MapHeight / TileHeight;
 
@@ -1496,15 +1336,12 @@ static void Resize(void)
 	TextHeight = CharHeight * MAX_TEXT_LINES;
 
 	TextLeft = (ClientWidth - TextWidth) / 2;
-	TextTop =
-		ularn_menu_height +
-		(ClientHeight - TextHeight - ularn_menu_height) / 2;
+	TextTop = (ClientHeight - TextHeight) / 2;
 
 	//
 	// Check if should draw a border around the text page when it is displayed
 	//
-	ShowTextBorder = (TextLeft >= BORDER_SIZE) &&
-			 (TextTop >= (ularn_menu_height + BORDER_SIZE));
+	ShowTextBorder = (TextLeft >= BORDER_SIZE) && (TextTop >= BORDER_SIZE);
 
 
 	//
@@ -1519,7 +1356,7 @@ static void Resize(void)
 
 	if (MapTileHeight > MAXY) {
 		MapTileHeight = MAXY;
-		MapTop = MapAreaTop + (MapHeight - MapTileHeight * TileHeight) / 2;
+		MapTop = (MapHeight - MapTileHeight * TileHeight) / 2;
 	}
 
 	if (CurrentDisplayMode == DISPLAY_MAP) {
@@ -1545,237 +1382,129 @@ static void Resize(void)
 	//
 	PaintWindow();
 
+	//
+	// Show the cursor if required
+	//
 	if (CaretActive) {
-
-		XSetForeground(display, ularn_gc, black_pixel);
-		XSetClipOrigin(display, ularn_gc,
-			       TLeft + (CursorX - 1) * CharWidth,
-			       TTop + (CursorY - 1) * CharHeight + CharAscent);
-		XSetClipMask(display, ularn_gc, CursorPixmap);
-		XCopyPlane(display, CursorPixmap, ularn_window, ularn_gc,
-			   0, 0,
-			   cursor_width, cursor_height,
-			   TLeft + (CursorX - 1) * CharWidth,
-			   TTop + (CursorY - 1) * CharHeight + CharAscent, 1);
-
-		XSetClipOrigin(display, ularn_gc, 0, 0);
-		XSetClipMask(display, ularn_gc, None);
-
+		SetAPen(UlarnRP, BLUE_PEN);
+		RectFill(
+			UlarnRP,
+			TLeft + (CursorX - 1) * CharWidth, TTop + (CursorY - 1) * CharHeight + 2,
+			TLeft + (CursorX) * CharWidth - 1, TTop + (CursorY) * CharHeight + 2 - 1);
 	}
 
 }
 
-
 /* =============================================================================
- * FUNCTION: handle_event
+ * FUNCTION: HandleInput
  *
  * DESCRIPTION:
- * This procedure handles the processing for X events.
+ * This procedure handles the next IntuiMessage and performs input
+ * processing for the event that was received.
+ * The Event variable is set to the event corresponding to the input
+ * received.
  *
  * PARAMETERS:
  *
- *   event : The X event to process.
+ *   None.
  *
  * RETURN VALUE:
  *
  *   None.
  */
-static void handle_event(XEvent *event)
+static void HandleInput(void)
 {
-	int MenuId;
+	struct IntuiMessage *Msg;
 
+	WaitPort(UlarnWindow->UserPort);
 
-	/* Handle menu input */
-	MenuId = XMENU_HandleEvent(event);
-	if (MenuId >= 0) {
+	Msg = (struct IntuiMessage *)GetMsg(UlarnWindow->UserPort);
 
-		switch (MenuId) {
-		case MENU_GAME_SAVE:
-			Event = ACTION_SAVE;
-			break;
+	switch (Msg->Class) {
+	case IDCMP_MENUPICK:
+		/* A menu item has been selected. */
+		DoMenuSelection(Msg->Code);
+		break;
 
-		case MENU_GAME_QUIT:
-			Event = ACTION_QUIT;
-			break;
+	case IDCMP_VANILLAKEY:
+	{
+		/* An ASCII keypress */
+		ActionType Action;
+		int Found = 0;
+		int i;
+		int ModKey = M_ASCII;
 
-		case MENU_ACTION_WAIT:
-			Event = ACTION_WAIT;
-			break;
+		if ((Msg->Qualifier & IEQUALIFIER_NUMERICPAD) != 0) {
+			ModKey = M_NUMPAD;
 
-		case MENU_ACTION_WIELD:
-			Event = ACTION_WIELD;
-			break;
+			if (((Msg->Qualifier & IEQUALIFIER_LSHIFT) != 0) ||
+			    ((Msg->Qualifier & IEQUALIFIER_RSHIFT) != 0))
+				ModKey |= M_SHIFT;
 
-		case MENU_ACTION_WEAR:
-			Event = ACTION_WEAR;
-			break;
-
-		case MENU_ACTION_TAKEOFF:
-			Event = ACTION_REMOVE_ARMOUR;
-			break;
-
-		case MENU_ACTION_QUAFF:
-			Event = ACTION_QUAFF;
-			break;
-
-		case MENU_ACTION_READ:
-			Event = ACTION_READ;
-			break;
-
-		case MENU_ACTION_CAST:
-			Event = ACTION_CAST_SPELL;
-			break;
-
-		case MENU_ACTION_EAT:
-			Event = ACTION_EAT_COOKIE;
-			break;
-
-		case MENU_ACTION_DROP:
-			Event = ACTION_DROP;
-			break;
-
-		case MENU_ACTION_CLOSEDOOR:
-			Event = ACTION_CLOSE_DOOR;
-			break;
-
-		case MENU_SHOW_DISCOVERIES:
-			Event = ACTION_LIST_SPELLS;
-			break;
-
-		case MENU_SHOW_INVENTORY:
-			Event = ACTION_INVENTORY;
-			break;
-
-		case MENU_SHOW_TAX:
-			Event = ACTION_SHOW_TAX;
-			break;
-
-		case MENU_SHOW_PACKWEIGHT:
-			Event = ACTION_PACK_WEIGHT;
-			break;
-
-		case MENU_DISPLAY_REDRAW:
-			Event = ACTION_REDRAW_SCREEN;
-			break;
-
-		case MENU_DISPLAY_BEEP:
-			nobeep = !nobeep;
-			/* Set menu checkmarks */
-
-			if (nobeep)
-				XMENU_SetCheck(MENU_DISPLAY_BEEP, XMENU_UNCHECKED);
-			else
-				XMENU_SetCheck(MENU_DISPLAY_BEEP, XMENU_CHECKED);
-			break;
-
-		case MENU_DISPLAY_FONT:
-			break;
-
-		case MENU_HELP_HELP:
-			Event = ACTION_HELP;
-			break;
-
-		case MENU_HELP_VERSION:
-			Event = ACTION_VERSION;
-			break;
-
-		case MENU_HELP_ABOUT:
-			break;
-
-		default:
-			break;
+			if ((Msg->Qualifier & IEQUALIFIER_CONTROL) != 0)
+				ModKey |= M_CTRL;
 		}
 
-		return;
+		Action = ACTION_NULL;
+		while ((Action < ACTION_COUNT) && (!Found)) {
+			for (i = 0; i < MAX_KEY_BINDINGS; i++) {
+				if ((Msg->Code == KeyMap[Action][i].VirtKey) &&
+				    (KeyMap[Action][i].ModKey == ModKey))
+					Found = 1;
+			}
+
+			if (!Found)
+				Action++;
+
+		}
+
+		if (Found)
+			Event = Action;
+		else{
+			/* Check run key */
+			if ((Msg->Code == RunKeyMap.VirtKey) &&
+			    (RunKeyMap.ModKey == ModKey))
+				Runkey = 1;
+		}
+
+		EventChar = (char)Msg->Code;
+		GotChar = 1;
+
+		break;
 	}
 
-
-	//
-	// What is the message
-	//
-	switch (event->type) {
-	case Expose:
-
-		if (event->xexpose.count == 0)
-			PaintWindow();
-		break;
-
-	case ConfigureNotify:
-		Resize();
-		break;
-
-	case KeyPress:
+	case IDCMP_RAWKEY:
 	{
+		/* A keypress that does not translate to a single ASCII character */
 		ActionType Action;
 		int ModKey = 0;
 		int Found = 0;
-		KeySym key_symbol;
-		XComposeStatus compose;
-		char KeyString[40];
 		int i;
 
-
-		XLookupString(&(event->xkey), KeyString, 40, &key_symbol, &compose);
-
-		if ((event->xkey.state & ShiftMask) != 0)
+		if (((Msg->Qualifier & IEQUALIFIER_LSHIFT) != 0) ||
+		    ((Msg->Qualifier & IEQUALIFIER_RSHIFT) != 0))
 			ModKey |= M_SHIFT;
 
-		if ((event->xkey.state & ControlMask) != 0)
+		if ((Msg->Qualifier & IEQUALIFIER_CONTROL) != 0)
 			ModKey |= M_CTRL;
 
-		/* Get ASCII character */
-
-		EventChar = KeyString[0];
-		GotChar = (EventChar != 0);
-
-		/* Decode key press as a ULarn Action */
-
 		Action = ACTION_NULL;
-
-		/* Check virtual key bindings */
-
 		while ((Action < ACTION_COUNT) && (!Found)) {
 			for (i = 0; i < MAX_KEY_BINDINGS; i++) {
-
-				if (KeyMap[Action][i].ModKey != M_ASCII) {
-					/* Virtual key binding */
-					if ((key_symbol == KeyMap[Action][i].VirtKey) &&
-					    (KeyMap[Action][i].ModKey == ModKey))
-						Found = 1;
-				}
+				if ((Msg->Code == KeyMap[Action][i].VirtKey) &&
+				    (KeyMap[Action][i].ModKey == ModKey))
+					Found = 1;
 			}
 
 			if (!Found)
 				Action++;
 		}
 
-		/*
-		 * Check ASCII key bindings if no virtual key matches and
-		 * got a valid ASCII char
-		 */
-
-		if (!Found && GotChar) {
-			Action = ACTION_NULL;
-
-			while ((Action < ACTION_COUNT) && (!Found)) {
-				for (i = 0; i < MAX_KEY_BINDINGS; i++) {
-					if (KeyMap[Action][i].ModKey == M_ASCII) {
-						/* ASCII key binding */
-						if (EventChar == KeyMap[Action][i].VirtKey)
-							Found = 1;
-					}
-				}
-
-				if (!Found)
-					Action++;
-			}
-		}
-
 		if (Found)
 			Event = Action;
 		else{
-			/* check run key */
-			if ((key_symbol == RunKeyMap.VirtKey) &&
+			/* Check run key */
+			if ((Msg->Code == RunKeyMap.VirtKey) &&
 			    (RunKeyMap.ModKey == ModKey))
 				Runkey = 1;
 		}
@@ -1783,93 +1512,13 @@ static void handle_event(XEvent *event)
 		break;
 	}
 
-	default:
-		break;
-
-	}
-}
-
-#define MASK_TILES 9
-static int MaskTiles[MASK_TILES][2] =
-{
-	{ 240,		248	     },
-	{ 241,		249	     },
-	{ 242,		250	     },
-	{ 243,		251	     },
-	{ 244,		252	     },
-	{ 245,		253	     },
-	{ 246,		254	     },
-	{ 247,		255	     },
-	{ TILE_CURSOR1, TILE_CURSOR2 }
-};
-
-/* =============================================================================
- * FUNCTION: MakeTileMasks
- *
- * DESCRIPTION:
- * This procedure makes the transparency masks for overlay tiles.
- *
- * PARAMETERS:
- *
- *   None.
- *
- * RETURN VALUE:
- *
- *   None.
- */
-void MakeTileMasks(void)
-{
-	XImage *Image1;
-	XImage *Image2;
-	XImage *Mask;
-	GC gc;
-	XGCValues values;
-	int Tile;
-	int x, y;
-	int t1x, t1y;
-	int t2x, t2y;
-	int p1, p2;
-
-	if (TilePShape == None)
-		printf("TilePShape not allocated!\n");
-
-	values.foreground = 1;
-	values.background = 0;
-	gc = XCreateGC(display, TilePShape, GCForeground | GCBackground, &values);
-
-	for (Tile = 0; Tile < MASK_TILES; Tile++) {
-		t1x = (MaskTiles[Tile][0] % 16) * TileWidth;
-		t1y = (MaskTiles[Tile][0] / 16) * TileHeight;
-
-		t2x = (MaskTiles[Tile][1] % 16) * TileWidth;
-		t2y = (MaskTiles[Tile][1] / 16) * TileHeight;
-
-		Image1 = XGetImage(display, TilePixmap, t1x, t1y, TileWidth, TileHeight, 0xffffffff, XYPixmap);
-		Image2 = XGetImage(display, TilePixmap, t2x, t2y, TileWidth, TileHeight, 0xffffffff, XYPixmap);
-		Mask =  XGetImage(display, TilePShape, t1x, t1y, TileWidth, TileHeight, 0xffffffff, XYPixmap);
-
-		for (y = 0; y < TileHeight; y++) {
-
-			for (x = 0; x < TileWidth; x++) {
-				p1 = XGetPixel(Image1, x, y);
-				p2 = XGetPixel(Image2, x, y);
-
-
-				if (p1 != p2)
-					XPutPixel(Mask, x, y, 0);
-				else
-					XPutPixel(Mask, x, y, 1);
-
-			}
-
-			XPutImage(display, TilePShape, gc, Mask, 0, 0, t1x, t1y, TileWidth, TileHeight);
-		}
-
-
 	}
 
-	XFreeGC(display, gc);
+	ReplyMsg((struct Message *)Msg);
 }
+
+
+
 
 /* =============================================================================
  * Exported functions
@@ -1878,157 +1527,137 @@ void MakeTileMasks(void)
 /* =============================================================================
  * FUNCTION: init_app
  */
-int init_app(char *DisplayName)
+int init_app(void)
 {
 	int x, y;
-/* XXX trn */
-	/*Visual *visual;*/
-	int rc;
-	char *LoadingText = "Loading data...";
-	char *UlarnText = "VLarn";
-	XTextProperty xtext;
+	struct ScreenModeRequester *req = NULL;
+	long ScreenMode;
 
-	display = XOpenDisplay(DisplayName);
+	//
+	// Open the Amiga libraries required
+	//
+	IntuitionBase = (struct IntuitionBase *)OpenLibrary("intuition.library", 0L);
+	GfxBase = (struct GfxBase *)OpenLibrary("graphics.library", 0L);
 
-	if (display == NULL) {
-		fprintf(stderr, "Error: Cannot connect to X server %s\n", DisplayName);
-		/*return 0;*/
-		exit(1);
-	}
+	AslBase = OpenLibrary("asl.library", 36L);
 
-	screen_num = DefaultScreen(display);
+	if (AslBase == NULL) {
+		printf("Error: ULarn requires the ASL Library\n");
 
-	white_pixel = WhitePixel(display, screen_num);
-	black_pixel = BlackPixel(display, screen_num);
-
-	screen_width = DisplayWidth(display, screen_num);
-	screen_height = DisplayHeight(display, screen_num);
-
-	root_window = RootWindow(display, screen_num);
-
-	ularn_window = XCreateSimpleWindow(
-		display,
-		root_window,
-		10, 10,
-		INITIAL_WIDTH, INITIAL_HEIGHT,
-		2,
-		BlackPixel(display, screen_num), WhitePixel(display, screen_num));
-
-	/* Set the window name */
-
-	if (XStringListToTextProperty(&LoadingText, 1, &xtext) == 0) {
-		printf("XStringListToTextProperty ran out of memory\n");
 		return 0;
 	}
 
-	XSetWMName(display, ularn_window, &xtext);
+	//
+	// Ask for the screen mode
+	//
 
-	XFree(xtext.value);
+	req = AllocAslRequestTags(ASL_ScreenModeRequest, TAG_DONE);
 
-	XMapWindow(display, ularn_window);
-
-	XFlush(display);
-	XSync(display, 0);
-
-	/* Create the graphics context */
-
-	gc_values.cap_style = CapButt;
-	gc_values.join_style = JoinBevel;
-	gc_values_mask = GCCapStyle | GCJoinStyle;
-	ularn_gc = XCreateGC(display, ularn_window, gc_values_mask, &gc_values);
-
-	/*
-	 * Install the menu and set initial check states
-	 */
-
-	XMENU_SetMenu(display, ularn_window, &Game_Menu, NULL, PaintWindow);
-	ularn_menu_height = XMENU_GetMenuHeight();
-
-	if (nobeep)
-		XMENU_SetCheck(MENU_DISPLAY_BEEP, XMENU_UNCHECKED);
-	else
-		XMENU_SetCheck(MENU_DISPLAY_BEEP, XMENU_CHECKED);
-
-
-	/* Get colours required */
-
-	/*visual = */ DefaultVisual(display, DefaultScreen(display));
-	colormap = XDefaultColormap(display, screen_num);
-
-	LtGrey.red = 192 * 256;
-	LtGrey.green = 192 * 256;
-	LtGrey.blue = 192 * 256;
-	XAllocColor(display, colormap, &LtGrey);
-
-	MidGrey.red = 128 * 256;
-	MidGrey.green = 128 * 256;
-	MidGrey.blue = 128 * 256;
-	XAllocColor(display, colormap, &MidGrey);
-
-	DkGrey.red = 96 * 256;
-	DkGrey.green = 96 * 256;
-	DkGrey.blue = 96 * 256;
-	XAllocColor(display, colormap, &DkGrey);
-
-	Red.red = 255 * 256;
-	Red.green = 0;
-	Red.blue = 0;
-	XAllocColor(display, colormap, &Red);
-
-	Green.red = 0;
-	Green.green = 128 * 256;
-	Green.blue = 0;
-	XAllocColor(display, colormap, &Green);
-
-	Blue.red = 0;
-	Blue.green = 0;
-	Blue.blue = 255 * 256;
-	XAllocColor(display, colormap, &Blue);
-
-	font_info = XLoadQueryFont(display, font_name);
-	if (!font_info) {
-		fprintf(stderr, "Error: XLoadQueryFont: failed loading font '%s'\n", font_name);
+	if (req == NULL) {
+		printf("Error: Couldn't allocate the screen mode requester\n");
 		return 0;
 	}
 
-	XSetFont(display, ularn_gc, font_info->fid);
+	if (AslRequestTags(req, TAG_DONE))
+		ScreenMode = req->sm_DisplayID;
 
-	XSelectInput(
-		display,
-		ularn_window,
-		ExposureMask | KeyPressMask | StructureNotifyMask | XMENU_EVENT_MASK);
+	FreeAslRequest(req);
 
-	CursorPixmap = XCreateBitmapFromData(display, ularn_window,
-					     cursor_bits, cursor_width, cursor_height);
+	//
+	// Create the screen
+	//
 
-	TileAttributes.valuemask = XpmCloseness;
-	TileAttributes.closeness = 25000;
+	if (ModeNotAvailable(ScreenMode)) {
+		printf("Error: Requested screen mode 0x%X is not available\n", ScreenMode);
 
-	rc = XpmReadFileToPixmap(display,
-				 ularn_window,
-				 TileFilename,
-				 &TilePixmap,
-				 &TilePShape,
-				 &TileAttributes);
-
-	if (rc < XpmSuccess) {
-		printf("Error reading pixmap: %s\n", XpmGetErrorString(rc));
-		printf("Retrying with inferior colours\n");
-
-		TileAttributes.valuemask = XpmCloseness;
-		TileAttributes.closeness = 50000;
-
-		rc = XpmReadFileToPixmap(display,
-					 ularn_window,
-					 TileFilename,
-					 &TilePixmap,
-					 &TilePShape,
-					 &TileAttributes);
-		if (rc < XpmSuccess)
-			printf("Error reading pixmap: %s\n", XpmGetErrorString(rc));
+		return 0;
 	}
 
-	MakeTileMasks();
+	//
+	// Open the font and get the font metrics
+	//
+
+	UlarnFont = OpenDiskFont(&UlarnTextAttr);
+	if (UlarnFont == NULL) {
+		printf("Error: Couldn't open font\n");
+		return 0;
+	}
+
+	CharWidth = UlarnFont->tf_XSize;
+	CharHeight = UlarnFont->tf_YSize;
+	CharBaseline = UlarnFont->tf_Baseline + 2;
+
+	UlarnScreen = OpenScreenTags(NULL,
+				     SA_Pens,      UlarnPens,
+				     SA_DisplayID, ScreenMode,
+				     SA_Width,     STDSCREENWIDTH,
+				     SA_Height,    STDSCREENHEIGHT,
+				     SA_Depth,     8,
+				     SA_Title,     "Ularn",
+				     SA_Type,      CUSTOMSCREEN,
+				     SA_ShowTitle, TRUE,
+				     SA_Font,      &UlarnTextAttr,
+				     TAG_DONE);
+
+	if (UlarnScreen == NULL) {
+		printf("Error: Couldn't open Ularn screen\n");
+		return 0;
+	}
+
+	//
+	// Create the window
+	//
+
+	UlarnWindow = OpenWindowTags(NULL,
+				     WA_Left,         0,
+				     WA_Top,          0,
+				     WA_Width,        UlarnScreen->Width,
+				     WA_Height,       UlarnScreen->Height,
+				     WA_IDCMP,        IDCMP_VANILLAKEY | IDCMP_RAWKEY | IDCMP_MENUPICK,
+				     WA_Title,        "Ularn",
+				     WA_CustomScreen, UlarnScreen,
+				     WA_DetailPen,    WHITE_PEN,
+				     WA_BlockPen,     MID_PEN,
+				     WA_Borderless,   TRUE,
+				     WA_Backdrop,     TRUE,
+				     WA_Activate,     TRUE,
+				     WA_SmartRefresh, TRUE,
+				     TAG_DONE);
+
+	if (UlarnWindow == NULL) {
+		printf("Error: Couldn't create Ularn window\n");
+		return 0;
+	}
+
+	if (!MakeMenuStructure(UlarnWindow, UlarnMenu)) {
+		printf("Error: Couldn't make menu\n");
+		return 0;
+	}
+
+	UlarnRP = UlarnWindow->RPort;
+
+	//
+	// Load the graphics
+	//
+	UlarnGfx = ReadIff(TileBMName, UlarnPalette);
+
+	if (UlarnGfx == NULL) {
+		printf("Error: Could't open graphics tiles");
+		return 0;
+	}
+
+	//
+	// Setup the palette
+	//
+
+	for (x = 0; x < 256; x++) {
+		SetRGB32(
+			&(UlarnScreen->ViewPort),
+			x,
+			(UlarnPalette[x] & 0xff0000) << 8,
+				(UlarnPalette[x] & 0x00ff00) << 16,
+				(UlarnPalette[x] & 0x0000ff) << 24);
+	}
 
 	//
 	// Clear the text buffers
@@ -2051,20 +1680,26 @@ int init_app(char *DisplayName)
 		TextChr[y][LINE_LENGTH] = 0;
 	}
 
-	if (XStringListToTextProperty(&UlarnText, 1, &xtext) == 0) {
-		printf("XStringListToTextProperty ran out of memory\n");
-		return 0;
-	}
+	//
+	// Set the initial text buffers
+	//
+	CursorX = MsgCursorX;
+	CursorY = MsgCursorY;
+	CurrentFormat = CurrentMsgFormat;
 
-	XSetWMName(display, ularn_window, &xtext);
+	AText = MessageChr;
+	Format = MessageFmt;
+	MaxLine = MAX_MSG_LINES;
 
-	XFree(xtext.value);
+	TLeft = MessageLeft;
+	TTop = MessageTop;
+	TWidth = MessageWidth;
+	THeight = MessageHeight;
+
 
 	//
-	// Set the initial window size
+	// Call resize to perform initial sizing and trigger the intial redraw
 	//
-	CalcMinWindowSize();
-
 	Resize();
 
 	return 1;
@@ -2076,31 +1711,42 @@ int init_app(char *DisplayName)
 void close_app(void)
 {
 
-	if (TilePixmap != None)
-		XFreePixmap(display, TilePixmap);
-
-
-	if (TilePShape != None)
-		XFreePixmap(display, TilePShape);
-
-	if (CursorPixmap != None)
-		XFreePixmap(display, CursorPixmap);
-
-	if (ularn_gc != None) {
-		XFreeColormap(display, colormap);
-		XFreeGC(display, ularn_gc);
+	if (UlarnGfx != NULL) {
+		FreeBitmap(UlarnGfx);
+		UlarnGfx = NULL;
 	}
 
-	if (ularn_window != None)
-		XDestroyWindow(display, ularn_window);
+	if (UlarnWindow != NULL) {
+		MenuQuit();
+		CloseWindow(UlarnWindow);
+		UlarnWindow = NULL;
+	}
 
-	sleep(4);
+	if (UlarnScreen != NULL) {
+		CloseScreen(UlarnScreen);
+		UlarnScreen = NULL;
+	}
 
-	XFlush(display);
-	XSync(display, 1);
+	if (UlarnFont != NULL) {
+		CloseFont(UlarnFont);
+		UlarnFont = NULL;
+	}
 
-	if (display != NULL)
-		XCloseDisplay(display);
+	if (AslBase != NULL) {
+		CloseLibrary(AslBase);
+		AslBase = NULL;
+	}
+
+	if (GfxBase != NULL) {
+		CloseLibrary((struct Library *)GfxBase);
+		GfxBase = NULL;
+	}
+
+	if (IntuitionBase != NULL) {
+		CloseLibrary((struct Library *)IntuitionBase);
+		IntuitionBase = NULL;
+	}
+
 }
 
 /* =============================================================================
@@ -2108,32 +1754,29 @@ void close_app(void)
  */
 ActionType get_normal_input(void)
 {
-	XEvent xevent; // The X event
 	int idx;
 	int got_dir;
 
 	Event = ACTION_NULL;
 	Runkey = 0;
 
+	/* Process input events until an action has been selected */
+
 	while (Event == ACTION_NULL) {
-		XNextEvent(display, &xevent);
+		HandleInput();
 
-		handle_event(&xevent);
-
-		//
-		// Clear enhanced interface events in enhanced interface is not active
-		//
 		if (!enhance_interface) {
 			if ((Event == ACTION_OPEN_DOOR) ||
 			    (Event == ACTION_OPEN_CHEST))
 				Event = ACTION_NULL;
 		}
+
 	}
 
+	/* Check for the run key, and adjust events accordingly */
 	if (Runkey) {
 		idx = 0;
 		got_dir = 0;
-
 		while ((idx < NUM_DIRS) && (!got_dir)) {
 			if (DirActions[idx] == Event)
 				got_dir = 1;
@@ -2144,6 +1787,7 @@ ActionType get_normal_input(void)
 		if (got_dir)
 			/* modify into a run event */
 			Event = Event + 1;
+
 	}
 
 	return Event;
@@ -2154,46 +1798,29 @@ ActionType get_normal_input(void)
  */
 char get_prompt_input(char *prompt, char *answers, int ShowCursor)
 {
-	XEvent xevent; // The X event
 	char *ch;
 
 	Print(prompt);
 
+	//
+	// Show the cursor if required
+	//
 	if (ShowCursor) {
-
-		XSetForeground(display, ularn_gc, black_pixel);
-		XSetClipOrigin(display, ularn_gc,
-			       TLeft + (CursorX - 1) * CharWidth,
-			       TTop + (CursorY - 1) * CharHeight + CharAscent);
-		XSetClipMask(display, ularn_gc, CursorPixmap);
-		XCopyPlane(display, CursorPixmap, ularn_window, ularn_gc,
-			   0, 0,
-			   cursor_width, cursor_height,
-			   TLeft + (CursorX - 1) * CharWidth,
-			   TTop + (CursorY - 1) * CharHeight + CharAscent, 1);
-
-		XSetClipOrigin(display, ularn_gc, 0, 0);
-		XSetClipMask(display, ularn_gc, None);
-
+		SetAPen(UlarnRP, BLUE_PEN);
+		RectFill(
+			UlarnRP,
+			TLeft + (CursorX - 1) * CharWidth, TTop + (CursorY - 1) * CharHeight + 2,
+			TLeft + (CursorX) * CharWidth - 1, TTop + (CursorY) * CharHeight + 2 - 1);
 		CaretActive = 1;
 	}
 
-	//
-	// Process events until a character in answers has been pressed.
-	//
 	GotChar = 0;
-	while (!GotChar) {
-		XNextEvent(display, &xevent);
 
-		handle_event(&xevent);
+	while (!GotChar) {
+		HandleInput();
 
 		if (GotChar) {
-
-			//
-			// Search for the input character in the answers string
-			//
 			ch = strchr(answers, EventChar);
-
 			if (ch == NULL) {
 				//
 				// Not an answer we want
@@ -2204,21 +1831,11 @@ char get_prompt_input(char *prompt, char *answers, int ShowCursor)
 	}
 
 	if (ShowCursor) {
-
-		XSetForeground(display, ularn_gc, white_pixel);
-		XSetClipOrigin(display, ularn_gc,
-			       TLeft + (CursorX - 1) * CharWidth,
-			       TTop + (CursorY - 1) * CharHeight + CharAscent);
-		XSetClipMask(display, ularn_gc, CursorPixmap);
-		XCopyPlane(display, CursorPixmap, ularn_window, ularn_gc,
-			   0, 0,
-			   cursor_width, cursor_height,
-			   TLeft + (CursorX - 1) * CharWidth,
-			   TTop + (CursorY - 1) * CharHeight + CharAscent, 1);
-
-		XSetClipOrigin(display, ularn_gc, 0, 0);
-		XSetClipMask(display, ularn_gc, None);
-
+		SetAPen(UlarnRP, WHITE_PEN);
+		RectFill(
+			UlarnRP,
+			TLeft + (CursorX - 1) * CharWidth, TTop + (CursorY - 1) * CharHeight + 2,
+			TLeft + (CursorX) * CharWidth - 1, TTop + (CursorY) * CharHeight + 2 - 1);
 		CaretActive = 0;
 	}
 
@@ -2253,7 +1870,7 @@ void get_password_input(char *password, int Len)
 	do{
 		ch = get_prompt_input("", inputchars, 1);
 
-		if (isprint((int)ch) && (Pos < Len)) {
+		if (isprint(ch) && (Pos < Len)) {
 			password[Pos] = ch;
 			Pos++;
 			Printc('*');
@@ -2274,9 +1891,59 @@ void get_password_input(char *password, int Len)
 
 	password[Pos] = 0;
 
+}
+#if 0
+/* =============================================================================
+ * FUNCTION: get_string_input
+ */
+static void get_string_input(char *string, int Len)
+{
+	char ch;
+	char inputchars[256];
+	int Pos;
+	int value;
+
+	/* get the printable characters on this system */
+	Pos = 0;
+	for (value = 0; value < 256; value++) {
+		if (isprint(value)) {
+			inputchars[Pos] = (char)value;
+			Pos++;
+		}
+	}
+
+	/* add CR, BS and null terminator */
+	inputchars[Pos++] = '\010';
+	inputchars[Pos++] = '\015';
+	inputchars[Pos] = '\0';
+
+	Pos = 0;
+	do{
+		ch = get_prompt_input("", inputchars, 1);
+
+		if (isprint((int)ch) && (Pos < Len)) {
+			string[Pos] = ch;
+			Pos++;
+			Printc(ch);
+		}else if (ch == '\010') {
+			//
+			// Backspace
+			//
+
+			if (Pos > 0) {
+				CursorX--;
+				Printc(' ');
+				CursorX--;
+				Pos--;
+			}
+		}
+
+	} while (ch != '\015');
+
+	string[Pos] = 0;
 
 }
-
+#endif
 /* =============================================================================
  * FUNCTION: get_num_input
  */
@@ -2341,7 +2008,6 @@ int get_num_input(int defval)
  */
 ActionType get_dir_input(char *prompt, int ShowCursor)
 {
-	XEvent xevent;
 	int got_dir;
 	int idx;
 
@@ -2350,25 +2016,12 @@ ActionType get_dir_input(char *prompt, int ShowCursor)
 	//
 	Print(prompt);
 
-	//
-	// Show the cursor if required
-	//
 	if (ShowCursor) {
-
-		XSetForeground(display, ularn_gc, black_pixel);
-		XSetClipOrigin(display, ularn_gc,
-			       TLeft + (CursorX - 1) * CharWidth,
-			       TTop + (CursorY - 1) * CharHeight + CharAscent);
-		XSetClipMask(display, ularn_gc, CursorPixmap);
-		XCopyPlane(display, CursorPixmap, ularn_window, ularn_gc,
-			   0, 0,
-			   cursor_width, cursor_height,
-			   TLeft + (CursorX - 1) * CharWidth,
-			   TTop + (CursorY - 1) * CharHeight + CharAscent, 1);
-
-		XSetClipOrigin(display, ularn_gc, 0, 0);
-		XSetClipMask(display, ularn_gc, None);
-
+		SetAPen(UlarnRP, BLUE_PEN);
+		RectFill(
+			UlarnRP,
+			TLeft + (CursorX - 1) * CharWidth, TTop + (CursorY - 1) * CharHeight + 2,
+			TLeft + (CursorX) * CharWidth - 1, TTop + (CursorY) * CharHeight + 2 - 1);
 		CaretActive = 1;
 	}
 
@@ -2376,12 +2029,9 @@ ActionType get_dir_input(char *prompt, int ShowCursor)
 	got_dir = 0;
 
 	while (!got_dir) {
-		XNextEvent(display, &xevent);
-
-		handle_event(&xevent);
+		HandleInput();
 
 		idx = 0;
-
 		while ((idx < NUM_DIRS) && (!got_dir)) {
 			if (DirActions[idx] == Event)
 				got_dir = 1;
@@ -2392,26 +2042,15 @@ ActionType get_dir_input(char *prompt, int ShowCursor)
 	}
 
 	if (ShowCursor) {
-
-		XSetForeground(display, ularn_gc, white_pixel);
-		XSetClipOrigin(display, ularn_gc,
-			       TLeft + (CursorX - 1) * CharWidth,
-			       TTop + (CursorY - 1) * CharHeight + CharAscent);
-		XSetClipMask(display, ularn_gc, CursorPixmap);
-		XCopyPlane(display, CursorPixmap, ularn_window, ularn_gc,
-			   0, 0,
-			   cursor_width, cursor_height,
-			   TLeft + (CursorX - 1) * CharWidth,
-			   TTop + (CursorY - 1) * CharHeight + CharAscent, 1);
-
-		XSetClipOrigin(display, ularn_gc, 0, 0);
-		XSetClipMask(display, ularn_gc, None);
-
+		SetAPen(UlarnRP, WHITE_PEN);
+		RectFill(
+			UlarnRP,
+			TLeft + (CursorX - 1) * CharWidth, TTop + (CursorY - 1) * CharHeight + 2,
+			TLeft + (CursorX) * CharWidth - 1, TTop + (CursorY) * CharHeight + 2 - 1);
 		CaretActive = 0;
 	}
 
 	return Event;
-
 }
 
 /* =============================================================================
@@ -2485,7 +2124,7 @@ void set_display(DisplayModeType Mode)
 		CursorY = MsgCursorY;
 		CurrentFormat = CurrentMsgFormat;
 
-		Text = MessageChr;
+		AText = MessageChr;
 		Format = MessageFmt;
 		MaxLine = MAX_MSG_LINES;
 
@@ -2499,7 +2138,7 @@ void set_display(DisplayModeType Mode)
 		CursorY = TextCursorY;
 		CurrentFormat = CurrentTextFormat;
 
-		Text = TextChr;
+		AText = TextChr;
 		Format = TextFmt;
 		MaxLine = MAX_TEXT_LINES;
 
@@ -2544,14 +2183,14 @@ static void IncCursorY(int Count)
 			Scroll = 1;
 			for (Line = 0; Line < (MaxLine - 1); Line++) {
 				for (x = 0; x < LINE_LENGTH; x++) {
-					Text[Line][x] = Text[Line + 1][x];
+					AText[Line][x] = AText[Line + 1][x];
 					Format[Line][x] = Format[Line + 1][x];
 				}
 			}
 			CursorY--;
 
 			for (x = 0; x < LINE_LENGTH; x++) {
-				Text[MaxLine - 1][x] = ' ';
+				AText[MaxLine - 1][x] = ' ';
 				Format[MaxLine - 1][x] = FORMAT_NORMAL;
 			}
 		}
@@ -2599,11 +2238,11 @@ void ClearText(void)
 
 	for (y = 0; y < MaxLine; y++) {
 		for (x = 0; x < LINE_LENGTH; x++) {
-			Text[y][x] = ' ';
+			AText[y][x] = ' ';
 			Format[y][x] = FORMAT_NORMAL;
 		}
 
-		Text[y][LINE_LENGTH] = 0;
+		AText[y][LINE_LENGTH] = 0;
 	}
 
 	CursorX = 1;
@@ -2613,10 +2252,6 @@ void ClearText(void)
 	// Clear the text area
 	//
 	PaintTextWindow();
-
-	XFlush(display);
-	XSync(display, 0);
-
 }
 
 /* =============================================================================
@@ -2624,20 +2259,26 @@ void ClearText(void)
  */
 void UlarnBeep(void)
 {
-	//
-	// Middle C, 1/4 second
-	//
-	if (!nobeep)
-		XBell(display, 100);
+	if (!nobeep) {
+		//
+		//
+		//
+		DisplayBeep(UlarnScreen);
+	}
 }
 
 /* =============================================================================
- * FUNCTION: Cursor
+ * FUNCTION: MoveCursor
  */
 void MoveCursor(int x, int y)
 {
 	CursorX = x;
 	CursorY = y;
+
+	if (CursorX < 1) CursorX = 1;
+	if (CursorY < 1) CursorY = 1;
+	if (CursorX > LINE_LENGTH) CursorX = LINE_LENGTH;
+	if (CursorY > MaxLine) CursorY = MaxLine;
 }
 
 /* =============================================================================
@@ -2646,7 +2287,6 @@ void MoveCursor(int x, int y)
 void Printc(char c)
 {
 	int incx;
-	char lc;
 
 	switch (c) {
 	case '\t':
@@ -2659,49 +2299,36 @@ void Printc(char c)
 		IncCursorY(1);
 		break;
 
-	case '\015':
+	case 13:
+		/* Ignore LF */
 		break;
 
 	default:
-
-		lc = Text[CursorY - 1][CursorX - 1];
-
-		if (lc != c) {
-			/* Erase the char that was here */
-			XSetForeground(display, ularn_gc, white_pixel);
-			XSetBackground(display, ularn_gc, black_pixel);
-			XSetFillStyle(display, ularn_gc, FillSolid);
-
-			XFillRectangle(display, ularn_window, ularn_gc,
-				       TLeft + (CursorX - 1) * CharWidth,
-				       TTop + (CursorY - 1) * CharHeight,
-				       CharWidth, CharHeight);
-		}
-
-		Text[CursorY - 1][CursorX - 1] = c;
+		AText[CursorY - 1][CursorX - 1] = c;
 		Format[CursorY - 1][CursorX - 1] = CurrentFormat;
 
 		switch (CurrentFormat) {
 		case FORMAT_NORMAL:
-			XSetForeground(display, ularn_gc, black_pixel);
+			SetAPen(UlarnRP, BLACK_PEN);
 			break;
 		case FORMAT_STANDOUT:
-			XSetForeground(display, ularn_gc, Red.pixel);
+			SetAPen(UlarnRP, RED_PEN);
 			break;
 		case FORMAT_STANDOUT2:
-			XSetForeground(display, ularn_gc, Green.pixel);
+			SetAPen(UlarnRP, GREEN_PEN);
 			break;
 		case FORMAT_STANDOUT3:
-			XSetForeground(display, ularn_gc, Blue.pixel);
+			SetAPen(UlarnRP, BLUE_PEN);
 			break;
 		default:
 			break;
 		}
 
-		XDrawString(display, ularn_window, ularn_gc,
-			    TLeft + (CursorX - 1) * CharWidth,
-			    TTop + (CursorY - 1) * CharHeight + CharAscent,
-			    &c, 1);
+		Move(UlarnRP,
+		     TLeft + (CursorX - 1) * CharWidth,
+		     TTop + (CursorY - 1) * CharHeight + CharBaseline);
+
+		Text(UlarnRP, &c, 1);
 
 		IncCursorX(1);
 		break;
@@ -2724,10 +2351,6 @@ void Print(char *string)
 
 	for (pos = 0; pos < Len; pos++)
 		Printc(string[pos]);
-
-	XFlush(display);
-	XSync(display, 0);
-
 }
 
 /* =============================================================================
@@ -2773,20 +2396,15 @@ void ClearToEOL(void)
 	int x;
 
 	for (x = CursorX; x <= LINE_LENGTH; x++) {
-		Text[CursorY - 1][x - 1] = ' ';
+		AText[CursorY - 1][x - 1] = ' ';
 		Format[CursorY - 1][x - 1] = FORMAT_NORMAL;
 	}
 
+	Move(UlarnRP,
+	     TLeft + (CursorX - 1) * CharWidth,
+	     TTop + (CursorY - 1) * CharHeight + CharBaseline);
 
-	XSetForeground(display, ularn_gc, white_pixel);
-	XSetBackground(display, ularn_gc, black_pixel);
-	XSetFillStyle(display, ularn_gc, FillSolid);
-
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       TLeft + (CursorX - 1) * CharWidth,
-		       TTop + (CursorY - 1) * CharHeight,
-		       ((LINE_LENGTH - CursorX) + 1) * CharWidth,
-		       CharHeight);
+	Text(UlarnRP, &(AText[CursorY - 1][CursorX - 1]), (LINE_LENGTH - CursorX) + 1);
 
 }
 
@@ -2798,31 +2416,21 @@ void ClearToEOPage(int x, int y)
 	int tx, ty;
 
 	for (tx = x; tx <= LINE_LENGTH; tx++) {
-		Text[y - 1][tx - 1] = ' ';
+		AText[y - 1][tx - 1] = ' ';
 		Format[y - 1][tx - 1] = FORMAT_NORMAL;
 	}
 
-	XSetForeground(display, ularn_gc, white_pixel);
-	XSetBackground(display, ularn_gc, black_pixel);
-	XSetFillStyle(display, ularn_gc, FillSolid);
-
-	XFillRectangle(display, ularn_window, ularn_gc,
-		       TLeft + (x - 1) * CharWidth,
-		       TTop + (y - 1) * CharHeight,
-		       ((LINE_LENGTH - x) + 1) * CharWidth,
-		       CharHeight);
+	Move(UlarnRP, TLeft + (x - 1) * CharWidth, TTop + (y - 1) * CharHeight + CharBaseline);
+	Text(UlarnRP, &(AText[y - 1][x - 1]), (LINE_LENGTH - x) + 1);
 
 	for (ty = y + 1; ty <= MaxLine; ty++) {
 		for (tx = 1; tx <= LINE_LENGTH; tx++) {
-			Text[ty - 1][tx - 1] = ' ';
+			AText[ty - 1][tx - 1] = ' ';
 			Format[ty - 1][tx - 1] = FORMAT_NORMAL;
 		}
 
-		XFillRectangle(display, ularn_window, ularn_gc,
-			       TLeft,
-			       TTop + (ty - 1) * CharHeight,
-			       LINE_LENGTH * CharWidth,
-			       CharHeight);
+		Move(UlarnRP, TLeft, TTop + (ty - 1) * CharHeight + CharBaseline);
+		Text(UlarnRP, AText[ty - 1], LINE_LENGTH);
 
 	}
 
@@ -2837,7 +2445,7 @@ void show1cell(int x, int y)
 	int sx, sy;
 	int TileX, TileY;
 
-	/* see nothing if blind		*/
+	/* see nothing if blind   */
 	if (c[BLINDCOUNT]) return;
 
 	/* we end up knowing about it */
@@ -2862,10 +2470,13 @@ void show1cell(int x, int y)
 	TileX = (TileId % 16) * TileWidth;
 	TileY = (TileId / 16) * TileHeight;
 
-	XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-		  TileX, TileY,
-		  TileWidth, TileHeight,
-		  MapLeft + sx * TileWidth, MapTop + sy * TileHeight);
+	BltBitMapRastPort(
+		UlarnGfx,
+		TileX, TileY,
+		UlarnRP,
+		MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+		TileWidth, TileHeight,
+		0xc0);
 
 }
 
@@ -2900,28 +2511,35 @@ void showplayer(void)
 			TileX = (TileId % 16) * TileWidth;
 			TileY = (TileId / 16) * TileHeight;
 
-			XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-				  TileX, TileY,
-				  TileWidth, TileHeight,
-				  MapLeft + sx * TileWidth, MapTop + sy * TileHeight);
+			BltBitMapRastPort(
+				UlarnGfx,
+				TileX, TileY,
+				UlarnRP,
+				MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+				TileWidth, TileHeight,
+				0xc0);
 
 			TileId = TILE_CURSOR1;
 			TileX = (TileId % 16) * TileWidth;
 			TileY = (TileId / 16) * TileHeight;
+			BltBitMapRastPort(
+				UlarnGfx,
+				TileX, TileY,
+				UlarnRP,
+				MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+				TileWidth, TileHeight,
+				0x80);
 
-			XSetClipOrigin(display, ularn_gc,
-				       MapLeft + sx * TileWidth - TileX,
-				       MapTop + sy * TileHeight - TileY);
-			XSetClipMask(display, ularn_gc, TilePShape);
-			XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-				  TileX, TileY,
-				  TileWidth, TileHeight,
-				  MapLeft + sx * TileWidth,
-				  MapTop + sy * TileHeight);
-
-
-			XSetClipOrigin(display, ularn_gc, 0, 0);
-			XSetClipMask(display, ularn_gc, None);
+			TileId = TILE_CURSOR2;
+			TileX = (TileId % 16) * TileWidth;
+			TileY = (TileId / 16) * TileHeight;
+			BltBitMapRastPort(
+				UlarnGfx,
+				TileX, TileY,
+				UlarnRP,
+				MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+				TileWidth, TileHeight,
+				0xe0);
 
 		} /* If player on visible map area */
 	}
@@ -2954,7 +2572,7 @@ void showcell(int x, int y)
 		maxx = x + 3;
 		miny = y - 3;
 		maxy = y + 3;
-	}else   {
+	}else {
 		minx = x - 1;
 		maxx = x + 1;
 		miny = y - 1;
@@ -2989,10 +2607,13 @@ void showcell(int x, int y)
 				TileX = (TileId % 16) * TileWidth;
 				TileY = (TileId / 16) * TileHeight;
 
-				XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-					  TileX, TileY,
-					  TileWidth, TileHeight,
-					  MapLeft + sx * TileWidth, MapTop + sy * TileHeight);
+				BltBitMapRastPort(
+					UlarnGfx,
+					TileX, TileY,
+					UlarnRP,
+					MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+					TileWidth, TileHeight,
+					0xc0);
 			}
 
 		}
@@ -3046,10 +2667,13 @@ void showcell(int x, int y)
 						TileX = (TileId % 16) * TileWidth;
 						TileY = (TileId / 16) * TileHeight;
 
-						XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-							  TileX, TileY,
-							  TileWidth, TileHeight,
-							  MapLeft + sx * TileWidth, MapTop + sy * TileHeight);
+						BltBitMapRastPort(
+							UlarnGfx,
+							TileX, TileY,
+							UlarnRP,
+							MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+							TileWidth, TileHeight,
+							0xc0);
 
 					}
 
@@ -3092,7 +2716,7 @@ void mapeffect(int x, int y, DirEffectsType effect, int dir)
 	int sx, sy;
 	int TileX, TileY;
 
-	/* see nothing if blind		*/
+	/* see nothing if blind   */
 	if (c[BLINDCOUNT]) return;
 
 	sx = x - MapTileLeft;
@@ -3112,10 +2736,13 @@ void mapeffect(int x, int y, DirEffectsType effect, int dir)
 	TileX = (TileId % 16) * TileWidth;
 	TileY = (TileId / 16) * TileHeight;
 
-	XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-		  TileX, TileY,
-		  TileWidth, TileHeight,
-		  MapLeft + sx * TileWidth, MapTop + sy * TileHeight);
+	BltBitMapRastPort(
+		UlarnGfx,
+		TileX, TileY,
+		UlarnRP,
+		MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+		TileWidth, TileHeight,
+		0xc0);
 }
 
 /* =============================================================================
@@ -3142,7 +2769,7 @@ void magic_effect(int x, int y, MagicEffectsType fx, int frame)
 	 * draw the tile that is at this location
 	 */
 
-	/* see nothing if blind		*/
+	/* see nothing if blind   */
 	if (c[BLINDCOUNT]) return;
 
 	sx = x - MapTileLeft;
@@ -3163,39 +2790,47 @@ void magic_effect(int x, int y, MagicEffectsType fx, int frame)
 		TileX = (TileId % 16) * TileWidth;
 		TileY = (TileId / 16) * TileHeight;
 
-		XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-			  TileX, TileY,
-			  TileWidth, TileHeight,
-			  MapLeft + sx * TileWidth, MapTop + sy * TileHeight);
+		BltBitMapRastPort(
+			UlarnGfx,
+			TileX, TileY,
+			UlarnRP,
+			MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+			TileWidth, TileHeight,
+			0xc0);
 
 		TileId = magicfx_tile[fx].Tile1[frame];
 		TileX = (TileId % 16) * TileWidth;
 		TileY = (TileId / 16) * TileHeight;
+		BltBitMapRastPort(
+			UlarnGfx,
+			TileX, TileY,
+			UlarnRP,
+			MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+			TileWidth, TileHeight,
+			0x80);
 
-		XSetClipOrigin(display, ularn_gc,
-			       MapLeft + sx * TileWidth - TileX,
-			       MapTop + sy * TileHeight - TileY);
-		XSetClipMask(display, ularn_gc, TilePShape);
-		XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-			  TileX, TileY,
-			  TileWidth, TileHeight,
-			  MapLeft + sx * TileWidth,
-			  MapTop + sy * TileHeight);
-
-
-		XSetClipOrigin(display, ularn_gc, 0, 0);
-		XSetClipMask(display, ularn_gc, None);
-
+		TileId = magicfx_tile[fx].Tile2[frame];
+		TileX = (TileId % 16) * TileWidth;
+		TileY = (TileId / 16) * TileHeight;
+		BltBitMapRastPort(
+			UlarnGfx,
+			TileX, TileY,
+			UlarnRP,
+			MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+			TileWidth, TileHeight,
+			0xe0);
 	}else {
 		TileId = magicfx_tile[fx].Tile1[frame];
 		TileX = (TileId % 16) * TileWidth;
 		TileY = (TileId / 16) * TileHeight;
 
-		XCopyArea(display, TilePixmap, ularn_window, ularn_gc,
-			  TileX, TileY,
-			  TileWidth, TileHeight,
-			  MapLeft + sx * TileWidth, MapTop + sy * TileHeight);
-
+		BltBitMapRastPort(
+			UlarnGfx,
+			TileX, TileY,
+			UlarnRP,
+			MapLeft + sx * TileWidth, MapTop + sy * TileHeight,
+			TileWidth, TileHeight,
+			0xc0);
 	}
 
 }
@@ -3205,19 +2840,92 @@ void magic_effect(int x, int y, MagicEffectsType fx, int frame)
  */
 void nap(int delay)
 {
-	XFlush(display);
-	XSync(display, 0);
-	usleep(delay * 1000);
+	//
+	// Delay for delay/20 ticks (50 ticks per second)
+	//
+	Delay(delay / 20);
+
 }
+
+//
+//
+//
+
+static char *UserName;
+
 
 /* =============================================================================
  * FUNCTION: GetUser
  */
 void GetUser(char *username, int *uid)
 {
+	FILE *fp;
+	char TmpName[80];
+	int TmpPid;
+	int Found;
+	int n;
 
-	*uid = getuid();
+	/* Set the buffer the name dialog is to use to store the input name */
+	UserName = username;
+	/* uid = -1 indicated failure to determine uid */
+	*uid = -1;
 
-	strcpy(username, getenv("USER"));
+	if (username[0] == 0) {
+		//
+		// Name is not yet specified, so ask player for the name
+		//
+		Print("Who are you? ");
+		get_string_input(username, USERNAME_LENGTH);
+
+		if (strlen(username) == 0)
+			strcpy(username, "Anon");
+	}
+
+	/* get the Player Id */
+
+	fp = fopen(PIDName, "rb");
+	if (fp == NULL) {
+		/* Need to create the PID file. */
+		fp = fopen(PIDName, "wb");
+		if (fp != NULL) {
+			*uid = FIRST_PID;
+			fwrite(username, USERNAME_LENGTH + 1, 1, fp);
+			fwrite(uid, sizeof(int), 1, fp);
+
+			fclose(fp);
+		}
+	}else {
+		/* search the PID file for this player id */
+		Found = 0;
+		TmpPid = FIRST_PID;
+		while (!feof(fp) && !Found) {
+			n = fread(TmpName, USERNAME_LENGTH + 1, 1, fp);
+			if (n == 1)
+				n = fread(&TmpPid, sizeof(int), 1, fp);
+
+			if (n == 1) {
+				if (strcmp(TmpName, username) == 0) {
+					*uid = TmpPid;
+					Found = 1;
+				}
+			}
+
+		}
+
+		fclose(fp);
+
+		if (!Found) {
+			*uid = TmpPid + 1;
+			fp = fopen(PIDName, "ab");
+			if (fp != NULL) {
+				fwrite(username, USERNAME_LENGTH + 1, 1, fp);
+				fwrite(uid, sizeof(int), 1, fp);
+
+				fclose(fp);
+			}
+		}
+
+	}
+
 }
 

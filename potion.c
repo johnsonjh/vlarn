@@ -34,41 +34,41 @@
 /*  name array for magic potions  */
 char *potionname[MAXPOTION] =
 {
-  " sleep",
-  " healing",
-  " raise level",
-  " increase ability",
-  " wisdom",
-  " strength",
-  " raise charisma",
-  " dizziness",
-  " learning",
-  " gold detection",
-  " monster detection",
-  " forgetfulness",
-  " water",
-  " blindness",
-  " confusion",
-  " heroism",
-  " sturdiness",
-  " giant strength",
-  " fire resistance",
-  " treasure finding",
-  " instant healing",
-  " cure dianthroritis",
-  " poison",
-  " see invisible",
-  "  ",
-  "  ",
-  "  ",
-  "  ",
-  "  ",
-  "  ",
-  "  ",
-  "  ",
-  "  ",
-  "  ",
-  "  "
+	" sleep",
+	" healing",
+	" raise level",
+	" increase ability",
+	" wisdom",
+	" strength",
+	" raise charisma",
+	" dizziness",
+	" learning",
+	" gold detection",
+	" monster detection",
+	" forgetfulness",
+	" water",
+	" blindness",
+	" confusion",
+	" heroism",
+	" sturdiness",
+	" giant strength",
+	" fire resistance",
+	" treasure finding",
+	" instant healing",
+	" cure dianthroritis",
+	" poison",
+	" see invisible",
+	"  ",
+	"  ",
+	"  ",
+	"  ",
+	"  ",
+	"  ",
+	"  ",
+	"  ",
+	"  ",
+	"  ",
+	"  "
 };
 
 /* =============================================================================
@@ -86,30 +86,30 @@ char *potionname[MAXPOTION] =
 
 static char potprob[POTION_PROB_SIZE] =
 {
-  PSLEEP, PSLEEP,
-  PHEALING, PHEALING, PHEALING,
-  PRAISELEVEL,
-  PINCABILITY, PINCABILITY, 
-  PWISDOM, PWISDOM,
-  PSTRENGTH, PSTRENGTH, 
-  PCHARISMA, PCHARISMA,
-  PDIZZINESS, PDIZZINESS,
-  PLEARNING,
-  PGOLDDET, PGOLDDET, PGOLDDET,
-  PMONSTDET, PMONSTDET, PMONSTDET,
-  PFORGETFUL, PFORGETFUL,
-  PWATER, PWATER,
-  PBLINDNESS,
-  PCONFUSION,
-  PHEROISM,
-  PSTURDINESS,
-  PGIANTSTR,
-  PFIRERESIST,
-  PTREASURE, PTREASURE,
-  PINSTHEAL, PINSTHEAL,
-  /* No Cure Dianthroritis */
-  PPOISON, PPOISON,
-  PSEEINVIS, PSEEINVIS
+	PSLEEP,	     PSLEEP,
+	PHEALING,    PHEALING,	 PHEALING,
+	PRAISELEVEL,
+	PINCABILITY, PINCABILITY,
+	PWISDOM,     PWISDOM,
+	PSTRENGTH,   PSTRENGTH,
+	PCHARISMA,   PCHARISMA,
+	PDIZZINESS,  PDIZZINESS,
+	PLEARNING,
+	PGOLDDET,    PGOLDDET,	 PGOLDDET,
+	PMONSTDET,   PMONSTDET,	 PMONSTDET,
+	PFORGETFUL,  PFORGETFUL,
+	PWATER,	     PWATER,
+	PBLINDNESS,
+	PCONFUSION,
+	PHEROISM,
+	PSTURDINESS,
+	PGIANTSTR,
+	PFIRERESIST,
+	PTREASURE,   PTREASURE,
+	PINSTHEAL,   PINSTHEAL,
+	/* No Cure Dianthroritis */
+	PPOISON,     PPOISON,
+	PSEEINVIS,   PSEEINVIS
 };
 
 /* =============================================================================
@@ -121,7 +121,7 @@ static char potprob[POTION_PROB_SIZE] =
  */
 int newpotion(void)
 {
-  return (potprob[rund(POTION_PROB_SIZE)]);
+	return potprob[rund(POTION_PROB_SIZE)];
 }
 
 /* =============================================================================
@@ -129,223 +129,191 @@ int newpotion(void)
  */
 void quaffpotion(int pot)
 {
-  int i,j;
-  int k;
+	int i, j;
+	int k;
 
-  /* check for within bounds */
-  if (pot<0 || pot>=MAXPOTION) return;
+	/* check for within bounds */
+	if (pot < 0 || pot >= MAXPOTION) return;
 
-  if (potionknown[pot] == 0) potionknown[pot] = 1;
-  Printf("\nYou drink a potion of %s.", &potionname[pot][1]);
+	if (potionknown[pot] == 0) potionknown[pot] = 1;
+	Printf("\nYou drink a potion of %s.", &potionname[pot][1]);
 
-  /* 
-   * In the switch, if no status/attr changes then use return, 
-   * else use break to get the UpdateStatusAndEffects call.
-   */
-  
-  switch (pot)
-  {
-    case PSLEEP:
-      Print("\n  You fall asleep...");
-      i=rnd(11)-(c[CONSTITUTION]>>2)+2;
-      while(--i>0)
-      {
-        parse2();
-        nap(1000);
-      }
+	/*
+	 * In the switch, if no status/attr changes then use return,
+	 * else use break to get the UpdateStatusAndEffects call.
+	 */
 
-      Print("\n.. you wake up.");
-      return;
+	switch (pot) {
+	case PSLEEP:
+		Print("\n  You fall asleep...");
+		i = rnd(11) - (c[CONSTITUTION] >> 2) + 2;
+		while (--i > 0) {
+			parse2();
+			nap(1000);
+		}
 
-    case PHEALING:
-      Print("\n  You feel better.");
-      if (c[HP] == c[HPMAX])
-      {
-        /* Already fully healed, so increase max hp */
-        raisemhp(1);
-      }
-      else if ((c[HP] += rnd(20)+20+c[LEVEL]) > c[HPMAX])
-      {
-        c[HP]=c[HPMAX];
-      }
-      break;
+		Print("\n.. you wake up.");
+		return;
 
-    case PRAISELEVEL:
-      Print("\n  You feel much more skillful!");
-      raiselevel();
-      raisemhp(1);
-      break;
+	case PHEALING:
+		Print("\n  You feel better.");
+		if (c[HP] == c[HPMAX])
+			/* Already fully healed, so increase max hp */
+			raisemhp(1);
+		else if ((c[HP] += rnd(20) + 20 + c[LEVEL]) > c[HPMAX])
+			c[HP] = c[HPMAX];
+		break;
 
-    case PINCABILITY:
-      Print("\n  You feel strange for a moment.");
-      i = ABILITY_FIRST + rund(ABILITY_COUNT);
-      c[i]++;
-      break;
+	case PRAISELEVEL:
+		Print("\n  You feel much more skillful!");
+		raiselevel();
+		raisemhp(1);
+		break;
 
-    case PWISDOM:
-      Print("\n  You feel more self-confident!");
-      c[WISDOM] += rnd(2);
-      break;
+	case PINCABILITY:
+		Print("\n  You feel strange for a moment.");
+		i = ABILITY_FIRST + rund(ABILITY_COUNT);
+		c[i]++;
+		break;
 
-    case PSTRENGTH:
-      Print("\n  Wow!  You feel great!");
-      if (c[STRENGTH]<12)
-      {
-        c[STRENGTH]=12;
-      }
-      else
-      {
-        c[STRENGTH]++;
-      }
-      break;
+	case PWISDOM:
+		Print("\n  You feel more self-confident!");
+		c[WISDOM] += rnd(2);
+		break;
 
-    case PCHARISMA:
-      Print("\n  You feel charismatic!");
-      c[CHARISMA]++;
-      break;
+	case PSTRENGTH:
+		Print("\n  Wow!  You feel great!");
+		if (c[STRENGTH] < 12)
+			c[STRENGTH] = 12;
+		else
+			c[STRENGTH]++;
+		break;
 
-    case PDIZZINESS:
-      Print("\n  You become dizzy!");
-      if (--c[STRENGTH] < 3) c[STRENGTH]=3;
-      break;
+	case PCHARISMA:
+		Print("\n  You feel charismatic!");
+		c[CHARISMA]++;
+		break;
 
-    case PLEARNING:
-      Print("\n  You feel clever!");
-      c[INTELLIGENCE]++;
-      break;
+	case PDIZZINESS:
+		Print("\n  You become dizzy!");
+		if (--c[STRENGTH] < 3) c[STRENGTH] = 3;
+		break;
 
-    case PGOLDDET:
-      Print("\n  You feel greedy...");
-      nap(2000);
+	case PLEARNING:
+		Print("\n  You feel clever!");
+		c[INTELLIGENCE]++;
+		break;
 
-      for (i=0; i<MAXY; i++)
-      {
-        for (j=0; j<MAXX; j++)
-        {
-          if ((item[j][i]==OGOLDPILE) || (item[j][i]==OMAXGOLD))
-          {
-            show1cell(j, i);
-          }
-        }
-      }
-      showplayer();
-      return;
+	case PGOLDDET:
+		Print("\n  You feel greedy...");
+		nap(2000);
 
-    case PMONSTDET:
-      for (i = 0; i < MAXY; i++)
-      {
-        for (j = 0; j < MAXX; j++)
-        {
-          if (mitem[j][i].mon)
-          {
-            show1cell(j, i);
-          }
-        }
-      }
-      return;
+		for (i = 0; i < MAXY; i++) {
+			for (j = 0; j < MAXX; j++)
+				if ((item[j][i] == OGOLDPILE) || (item[j][i] == OMAXGOLD))
+					show1cell(j, i);
+		}
+		showplayer();
+		return;
 
-    case PFORGETFUL:
-      Print("\n  You stagger for a moment...");
+	case PMONSTDET:
+		for (i = 0; i < MAXY; i++) {
+			for (j = 0; j < MAXX; j++)
+				if (mitem[j][i].mon)
+					show1cell(j, i);
+		}
+		return;
 
-      for (i=0; i<MAXY; i++)
-      {
-        for (j=0; j<MAXX; j++)
-        {
-          know[j][i]=OUNKNOWN;
-        }
-      }
-      nap(2000);
-      draws(0, MAXX, 0, MAXY);
-      return;
+	case PFORGETFUL:
+		Print("\n  You stagger for a moment...");
 
-    case PWATER:
-      return;
+		for (i = 0; i < MAXY; i++)
+			for (j = 0; j < MAXX; j++)
+				know[j][i] = OUNKNOWN;
+		nap(2000);
+		draws(0, MAXX, 0, MAXY);
+		return;
 
-    case PBLINDNESS:
-      Print("\n  You can't see anything!");
-      c[BLINDCOUNT]+=250;  /* dang, that's a long time. */
-      /* erase the character, too! */
+	case PWATER:
+		return;
 
-      showplayer();
-      return;
+	case PBLINDNESS:
+		Print("\n  You can't see anything!");
+		c[BLINDCOUNT] += 250; /* dang, that's a long time. */
+		/* erase the character, too! */
 
-    case PCONFUSION:
-      Print("\n  You feel confused.");
-      c[CONFUSE]+= 20+rnd(9);
-      return;
+		showplayer();
+		return;
 
-    case PHEROISM:
-      Print("\n  WOW!  You feel fantastic!");
-      if (c[HERO]==0)
-      {
-        for (i = ABILITY_FIRST ; i <= ABILITY_LAST ; i++)
-        {
-          c[i] += PHEROISM_BOOST;
-        }
-      }
-      c[HERO] += 250;
-      break;
+	case PCONFUSION:
+		Print("\n  You feel confused.");
+		c[CONFUSE] += 20 + rnd(9);
+		return;
 
-    case PSTURDINESS:
-      Print("\n  You feel healthier!");
-      c[CONSTITUTION]++;
-      break;
+	case PHEROISM:
+		Print("\n  WOW!  You feel fantastic!");
+		if (c[HERO] == 0)
+			for (i = ABILITY_FIRST; i <= ABILITY_LAST; i++)
+				c[i] += PHEROISM_BOOST;
+		c[HERO] += 250;
+		break;
 
-    case PGIANTSTR:
-      Print("\n  You now have incredible bulging muscles!");
-      if (c[GIANTSTR]==0) c[STREXTRA] += PGIANTSTR_BOOST;
-      c[GIANTSTR] += 700;
-      break;
+	case PSTURDINESS:
+		Print("\n  You feel healthier!");
+		c[CONSTITUTION]++;
+		break;
 
-    case PFIRERESIST:
-      Print("\n  You feel a chill run up your spine!");
-      c[FIRERESISTANCE] += 1000;
-      break;
+	case PGIANTSTR:
+		Print("\n  You now have incredible bulging muscles!");
+		if (c[GIANTSTR] == 0) c[STREXTRA] += PGIANTSTR_BOOST;
+		c[GIANTSTR] += 700;
+		break;
 
-    case PTREASURE:
-      Print("\n  You feel greedy...");
-      nap(2000);
-      for (i=0; i<MAXY; i++)
-      {
-        for (j=0; j<MAXX; j++)
-        {
-          k=item[j][i];
-          if ((k==ODIAMOND) || (k==ORUBY) || (k==OEMERALD) ||
-              (k==OMAXGOLD) || (k==OSAPPHIRE) || (k==OLARNEYE) ||
-              (k==OGOLDPILE))
-          {
-            show1cell(j,i);
-          }
-        }
-      }
-      showplayer();
-      return;
+	case PFIRERESIST:
+		Print("\n  You feel a chill run up your spine!");
+		c[FIRERESISTANCE] += 1000;
+		break;
 
-    case PINSTHEAL:
-      c[HP] = c[HPMAX];
-      removecurse();
-      break;
+	case PTREASURE:
+		Print("\n  You feel greedy...");
+		nap(2000);
+		for (i = 0; i < MAXY; i++) {
+			for (j = 0; j < MAXX; j++) {
+				k = item[j][i];
+				if ((k == ODIAMOND) || (k == ORUBY) || (k == OEMERALD) ||
+				    (k == OMAXGOLD) || (k == OSAPPHIRE) || (k == OLARNEYE) ||
+				    (k == OGOLDPILE))
+					show1cell(j, i);
+			}
+		}
+		showplayer();
+		return;
 
-    case PCUREDIANTH:
-      Print("\n  You don't seem to be affected.");
-      return;
+	case PINSTHEAL:
+		c[HP] = c[HPMAX];
+		removecurse();
+		break;
 
-    case PPOISON:
-      Print("\n  You feel a sickness engulf you!");
-      c[HALFDAM] += 200 + rnd(200);
-      return;
+	case PCUREDIANTH:
+		Print("\n  You don't seem to be affected.");
+		return;
 
-    case PSEEINVIS:
-      Print("\n  You feel your vision sharpen.");
-      c[SEEINVISIBLE] += rnd(1000)+400;
-      monstnamelist[INVISIBLESTALKER] = 'I';
-      return;
+	case PPOISON:
+		Print("\n  You feel a sickness engulf you!");
+		c[HALFDAM] += 200 + rnd(200);
+		return;
 
-    default:
-      break;
-  }
+	case PSEEINVIS:
+		Print("\n  You feel your vision sharpen.");
+		c[SEEINVISIBLE] += rnd(1000) + 400;
+		monstnamelist[INVISIBLESTALKER] = 'I';
+		return;
 
-  /*  show new stats    */
-  UpdateStatusAndEffects();
-  return;
+	default:
+		break;
+	}
+
+	/*  show new stats    */
+	UpdateStatusAndEffects();
+	return;
 }

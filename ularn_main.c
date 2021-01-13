@@ -6,9 +6,9 @@
 
 int main(int argc, char *argv[])
 {
-  InitApp(":0");
+	InitApp(":0");
 
-  CloseApp();
+	CloseApp();
 
-  return 0;
+	return 0;
 }

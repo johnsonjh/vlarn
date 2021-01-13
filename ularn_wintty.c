@@ -105,102 +105,100 @@ int CaretActive = 0;
 
 #define MAX_KEY_BINDINGS 3
 
-struct KeyCodeType
-{
-  int VirtKey;
-  int ModKey;
+struct KeyCodeType {
+	int VirtKey;
+	int ModKey;
 };
 
 #define NUM_DIRS 8
 static ActionType DirActions[NUM_DIRS] =
 {
-  ACTION_MOVE_WEST,
-  ACTION_MOVE_EAST,
-  ACTION_MOVE_SOUTH,
-  ACTION_MOVE_NORTH,
-  ACTION_MOVE_NORTHEAST,
-  ACTION_MOVE_NORTHWEST,
-  ACTION_MOVE_SOUTHEAST,
-  ACTION_MOVE_SOUTHWEST
+	ACTION_MOVE_WEST,
+	ACTION_MOVE_EAST,
+	ACTION_MOVE_SOUTH,
+	ACTION_MOVE_NORTH,
+	ACTION_MOVE_NORTHEAST,
+	ACTION_MOVE_NORTHWEST,
+	ACTION_MOVE_SOUTHEAST,
+	ACTION_MOVE_SOUTHWEST
 };
 
 /* Default keymap */
 /* Allow up to MAX_KEY_BINDINGS per action */
 static struct KeyCodeType KeyMap[ACTION_COUNT][MAX_KEY_BINDINGS] =
 {
-  { { 0, 0 },         { 0, 0 }, { 0, 0 } },                   // ACTION_NULL
-  { { '~', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_DIAG
-  { { 'h', M_ASCII }, { KEY_LEFT,  M_ASCII },  { 0, 0 } },    // ACTION_MOVE_WEST
-  { { 'H', M_ASCII }, { 0, 0 },                { 0, 0 } },    // ACTION_RUN_WEST
-  { { 'l', M_ASCII }, { KEY_RIGHT, M_ASCII },  { 0, 0 } },    // ACTION_MOVE_EAST,
-  { { 'L', M_ASCII }, { 0, 0 },                { 0, 0 } },    // ACTION_RUN_EAST,
-  { { 'j', M_ASCII }, { KEY_DOWN,  M_ASCII },  { 0, 0 } },    // ACTION_MOVE_SOUTH,
-  { { 'J', M_ASCII }, { 0, 0 },                { 0, 0 } },    // ACTION_RUN_SOUTH,
-  { { 'k', M_ASCII }, { KEY_UP,    M_ASCII },  { 0, 0 } },    // ACTION_MOVE_NORTH,
-  { { 'K', M_ASCII }, { 0, 0 },                { 0, 0 } },    // ACTION_RUN_NORTH,
-  { { 'u', M_ASCII }, { KEY_A3, M_ASCII },     { 0, 0 } },    // ACTION_MOVE_NORTHEAST,
-  { { 'U', M_ASCII }, { 0, 0 },                { 0, 0 } },    // ACTION_RUN_NORTHEAST,
-  { { 'y', M_ASCII }, { KEY_A1, M_ASCII },     { 0, 0 } },    // ACTION_MOVE_NORTHWEST,
-  { { 'Y', M_ASCII }, { 0, 0 },                { 0, 0 } },    // ACTION_RUN_NORTHWEST,
-  { { 'n', M_ASCII }, { KEY_C3, M_ASCII },     { 0, 0 } },    // ACTION_MOVE_SOUTHEAST,
-  { { 'N', M_ASCII }, { 0, 0 },                { 0, 0 } },    // ACTION_RUN_SOUTHEAST,
-  { { 'b', M_ASCII }, { KEY_C1, M_ASCII },     { 0, 0 } },    // ACTION_MOVE_SOUTHWEST,
-  { { 'B', M_ASCII }, { 0, 0 },                { 0, 0 } },    // ACTION_RUN_SOUTHWEST,
-  { { '.', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_WAIT,
-  { { ' ', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_NONE,
-  { { 'w', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_WIELD,
-  { { 'W', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_WEAR,
-  { { 'r', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_READ,
-  { { 'q', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_QUAFF,
-  { { 'd', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_DROP,
-  { { 'c', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_CAST_SPELL,
-  { { 'o', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_OPEN_DOOR
-  { { 'C', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_CLOSE_DOOR,
-  { { 'O', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_OPEN_CHEST
-  { { 'i', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_INVENTORY,
-  { { 'e', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_EAT_COOKIE,
-  { { '\\',M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_LIST_SPELLS,
-  { { '?', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_HELP,
-  { { 'S', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_SAVE,
-  { { 'Z', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_TELEPORT,
-  { { '^', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_IDENTIFY_TRAPS,
-  { { '_', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_BECOME_CREATOR,
-  { { '+', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_CREATE_ITEM,
-  { { '-', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_TOGGLE_WIZARD,
-  { { '`', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_DEBUG_MODE,
-  { { 'T', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_REMOVE_ARMOUR,
-  { { 'g', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_PACK_WEIGHT,
-  { { 'v', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_VERSION,
-  { { 'Q', M_ASCII }, { 0, 0 }, { 0, 0 } },                   // ACTION_QUIT,
-  { {  18, M_ASCII  }, { 0, 0 }, { 0, 0 } },                  // ACTION_REDRAW_SCREEN,
-  { { 'P', M_ASCII }, { 0, 0 }, { 0, 0 } }                    // ACTION_SHOW_TAX
+	{ { 0,	  0	   },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_NULL
+	{ { '~',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_DIAG
+	{ { 'h',  M_ASCII  },	      { KEY_LEFT,  M_ASCII    },		{ 0, 0 } },     // ACTION_MOVE_WEST
+	{ { 'H',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_RUN_WEST
+	{ { 'l',  M_ASCII  },	      { KEY_RIGHT, M_ASCII    },		{ 0, 0 } },     // ACTION_MOVE_EAST,
+	{ { 'L',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_RUN_EAST,
+	{ { 'j',  M_ASCII  },	      { KEY_DOWN,  M_ASCII    },		{ 0, 0 } },     // ACTION_MOVE_SOUTH,
+	{ { 'J',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_RUN_SOUTH,
+	{ { 'k',  M_ASCII  },	      { KEY_UP,	   M_ASCII    },		{ 0, 0 } },     // ACTION_MOVE_NORTH,
+	{ { 'K',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_RUN_NORTH,
+	{ { 'u',  M_ASCII  },	      { KEY_A3,	   M_ASCII    },		{ 0, 0 } },     // ACTION_MOVE_NORTHEAST,
+	{ { 'U',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_RUN_NORTHEAST,
+	{ { 'y',  M_ASCII  },	      { KEY_A1,	   M_ASCII    },		{ 0, 0 } },     // ACTION_MOVE_NORTHWEST,
+	{ { 'Y',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_RUN_NORTHWEST,
+	{ { 'n',  M_ASCII  },	      { KEY_C3,	   M_ASCII    },		{ 0, 0 } },     // ACTION_MOVE_SOUTHEAST,
+	{ { 'N',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_RUN_SOUTHEAST,
+	{ { 'b',  M_ASCII  },	      { KEY_C1,	   M_ASCII    },		{ 0, 0 } },     // ACTION_MOVE_SOUTHWEST,
+	{ { 'B',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_RUN_SOUTHWEST,
+	{ { '.',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_WAIT,
+	{ { ' ',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_NONE,
+	{ { 'w',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_WIELD,
+	{ { 'W',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_WEAR,
+	{ { 'r',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_READ,
+	{ { 'q',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_QUAFF,
+	{ { 'd',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_DROP,
+	{ { 'c',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_CAST_SPELL,
+	{ { 'o',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_OPEN_DOOR
+	{ { 'C',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_CLOSE_DOOR,
+	{ { 'O',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_OPEN_CHEST
+	{ { 'i',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_INVENTORY,
+	{ { 'e',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_EAT_COOKIE,
+	{ { '\\', M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_LIST_SPELLS,
+	{ { '?',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_HELP,
+	{ { 'S',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_SAVE,
+	{ { 'Z',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_TELEPORT,
+	{ { '^',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_IDENTIFY_TRAPS,
+	{ { '_',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_BECOME_CREATOR,
+	{ { '+',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_CREATE_ITEM,
+	{ { '-',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_TOGGLE_WIZARD,
+	{ { '`',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_DEBUG_MODE,
+	{ { 'T',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_REMOVE_ARMOUR,
+	{ { 'g',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_PACK_WEIGHT,
+	{ { 'v',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_VERSION,
+	{ { 'Q',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_QUIT,
+	{ {  18,  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } },     // ACTION_REDRAW_SCREEN,
+	{ { 'P',  M_ASCII  },	      { 0,	   0	      },		{ 0, 0 } } // ACTION_SHOW_TAX
 };
 
 static struct KeyCodeType RunKeyMap = { KEY_B2, M_ASCII };
 
-typedef enum
-{
-  C_BLACK,
-  C_RED,
-  C_GREEN,
-  C_YELLOW,
-  C_BLUE,
-  C_MAGENTA,
-  C_CYAN,
-  C_WHITE,
-  C_COUNT
+typedef enum {
+	C_BLACK,
+	C_RED,
+	C_GREEN,
+	C_YELLOW,
+	C_BLUE,
+	C_MAGENTA,
+	C_CYAN,
+	C_WHITE,
+	C_COUNT
 } Ularn_Color_Type;
 
 static int ColorPairs[C_COUNT][2] =
 {
-  { COLOR_BLACK,   COLOR_BLACK },
-  { COLOR_RED,     COLOR_BLACK },
-  { COLOR_GREEN,   COLOR_BLACK },
-  { COLOR_YELLOW,  COLOR_BLACK },
-  { COLOR_BLUE,    COLOR_BLACK },
-  { COLOR_MAGENTA, COLOR_BLACK },
-  { COLOR_CYAN,    COLOR_BLACK },
-  { COLOR_WHITE,   COLOR_BLACK }
+	{ COLOR_BLACK,	 COLOR_BLACK	 },
+	{ COLOR_RED,	 COLOR_BLACK	 },
+	{ COLOR_GREEN,	 COLOR_BLACK	 },
+	{ COLOR_YELLOW,	 COLOR_BLACK	 },
+	{ COLOR_BLUE,	 COLOR_BLACK	 },
+	{ COLOR_MAGENTA, COLOR_BLACK	 },
+	{ COLOR_CYAN,	 COLOR_BLACK	 },
+	{ COLOR_WHITE,	 COLOR_BLACK	 }
 };
 
 static int Runkey;
@@ -212,146 +210,145 @@ static int EventChar;
 // Characters for tiles
 //
 
-int WallTile[16] = 
+int WallTile[16] =
 {
-  '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'
-  //'#', '-', '|', '+', '-', '-', '+', '-', '|', '+', '|', '|', '+', '-', '|', '#'
+	'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'
+	//'#', '-', '|', '+', '-', '-', '+', '-', '|', '+', '|', '|', '+', '-', '|', '#'
 };
 
 /* Tiles for directional effects */
 static int EffectTile[EFFECT_COUNT][9] =
 {
-  { '*', '|', '-', '|', '-', '/', '\\', '\\', '/'  },
-  { '*', '|', '-', '|', '-', '/', '\\', '\\', '/'  },
-  { '*', '|', '-', '|', '-', '/', '\\', '\\', '/'  },
-  { '*', '|', '-', '|', '-', '/', '\\', '\\', '/'  },
-  { '*', '|', '-', '|', '-', '/', '\\', '\\', '/'  },
+	{ '*', '|', '-', '|', '-', '/', '\\', '\\', '/'	 },
+	{ '*', '|', '-', '|', '-', '/', '\\', '\\', '/'	 },
+	{ '*', '|', '-', '|', '-', '/', '\\', '\\', '/'	 },
+	{ '*', '|', '-', '|', '-', '/', '\\', '\\', '/'	 },
+	{ '*', '|', '-', '|', '-', '/', '\\', '\\', '/'	 },
 };
 
 static int EffectColor[EFFECT_COUNT] =
 {
-  C_GREEN,
-  C_CYAN,
-  C_RED,
-  C_YELLOW,
-  C_WHITE
+	C_GREEN,
+	C_CYAN,
+	C_RED,
+	C_YELLOW,
+	C_WHITE
 };
 
 #define MAX_MAGICFX_FRAME 8
 
-struct MagicEffectDataType
-{
-  int Frames;                   /* Number of frames in the effect  */
-  int Tile[MAX_MAGICFX_FRAME];  /* The primary tile for this frame */
-  int Color[MAX_MAGICFX_FRAME]; /* Only used for overlay effects   */
+struct MagicEffectDataType {
+	int Frames;                     /* Number of frames in the effect  */
+	int Tile[MAX_MAGICFX_FRAME];    /* The primary tile for this frame */
+	int Color[MAX_MAGICFX_FRAME];   /* Only used for overlay effects   */
 };
 
 static struct MagicEffectDataType magicfx_tile[MAGIC_COUNT] =
 {
-  /* Sparkle */
-  { 
-    8,
-    {  '-', '\\', '|', '/', '-', '\\', '|', '/' },
-    { C_RED, C_YELLOW, C_GREEN, C_CYAN, C_BLUE, C_MAGENTA, C_RED, C_YELLOW }
-  },
+	/* Sparkle */
+	{
+		8,
+		{  '-',	     '\\',	'|',	   '/',	      '-',	'\\',	   '|',	  '/'	   },
+		{ C_RED,     C_YELLOW,	C_GREEN,   C_CYAN,    C_BLUE,	C_MAGENTA, C_RED, C_YELLOW }
+	},
 
-  /* Sleep */
-  {
-    6,
-    { 'z', 'Z', 'z', 'Z', 'z', 'Z', 0, 0 },
-    { C_RED, C_RED, C_GREEN, C_GREEN, C_BLUE, C_BLUE, 0, 0 }
-  },
+	/* Sleep */
+	{
+		6,
+		{ 'z',	     'Z',	'z',	   'Z',	      'z',	'Z',	   0,	  0	   },
+		{ C_RED,     C_RED,	C_GREEN,   C_GREEN,   C_BLUE,	C_BLUE,	   0,	  0	   }
+	},
 
-  /* Web */
-  {
-    6,
-    { '.', 'o', '*', '#', '#', '#', 0, 0 },
-    { C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_GREEN, C_BLUE, 0, 0 }
-  },
+	/* Web */
+	{
+		6,
+		{ '.',	     'o',	'*',	   '#',	      '#',	'#',	   0,	  0	   },
+		{ C_WHITE,   C_WHITE,	C_WHITE,   C_WHITE,   C_GREEN,	C_BLUE,	   0,	  0	   }
+	},
 
-  /* Phantasmal forces */
-  {
-    6,
-    { '.', ':', '^', 'A', 'A', 'A', 0, 0 },
-    { C_BLUE, C_BLUE, C_MAGENTA, C_MAGENTA, C_CYAN, C_CYAN, 0, 0 }
-  },
+	/* Phantasmal forces */
+	{
+		6,
+		{ '.',	     ':',	'^',	   'A',	      'A',	'A',	   0,	  0	   },
+		{ C_BLUE,    C_BLUE,	C_MAGENTA, C_MAGENTA, C_CYAN,	C_CYAN,	   0,	  0	   }
+	},
 
-  /* Cloud kill */
-  {
-    6,
-    { '.', 'o', '*', '#', '#', 'O', 0, 0 },
-    { C_GREEN, C_GREEN, C_GREEN, C_GREEN, C_YELLOW, C_GREEN, 0 ,0 }
-  },
+	/* Cloud kill */
+	{
+		6,
+		{ '.',	     'o',	'*',	   '#',	      '#',	'O',	   0,	  0	   },
+		{ C_GREEN,   C_GREEN,	C_GREEN,   C_GREEN,   C_YELLOW, C_GREEN,   0,	  0	   }
+	},
 
-  /* Vaporize rock */
-  {
-    6,
-    { '.', 'o', '*', '#', '#', 'O', 0, 0 },
-    { C_RED, C_RED, C_RED, C_RED, C_YELLOW, C_RED, 0, 0 }
-  },
+	/* Vaporize rock */
+	{
+		6,
+		{ '.',	     'o',	'*',	   '#',	      '#',	'O',	   0,	  0	   },
+		{ C_RED,     C_RED,	C_RED,	   C_RED,     C_YELLOW, C_RED,	   0,	  0	   }
+	},
 
-  /* Dehydrate */
-  {
-    6,
-    { '.', ':', '|', 'T', '^', '~', 0, 0 },
-    { C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, 0, 0 }
-  },
+	/* Dehydrate */
+	{
+		6,
+		{ '.',	     ':',	'|',	   'T',	      '^',	'~',	   0,	  0	   },
+		{ C_WHITE,   C_WHITE,	C_WHITE,   C_WHITE,   C_WHITE,	C_WHITE,   0,	  0	   }
+	},
 
-  /* Drain life */
-  {
-    6,
-    { '#', '*', '|', ':', 'o', '.', 0, 0 },
-    { C_YELLOW, C_YELLOW, C_YELLOW, C_RED, C_RED, C_RED, 0, 0 }
-  },
+	/* Drain life */
+	{
+		6,
+		{ '#',	     '*',	'|',	   ':',	      'o',	'.',	   0,	  0	   },
+		{ C_YELLOW,  C_YELLOW,	C_YELLOW,  C_RED,     C_RED,	C_RED,	   0,	  0	   }
+	},
 
-  /* Flood */
-  {
-    6,
-    { '.', 'o', 'O', 'o', 'O', 'o', 0, 0 }, 
-    { C_BLUE, C_BLUE, C_BLUE, C_CYAN, C_CYAN, C_BLUE, 0, 0 }
-  },
+	/* Flood */
+	{
+		6,
+		{ '.',	     'o',	'O',	   'o',	      'O',	'o',	   0,	  0	   },
+		{ C_BLUE,    C_BLUE,	C_BLUE,	   C_CYAN,    C_CYAN,	C_BLUE,	   0,	  0	   }
+	},
 
-  /* Finger of death */
-  {
-    6,
-    { '#', '*', '|', ':', 'o', '.', 0, 0 },
-    { C_RED, C_RED, C_MAGENTA, C_MAGENTA, C_BLUE, C_BLUE, 0, 0 }
-  },
+	/* Finger of death */
+	{
+		6,
+		{ '#',	     '*',	'|',	   ':',	      'o',	'.',	   0,	  0	   },
+		{ C_RED,     C_RED,	C_MAGENTA, C_MAGENTA, C_BLUE,	C_BLUE,	   0,	  0	   }
+	},
 
-  /* Teleport away */
-  {
-    6,
-    { ':', '|', 'H', 'H', '|', ':', 0, 0 },
-    { C_CYAN, C_CYAN, C_CYAN, C_BLUE, C_BLUE, C_BLUE, 0, 0 }
-  },
+	/* Teleport away */
+	{
+		6,
+		{ ':',	     '|',	'H',	   'H',	      '|',	':',	   0,	  0	   },
+		{ C_CYAN,    C_CYAN,	C_CYAN,	   C_BLUE,    C_BLUE,	C_BLUE,	   0,	  0	   }
+	},
 
-  /* Magic fire */
-  {
-    6,
-    { '.', 'o', '*', '#', '#', 'O', 0, 0 },
-    { C_RED, C_RED, C_RED, C_RED, C_YELLOW, C_RED, 0 ,0 }
-  },
+	/* Magic fire */
+	{
+		6,
+		{ '.',	     'o',	'*',	   '#',	      '#',	'O',	   0,	  0	   },
+		{ C_RED,     C_RED,	C_RED,	   C_RED,     C_YELLOW, C_RED,	   0,	  0	   }
+	},
 
-  /* Make wall */
-  {
-    6,
-    { '.', ':', 'H', '#', '#', '#', 0, 0 },
-    { C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_RED, C_WHITE, 0, 0 }
-  },
+	/* Make wall */
+	{
+		6,
+		{ '.',	     ':',	'H',	   '#',	      '#',	'#',	   0,	  0	   },
+		{ C_WHITE,   C_WHITE,	C_WHITE,   C_WHITE,   C_RED,	C_WHITE,   0,	  0	   }
+	},
 
-  /* Summon demon */
-  {
-    6,
-    { '.', ':', '^', '8', '8', '8', 0, 0 },
-    { C_MAGENTA, C_MAGENTA, C_RED, C_RED, C_YELLOW, C_YELLOW, 0, 0 }
-  },
+	/* Summon demon */
+	{
+		6,
+		{ '.',	     ':',	'^',	   '8',	      '8',	'8',	   0,	  0	   },
+		{ C_MAGENTA, C_MAGENTA, C_RED,	   C_RED,     C_YELLOW, C_YELLOW,  0,	  0	   }
+	},
 
-  /* Annihilate (scroll) */
-  {
-    6,
-    { '-', '|', '-', '|', '-', '|', 0, 0 },
-    { C_RED, C_RED, C_YELLOW, C_YELLOW, C_GREEN, C_GREEN, 0 ,0 }
-  }
+	/* Annihilate (scroll) */
+	{
+		6,
+		{ '-',	     '|',	'-',	   '|',	      '-',	'|',	   0,	  0	   },
+		{ C_RED,     C_RED,	C_YELLOW,  C_YELLOW,  C_GREEN,	C_GREEN,   0,	  0	   }
+	}
 };
 
 //
@@ -359,89 +356,89 @@ static struct MagicEffectDataType magicfx_tile[MAGIC_COUNT] =
 //
 
 static int ItemAttr[OCOUNT] =
-{ 
-  0, 0,
-  /* Dungeon features */
-  A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE,
-  A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE,
-  0,
-  /* gold piles */
-  0, 0, 0, 0,
-  /* eye of larn */
-  A_STANDOUT,
-  /* armour */
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0,
-  /* weapons */
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0,
-  /* rings */
-  0, 0, 0, 0, 0, 0, 0, 0,
-  /* magic items */
-  0, 0, 0, A_REVERSE, A_REVERSE, A_BOLD, 0, A_BOLD,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0,
-  /* gems */
-  0, 0, 0, 0,
-  /* buildings/entrances */
-  A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE,
-  A_REVERSE, A_REVERSE, A_REVERSE,
-  /* traps */
-  0, 0, 0, 0, 0, 0, 0,
-  /* misc */
-  0, 0, 0,
-  /* drugs */
-  0, 0, 0, 0, 0
+{
+	0,	    0,
+	/* Dungeon features */
+	A_REVERSE,  A_REVERSE,A_REVERSE,  A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE,
+	A_REVERSE,  A_REVERSE,A_REVERSE,  A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE,
+	0,
+	/* gold piles */
+	0,	    0,	      0,	  0,
+	/* eye of larn */
+	A_STANDOUT,
+	/* armour */
+	0,	    0,	      0,	  0,	     0,		0,	   0,	      0,
+	0,	    0,
+	/* weapons */
+	0,	    0,	      0,	  0,	     0,		0,	   0,	      0,
+	0,	    0,	      0,	  0,
+	/* rings */
+	0,	    0,	      0,	  0,	     0,		0,	   0,	      0,
+	/* magic items */
+	0,	    0,	      0,	  A_REVERSE, A_REVERSE, A_BOLD,	   0,	      A_BOLD,
+	0,	    0,	      0,	  0,	     0,		0,	   0,	      0,
+	0,
+	/* gems */
+	0,	    0,	      0,	  0,
+	/* buildings/entrances */
+	A_REVERSE,  A_REVERSE,A_REVERSE,  A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE,
+	A_REVERSE,  A_REVERSE,A_REVERSE,
+	/* traps */
+	0,	    0,	      0,	  0,	     0,		0,	   0,
+	/* misc */
+	0,	    0,	      0,
+	/* drugs */
+	0,	    0,	      0,	  0,	     0
 };
 
 static int ItemColor[OCOUNT] =
-{ 
-  C_WHITE, C_WHITE,
-  /* Dungeon features */
-  C_WHITE, C_YELLOW, C_YELLOW, C_YELLOW, C_WHITE, C_GREEN, C_WHITE, C_BLUE,
-  C_WHITE, C_RED, C_WHITE, C_RED, C_WHITE, C_WHITE, C_WHITE, C_WHITE,
-  C_WHITE,
-  /* gold piles */
-  C_YELLOW, C_YELLOW, C_YELLOW, C_YELLOW,
-  /* eye of larn */
-  C_WHITE,
-  /* armour */
-  C_CYAN, C_CYAN, C_WHITE, C_CYAN, C_WHITE, C_CYAN, C_CYAN, C_CYAN,
-  C_WHITE, C_GREEN,
-  /* weapons */
-  C_CYAN, C_WHITE, C_CYAN, C_CYAN, C_WHITE, C_CYAN, C_CYAN, C_CYAN,
-  C_WHITE, C_WHITE, C_MAGENTA, C_YELLOW,
-  /* rings */
-  C_WHITE, C_GREEN, C_BLUE, C_WHITE, C_CYAN, C_RED, C_MAGENTA, C_WHITE,
-  /* magic items */
-  C_WHITE, C_WHITE, C_YELLOW, C_CYAN, C_YELLOW, C_CYAN, C_WHITE, C_RED,
-  C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE,
-  C_WHITE,
-  /* gems */
-  C_WHITE, C_RED, C_GREEN, C_BLUE,
-  /* buildings/entrances */
-  C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE,
-  C_WHITE, C_WHITE, C_WHITE,
-  /* traps */
-  C_RED, C_RED, C_RED, C_RED, C_RED, C_RED, C_RED,
-  /* misc */
-  C_WHITE, C_WHITE, C_WHITE,
-  /* drugs */
-  C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE
+{
+	C_WHITE,  C_WHITE,
+	/* Dungeon features */
+	C_WHITE,  C_YELLOW,C_YELLOW,   C_YELLOW, C_WHITE,  C_GREEN, C_WHITE,   C_BLUE,
+	C_WHITE,  C_RED,   C_WHITE,    C_RED,	 C_WHITE,  C_WHITE, C_WHITE,   C_WHITE,
+	C_WHITE,
+	/* gold piles */
+	C_YELLOW, C_YELLOW,C_YELLOW,   C_YELLOW,
+	/* eye of larn */
+	C_WHITE,
+	/* armour */
+	C_CYAN,	  C_CYAN,  C_WHITE,    C_CYAN,	 C_WHITE,  C_CYAN,  C_CYAN,    C_CYAN,
+	C_WHITE,  C_GREEN,
+	/* weapons */
+	C_CYAN,	  C_WHITE, C_CYAN,     C_CYAN,	 C_WHITE,  C_CYAN,  C_CYAN,    C_CYAN,
+	C_WHITE,  C_WHITE, C_MAGENTA,  C_YELLOW,
+	/* rings */
+	C_WHITE,  C_GREEN, C_BLUE,     C_WHITE,	 C_CYAN,   C_RED,   C_MAGENTA, C_WHITE,
+	/* magic items */
+	C_WHITE,  C_WHITE, C_YELLOW,   C_CYAN,	 C_YELLOW, C_CYAN,  C_WHITE,   C_RED,
+	C_WHITE,  C_WHITE, C_WHITE,    C_WHITE,	 C_WHITE,  C_WHITE, C_WHITE,   C_WHITE,
+	C_WHITE,
+	/* gems */
+	C_WHITE,  C_RED,   C_GREEN,    C_BLUE,
+	/* buildings/entrances */
+	C_WHITE,  C_WHITE, C_WHITE,    C_WHITE,	 C_WHITE,  C_WHITE, C_WHITE,   C_WHITE,
+	C_WHITE,  C_WHITE, C_WHITE,
+	/* traps */
+	C_RED,	  C_RED,   C_RED,      C_RED,	 C_RED,	   C_RED,   C_RED,
+	/* misc */
+	C_WHITE,  C_WHITE, C_WHITE,
+	/* drugs */
+	C_WHITE,  C_WHITE, C_WHITE,    C_WHITE,	 C_WHITE
 };
 
 static int MonstColor[MONST_COUNT] =
 {
-  C_WHITE, 
-  C_WHITE, C_GREEN, C_GREEN, C_WHITE, C_WHITE, C_RED,   C_GREEN, C_GREEN, 
-  C_RED,   C_RED,   C_RED,   C_CYAN,  C_GREEN, C_WHITE, C_BLUE,  C_RED, 
-  C_WHITE, C_WHITE, C_RED,   C_RED,   C_CYAN,  C_GREEN, C_YELLOW, C_WHITE, 
-  C_WHITE, C_GREEN, C_WHITE, C_CYAN,  C_YELLOW, C_RED,  C_MAGENTA, C_WHITE, 
-  C_YELLOW, C_YELLOW, C_YELLOW, C_YELLOW, C_RED, C_WHITE, C_WHITE, C_WHITE, 
-  C_CYAN,  C_GREEN, C_YELLOW, C_MAGENTA, C_GREEN, C_BLUE, C_BLUE,  C_MAGENTA, 
-  C_GREEN, C_MAGENTA, C_RED, C_YELLOW, C_CYAN,  C_YELLOW, C_GREEN, C_RED, 
-  C_WHITE, C_YELLOW, C_GREEN, C_CYAN, C_BLUE, C_RED, C_MAGENTA, C_CYAN, 
-  C_MAGENTA
+	C_WHITE,
+	C_WHITE, C_GREEN,    C_GREEN,  C_WHITE,	  C_WHITE,   C_RED,	C_GREEN,    C_GREEN,
+	C_RED,	 C_RED,	     C_RED,    C_CYAN,	  C_GREEN,   C_WHITE,	C_BLUE,	    C_RED,
+	C_WHITE, C_WHITE,    C_RED,    C_RED,	  C_CYAN,    C_GREEN,	C_YELLOW,   C_WHITE,
+	C_WHITE, C_GREEN,    C_WHITE,  C_CYAN,	  C_YELLOW,  C_RED,	C_MAGENTA,  C_WHITE,
+	C_YELLOW,C_YELLOW,   C_YELLOW, C_YELLOW,  C_RED,     C_WHITE,	C_WHITE,    C_WHITE,
+	C_CYAN,	 C_GREEN,    C_YELLOW, C_MAGENTA, C_GREEN,   C_BLUE,	C_BLUE,	    C_MAGENTA,
+	C_GREEN, C_MAGENTA,  C_RED,    C_YELLOW,  C_CYAN,    C_YELLOW,	C_GREEN,    C_RED,
+	C_WHITE, C_YELLOW,   C_GREEN,  C_CYAN,	  C_BLUE,    C_RED,	C_MAGENTA,  C_CYAN,
+	C_MAGENTA
 };
 
 
@@ -517,22 +514,22 @@ static int mimicmonst = MIMIC;
  */
 static void SetWallTiles(void)
 {
-  WallTile[0] = ACS_BLOCK;
-  WallTile[1] = ACS_HLINE;
-  WallTile[2] = ACS_VLINE;
-  WallTile[3] = ACS_URCORNER;
-  WallTile[4] = ACS_HLINE;
-  WallTile[5] = ACS_HLINE;
-  WallTile[6] = ACS_ULCORNER;
-  WallTile[7] = ACS_TTEE;
-  WallTile[8] = ACS_VLINE;
-  WallTile[9] = ACS_LRCORNER;
-  WallTile[10] = ACS_VLINE;
-  WallTile[11] = ACS_RTEE;
-  WallTile[12] = ACS_LLCORNER;
-  WallTile[13] = ACS_BTEE;
-  WallTile[14] = ACS_LTEE;
-  WallTile[15] = ACS_PLUS;
+	WallTile[0] = ACS_BLOCK;
+	WallTile[1] = ACS_HLINE;
+	WallTile[2] = ACS_VLINE;
+	WallTile[3] = ACS_URCORNER;
+	WallTile[4] = ACS_HLINE;
+	WallTile[5] = ACS_HLINE;
+	WallTile[6] = ACS_ULCORNER;
+	WallTile[7] = ACS_TTEE;
+	WallTile[8] = ACS_VLINE;
+	WallTile[9] = ACS_LRCORNER;
+	WallTile[10] = ACS_VLINE;
+	WallTile[11] = ACS_RTEE;
+	WallTile[12] = ACS_LLCORNER;
+	WallTile[13] = ACS_BTEE;
+	WallTile[14] = ACS_LTEE;
+	WallTile[15] = ACS_PLUS;
 
 }
 
@@ -552,65 +549,48 @@ static void SetWallTiles(void)
  */
 static void SetCursesAttr(FormatType Format)
 {
-  int BaseAttr;
-  
+	int BaseAttr;
+
 #ifdef W32_TTY
 
-  BaseAttr = A_BOLD;
-  
+	BaseAttr = A_BOLD;
+
 #else
 
-  BaseAttr = 0;
-  
+	BaseAttr = 0;
+
 #endif
-  
-  
-  switch (Format)
-    {
-    case FORMAT_NORMAL:
-      if (UseColor)
-	{
-	  wattrset(TextWindow, BaseAttr | COLOR_PAIR(C_WHITE));
+
+
+	switch (Format) {
+	case FORMAT_NORMAL:
+		if (UseColor)
+			wattrset(TextWindow, BaseAttr | COLOR_PAIR(C_WHITE));
+		else
+			wattrset(TextWindow, A_NORMAL);
+		break;
+	case FORMAT_STANDOUT:
+		if (UseColor)
+			wattrset(TextWindow, BaseAttr | COLOR_PAIR(C_RED));
+		else
+			wattrset(TextWindow, A_STANDOUT);
+		break;
+	case FORMAT_STANDOUT2:
+		if (UseColor)
+			wattrset(TextWindow, BaseAttr | COLOR_PAIR(C_GREEN));
+		else
+			wattrset(TextWindow, A_BOLD);
+		break;
+	case FORMAT_STANDOUT3:
+		if (UseColor)
+			wattrset(TextWindow, BaseAttr | COLOR_PAIR(C_BLUE));
+		else
+			wattrset(TextWindow, A_UNDERLINE);
+		break;
+	default:
+		break;
 	}
-      else
-	{
-	  wattrset(TextWindow, A_NORMAL);
-	}
-      break;
-    case FORMAT_STANDOUT:
-      if (UseColor)
-	{
-	  wattrset(TextWindow, BaseAttr | COLOR_PAIR(C_RED));
-	}
-      else
-	{
-	  wattrset(TextWindow, A_STANDOUT);
-	}
-      break;
-    case FORMAT_STANDOUT2:
-      if (UseColor)
-	{
-	  wattrset(TextWindow, BaseAttr | COLOR_PAIR(C_GREEN));
-	}
-      else
-	{
-	  wattrset(TextWindow, A_BOLD);
-	}
-      break;
-    case FORMAT_STANDOUT3:
-      if (UseColor)
-	{
-	  wattrset(TextWindow, BaseAttr | COLOR_PAIR(C_BLUE));
-	}
-      else
-	{
-	  wattrset(TextWindow, A_UNDERLINE);
-	}
-      break;
-    default:
-      break;
-    }
-  
+
 }
 
 /* =============================================================================
@@ -630,28 +610,24 @@ static void SetCursesAttr(FormatType Format)
 static void setup_colour_pairs(void)
 {
 
-  short i;
-  
-  for (i = 0; i < C_COUNT ; i++)
-    {
-      init_pair(i, ColorPairs[i][0], ColorPairs[i][1]);
-    }
-    
+	short i;
+
+	for (i = 0; i < C_COUNT; i++)
+		init_pair(i, ColorPairs[i][0], ColorPairs[i][1]);
+
 #ifdef W32_TTY
 
-  //
-  // PD Curses on windoze doesn't seem to do reverse video correctly!
-  // Need to set up the reverse colour combinations
-  //
+	//
+	// PD Curses on windoze doesn't seem to do reverse video correctly!
+	// Need to set up the reverse colour combinations
+	//
 
-  for (i = 0; i < C_COUNT ; i++)
-    {
-      init_pair(C_COUNT + i, ColorPairs[i][1], ColorPairs[i][0]);
-    }
-    
+	for (i = 0; i < C_COUNT; i++)
+		init_pair(C_COUNT + i, ColorPairs[i][1], ColorPairs[i][0]);
+
 #endif
-  
-}      
+
+}
 
 /*
  * Repaint flag to force redraw of everything, not just deltas
@@ -674,122 +650,119 @@ static int Repaint = 0;
  */
 static void PaintStatus(void)
 {
-  char Line[81];
-  char Buf[81];
-  int i;
+	char Line[81];
+	char Buf[81];
+	int i;
 
 #ifdef W32_TTY
 
-  wattrset(StatusWindow, A_BOLD | COLOR_PAIR(C_WHITE));
+	wattrset(StatusWindow, A_BOLD | COLOR_PAIR(C_WHITE));
 
 #else
 
-  wattrset(StatusWindow, COLOR_PAIR(C_WHITE));
+	wattrset(StatusWindow, COLOR_PAIR(C_WHITE));
 
 #endif
 
-  if (Repaint)
-    {
-      wclear(StatusWindow);
-      for (i = 0 ; i < 80 ; i++)
-	{
-	  mvwaddch(StatusWindow, 0, i, ' ');
-	  mvwaddch(StatusWindow, 1, i, ' ');
+	if (Repaint) {
+		wclear(StatusWindow);
+		for (i = 0; i < 80; i++) {
+			mvwaddch(StatusWindow, 0, i, ' ');
+			mvwaddch(StatusWindow, 1, i, ' ');
+		}
 	}
-    }
 
-  //
-  // Build the top status line
-  //
-  Line[0] = 0;
+	//
+	// Build the top status line
+	//
+	Line[0] = 0;
 
-  /* Spells */
-  if (c[SPELLMAX]>99)
-    sprintf(Buf, "Spells:%3ld(%3ld)", c[SPELLS],c[SPELLMAX]);
-  else
-    sprintf(Buf, "Spells:%3ld(%2ld) ",c[SPELLS],c[SPELLMAX]);
+	/* Spells */
+	if (c[SPELLMAX] > 99)
+		sprintf(Buf, "Spells:%3ld(%3ld)", c[SPELLS], c[SPELLMAX]);
+	else
+		sprintf(Buf, "Spells:%3ld(%2ld) ", c[SPELLS], c[SPELLMAX]);
 
-  strcat(Line, Buf);
+	strcat(Line, Buf);
 
-  /* AC, WC */
-  sprintf(Buf, " AC: %-3ld  WC: %-3ld  Level", c[AC], c[WCLASS]);
-  strcat(Line, Buf);
+	/* AC, WC */
+	sprintf(Buf, " AC: %-3ld  WC: %-3ld  Level", c[AC], c[WCLASS]);
+	strcat(Line, Buf);
 
-  /* Level */
-  if (c[LEVEL]>99)
-    sprintf(Buf, "%3ld", c[LEVEL]);
-  else
-    sprintf(Buf, " %-2ld", c[LEVEL]);
-  strcat(Line, Buf);
+	/* Level */
+	if (c[LEVEL] > 99)
+		sprintf(Buf, "%3ld", c[LEVEL]);
+	else
+		sprintf(Buf, " %-2ld", c[LEVEL]);
+	strcat(Line, Buf);
 
-  /* Exp, class */
-  sprintf(Buf, " Exp: %-9ld %s", c[EXPERIENCE], class[c[LEVEL]-1]);
-  strcat(Line, Buf);
+	/* Exp, class */
+	sprintf(Buf, " Exp: %-9ld %s", c[EXPERIENCE], class[c[LEVEL] - 1]);
+	strcat(Line, Buf);
 
-  mvwaddstr(StatusWindow, 0, 0, Line);
-  
-  //
-  // Format the second line of the status
-  //
-  sprintf(Buf, "%ld (%ld)", c[HP], c[HPMAX]);
+	mvwaddstr(StatusWindow, 0, 0, Line);
 
-  sprintf(Line, "HP: %11s STR=%-2ld INT=%-2ld WIS=%-2ld CON=%-2ld DEX=%-2ld CHA=%-2ld LV:",
-      Buf,
-      c[STRENGTH]+c[STREXTRA],
-      c[INTELLIGENCE],
-      c[WISDOM],
-      c[CONSTITUTION],
-      c[DEXTERITY],
-      c[CHARISMA]);
+	//
+	// Format the second line of the status
+	//
+	sprintf(Buf, "%ld (%ld)", c[HP], c[HPMAX]);
 
-  if ((level==0) || (wizard))
-    c[TELEFLAG]=0;
+	sprintf(Line, "HP: %11s STR=%-2ld INT=%-2ld WIS=%-2ld CON=%-2ld DEX=%-2ld CHA=%-2ld LV:",
+		Buf,
+		c[STRENGTH] + c[STREXTRA],
+		c[INTELLIGENCE],
+		c[WISDOM],
+		c[CONSTITUTION],
+		c[DEXTERITY],
+		c[CHARISMA]);
 
-  if (c[TELEFLAG])
-    strcat(Line, " ?");
-  else
-  strcat(Line, levelname[level]);
+	if ((level == 0) || (wizard))
+		c[TELEFLAG] = 0;
 
-  sprintf(Buf, "  Gold: %-8ld", c[GOLD]);
-  strcat(Line, Buf);
+	if (c[TELEFLAG])
+		strcat(Line, " ?");
+	else
+		strcat(Line, levelname[level]);
 
-  mvwaddstr(StatusWindow, 1, 0, Line);
+	sprintf(Buf, "  Gold: %-8ld", c[GOLD]);
+	strcat(Line, Buf);
 
-  wrefresh(StatusWindow);
+	mvwaddstr(StatusWindow, 1, 0, Line);
 
-  //
-  // Mark all character values as displayed.
-  //
-  c[TMP] = c[STRENGTH]+c[STREXTRA];
-  for (i=0; i<100; i++)
-    cbak[i]=c[i];
+	wrefresh(StatusWindow);
+
+	//
+	// Mark all character values as displayed.
+	//
+	c[TMP] = c[STRENGTH] + c[STREXTRA];
+	for (i = 0; i < 100; i++)
+		cbak[i] = c[i];
 
 }
 
 /* Effects strings */
-static struct bot_side_def
-{
-  int typ;
-  char *string;
+static struct bot_side_def {
+	int typ;
+	char *string;
 } bot_data[] =
 {
-  { STEALTH,        "  Stealth    " },
-  { UNDEADPRO,      "  Undead Pro " },
-  { SPIRITPRO,      "  Spirit Pro " },
-  { CHARMCOUNT,     "  Charm      " },
-  { TIMESTOP,       "  Time Stop  " },
-  { HOLDMONST,      "  Hold Monst " },
-  { GIANTSTR,       "  Giant Str  " },
-  { FIRERESISTANCE, "  Fire Resit " },
-  { DEXCOUNT,       "  Dexterity  " },
-  { STRCOUNT,       "  Strength   " },
-  { SCAREMONST,     "  Scare      " },
-  { HASTESELF,      "  Haste Self " },
-  { CANCELLATION,   "  Cancel     " },
-  { INVISIBILITY,   "  Invisible  " },
-  { ALTPRO,         "  Protect 3  " },
-  { PROTECTIONTIME, "  Protect 2  " },
-  { WTW,            "  Wall-Walk  " }
+	{ STEALTH,	  "  Stealth    "	     },
+	{ UNDEADPRO,	  "  Undead Pro "	     },
+	{ SPIRITPRO,	  "  Spirit Pro "	     },
+	{ CHARMCOUNT,	  "  Charm      "	     },
+	{ TIMESTOP,	  "  Time Stop  "	     },
+	{ HOLDMONST,	  "  Hold Monst "	     },
+	{ GIANTSTR,	  "  Giant Str  "	     },
+	{ FIRERESISTANCE, "  Fire Resit "	     },
+	{ DEXCOUNT,	  "  Dexterity  "	     },
+	{ STRCOUNT,	  "  Strength   "	     },
+	{ SCAREMONST,	  "  Scare      "	     },
+	{ HASTESELF,	  "  Haste Self "	     },
+	{ CANCELLATION,	  "  Cancel     "	     },
+	{ INVISIBILITY,	  "  Invisible  "	     },
+	{ ALTPRO,	  "  Protect 3  "	     },
+	{ PROTECTIONTIME, "  Protect 2  "	     },
+	{ WTW,		  "  Wall-Walk  "	     }
 };
 
 /* =============================================================================
@@ -808,47 +781,39 @@ static struct bot_side_def
  */
 static void PaintEffects(void)
 {
-  int i, idx;
-  int WasSet;
-  int IsSet;
+	int i, idx;
+	int WasSet;
+	int IsSet;
 
 #ifdef W32_TTY
 
-  wattrset(StatusWindow, A_BOLD | COLOR_PAIR(C_WHITE));
+	wattrset(StatusWindow, A_BOLD | COLOR_PAIR(C_WHITE));
 
 #else
 
-  wattrset(StatusWindow, COLOR_PAIR(C_WHITE));
+	wattrset(StatusWindow, COLOR_PAIR(C_WHITE));
 
 #endif
 
-  if (Repaint)
-    {
-      wclear(EffectsWindow);
-    }
+	if (Repaint)
+		wclear(EffectsWindow);
 
-  for (i=0; i < 17; i++)
-  {
-    idx = bot_data[i].typ;
-    WasSet = (cbak[idx] != 0);
-    IsSet  = (c[idx] != 0);
+	for (i = 0; i < 17; i++) {
+		idx = bot_data[i].typ;
+		WasSet = (cbak[idx] != 0);
+		IsSet = (c[idx] != 0);
 
-    if ((Repaint) || (IsSet != WasSet))
-    {
-      if (IsSet)
-      {
-	mvwaddstr(EffectsWindow, i, 0, bot_data[i].string);
-      }
-      else
-      {
-	mvwaddstr(EffectsWindow, i, 0, "             ");
-      }
-    }
+		if ((Repaint) || (IsSet != WasSet)) {
+			if (IsSet)
+				mvwaddstr(EffectsWindow, i, 0, bot_data[i].string);
+			else
+				mvwaddstr(EffectsWindow, i, 0, "             ");
+		}
 
-    cbak[idx] = c[idx];
-  }
+		cbak[idx] = c[idx];
+	}
 
-  wrefresh(EffectsWindow);
+	wrefresh(EffectsWindow);
 
 }
 
@@ -876,117 +841,94 @@ static void PaintEffects(void)
  */
 static void GetTile(int x, int y, int *TileId, int *Attr, int *ColorPair)
 {
-  MonsterIdType k;
+	MonsterIdType k;
 
-  *Attr = 0;
+	*Attr = 0;
 
-  if ((x == playerx) && (y == playery) && (c[BLINDCOUNT] == 0))
-  {
-    //
-    // This is the square containing the player and the players isn't
-    // blind, so return the player tile.
-    //
-    *TileId = '@';
-    *ColorPair = C_RED;
-    return;
-  }
+	if ((x == playerx) && (y == playery) && (c[BLINDCOUNT] == 0)) {
+		//
+		// This is the square containing the player and the players isn't
+		// blind, so return the player tile.
+		//
+		*TileId = '@';
+		*ColorPair = C_RED;
+		return;
+	}
 
-  //
-  // Work out what is here
-  //
-  if (know[x][y] == OUNKNOWN)
-  {
-    //
-    // The player doesn't know what is at this position.
-    //
-    *TileId = objnamelist[OUNKNOWN];
-    *Attr = ItemAttr[(int) know[x][y]];
-    *ColorPair = C_BLACK;
-  }
-  else
-  {
-    k = mitem[x][y].mon;
-    if (k != 0)
-    {
-      if ((c[BLINDCOUNT] == 0) &&
-          (((stealth[x][y] & STEALTH_SEEN) != 0) ||
-           ((stealth[x][y] & STEALTH_AWAKE) != 0)))
-      {
-        //
-        // There is a monster here and the player is not blind and the
-        // monster is seen or awake.
-        //
-        if (k == MIMIC)
-        {
-          if ((gtime % 10) == 0)
-          {
-            while ((mimicmonst = rnd(MAXMONST))==INVISIBLESTALKER);
-          }
+	//
+	// Work out what is here
+	//
+	if (know[x][y] == OUNKNOWN) {
+		//
+		// The player doesn't know what is at this position.
+		//
+		*TileId = objnamelist[OUNKNOWN];
+		*Attr = ItemAttr[(int)know[x][y]];
+		*ColorPair = C_BLACK;
+	}else {
+		k = mitem[x][y].mon;
+		if (k != 0) {
+			if ((c[BLINDCOUNT] == 0) &&
+			    (((stealth[x][y] & STEALTH_SEEN) != 0) ||
+			     ((stealth[x][y] & STEALTH_AWAKE) != 0))) {
+				//
+				// There is a monster here and the player is not blind and the
+				// monster is seen or awake.
+				//
+				if (k == MIMIC) {
+					if ((gtime % 10) == 0)
+						while ((mimicmonst = rnd(MAXMONST)) == INVISIBLESTALKER);
 
-          *TileId = monstnamelist[mimicmonst];
-	  *ColorPair = MonstColor[mimicmonst];
-        }
-        else if ((k==INVISIBLESTALKER) && (c[SEEINVISIBLE]==0))
-        {
-          *TileId = objnamelist[(int) know[x][y]];
-	  *Attr = ItemAttr[(int) know[x][y]];
-	  *ColorPair = ItemColor[(int) know[x][y]];
-        }
-        else if ((k>=DEMONLORD) && (k<=LUCIFER) && (c[EYEOFLARN]==0))
-        {
-          /* demons are invisible if not have the eye */
-          *TileId = objnamelist[(int) know[x][y]];
-	  *Attr = ItemAttr[(int) know[x][y]];
-	  *ColorPair = ItemColor[(int) know[x][y]];
-        }
-        else
-        {
-          *TileId = monstnamelist[k];
-	  *ColorPair = MonstColor[k];
-        }
+					*TileId = monstnamelist[mimicmonst];
+					*ColorPair = MonstColor[mimicmonst];
+				}else if ((k == INVISIBLESTALKER) && (c[SEEINVISIBLE] == 0)) {
+					*TileId = objnamelist[(int)know[x][y]];
+					*Attr = ItemAttr[(int)know[x][y]];
+					*ColorPair = ItemColor[(int)know[x][y]];
+				}else if ((k >= DEMONLORD) && (k <= LUCIFER) && (c[EYEOFLARN] == 0)) {
+					/* demons are invisible if not have the eye */
+					*TileId = objnamelist[(int)know[x][y]];
+					*Attr = ItemAttr[(int)know[x][y]];
+					*ColorPair = ItemColor[(int)know[x][y]];
+				}else {
+					*TileId = monstnamelist[k];
+					*ColorPair = MonstColor[k];
+				}
 
-      } /* can see monster */
-      else
-      {
-        /*
-         * The monster at this location is not known to the player, so show
-         * the tile for the item at this location
-         */
-        *TileId = objnamelist[(int) know[x][y]];
-	*Attr = ItemAttr[(int) know[x][y]];
-	*ColorPair = ItemColor[(int) know[x][y]];
-      }
-    } /* monster here */
-    else
-    {
-      k = know[x][y];
-      *TileId = objnamelist[k];
-      *Attr = ItemAttr[(int) know[x][y]];
-      *ColorPair = ItemColor[(int) know[x][y]];
-    }
-  }
-  
-  /* Handle walls */
-  if (*TileId == objnamelist[OWALL])
-  {
-    *TileId = WallTile[iarg[x][y]];
-  }
-  
+			} /* can see monster */
+			else{
+				/*
+				 * The monster at this location is not known to the player, so show
+				 * the tile for the item at this location
+				 */
+				*TileId = objnamelist[(int)know[x][y]];
+				*Attr = ItemAttr[(int)know[x][y]];
+				*ColorPair = ItemColor[(int)know[x][y]];
+			}
+		} /* monster here */
+		else{
+			k = know[x][y];
+			*TileId = objnamelist[k];
+			*Attr = ItemAttr[(int)know[x][y]];
+			*ColorPair = ItemColor[(int)know[x][y]];
+		}
+	}
+
+	/* Handle walls */
+	if (*TileId == objnamelist[OWALL])
+		*TileId = WallTile[iarg[x][y]];
+
 #ifdef W32_TTY
 
-  
-  if (*Attr & A_REVERSE)
-  {
-    /* If reverse on win32/pdcurses then use the reverse color pair */
-    *Attr = (*Attr & (~A_REVERSE));
-    *ColorPair += C_COUNT;
-  }
-  else
-  {
-    /* PD Curses also needs bold to make bright colours on win32 */
-    *Attr |= A_BOLD;
-  }
-  
+
+	if (*Attr & A_REVERSE) {
+		/* If reverse on win32/pdcurses then use the reverse color pair */
+		*Attr = (*Attr & (~A_REVERSE));
+		*ColorPair += C_COUNT;
+	}else
+		/* PD Curses also needs bold to make bright colours on win32 */
+		*Attr |= A_BOLD;
+
 #endif
 }
 
@@ -1006,36 +948,29 @@ static void GetTile(int x, int y, int *TileId, int *Attr, int *ColorPair)
  */
 static void PaintMap(void)
 {
-  int x, y;
-  int TileId;
-  int Attr;
-  int Color;
+	int x, y;
+	int TileId;
+	int Attr;
+	int Color;
 
-  if (Repaint)
-    {
-      wclear(MapWindow);
+	if (Repaint) {
+		wclear(MapWindow);
 
-      for (y = 0 ; y < MAXY ; y++)
-	{
-	  for (x = 0 ; x < MAXX ; x++)
-	    {
-	      GetTile(x, y, &TileId, &Attr, &Color);
-	
-	      if (UseColor)
-		{
-		  wattrset(MapWindow, Attr | COLOR_PAIR(Color));
+		for (y = 0; y < MAXY; y++) {
+			for (x = 0; x < MAXX; x++) {
+				GetTile(x, y, &TileId, &Attr, &Color);
+
+				if (UseColor)
+					wattrset(MapWindow, Attr | COLOR_PAIR(Color));
+				else
+					wattrset(MapWindow, Attr);
+
+				mvwaddch(MapWindow, y, x, TileId);
+			}
 		}
-	      else
-		{
-		  wattrset(MapWindow, Attr);
-		}
-
-	      mvwaddch(MapWindow, y, x, TileId);
-	    }
 	}
-    }
 
-  wrefresh(MapWindow);
+	wrefresh(MapWindow);
 }
 
 /* =============================================================================
@@ -1054,8 +989,8 @@ static void PaintMap(void)
  */
 static void PaintTextWindow(void)
 {
-  touchwin(TextWindow);
-  wrefresh(TextWindow);
+	touchwin(TextWindow);
+	wrefresh(TextWindow);
 }
 
 /* =============================================================================
@@ -1074,12 +1009,12 @@ static void PaintTextWindow(void)
  */
 static void PaintMapWindow(void)
 {
-  PaintStatus();
-  PaintEffects();
-  PaintTextWindow();
-  PaintMap();
+	PaintStatus();
+	PaintEffects();
+	PaintTextWindow();
+	PaintMap();
 
-  showplayer();
+	showplayer();
 }
 
 /* =============================================================================
@@ -1098,19 +1033,15 @@ static void PaintMapWindow(void)
  */
 static void PaintWindow(void)
 {
-  
-  Repaint = 1;
 
-  if (CurrentDisplayMode == DISPLAY_MAP)
-  {
-    PaintMapWindow();
-  }
-  else
-  {
-    PaintTextWindow();
-  }
+	Repaint = 1;
 
-  Repaint = 0;
+	if (CurrentDisplayMode == DISPLAY_MAP)
+		PaintMapWindow();
+	else
+		PaintTextWindow();
+
+	Repaint = 0;
 }
 
 
@@ -1124,76 +1055,70 @@ static void PaintWindow(void)
  */
 int init_app(void)
 {
-  int x, y;
+	int x, y;
 
-  /* Initialise curses app */
+	/* Initialise curses app */
 
-  initscr();
-  cbreak();
-  noecho();
+	initscr();
+	cbreak();
+	noecho();
 
-  nonl();
-  intrflush(stdscr, FALSE);
+	nonl();
+	intrflush(stdscr, FALSE);
 
-  //  meta(stdscr, TRUE);
-  start_color();
-  setup_colour_pairs();
+	//  meta(stdscr, TRUE);
+	start_color();
+	setup_colour_pairs();
 
-  keypad(stdscr, TRUE);
+	keypad(stdscr, TRUE);
 
-  /* Create windows */
+	/* Create windows */
 
-  MapWindow = newwin(17, 67, 0, 0);
-  StatusWindow = newwin(2, 80, 17, 0);
-  EffectsWindow = newwin(17, 13, 0, 67);
-  MessageWindow = newwin(5, 80, 19, 0);
+	MapWindow = newwin(17, 67, 0, 0);
+	StatusWindow = newwin(2, 80, 17, 0);
+	EffectsWindow = newwin(17, 13, 0, 67);
+	MessageWindow = newwin(5, 80, 19, 0);
 
-  SetWallTiles();
+	SetWallTiles();
 
-  /* Start colour mode for slowlaris */
-  wattrset(stdscr, A_STANDOUT | COLOR_PAIR(C_RED));
-  mvwaddch(stdscr, 0, 0, '*');
-  
-  touchwin(stdscr);
-  wrefresh(stdscr);
-  
-  UseColor = has_colors();
+	/* Start colour mode for slowlaris */
+	wattrset(stdscr, A_STANDOUT | COLOR_PAIR(C_RED));
+	mvwaddch(stdscr, 0, 0, '*');
 
-  refresh();
+	touchwin(stdscr);
+	wrefresh(stdscr);
 
-  //
-  // Clear the text buffers
-  //
+	UseColor = has_colors();
 
-  TextWindow = MessageWindow;
+	refresh();
 
-  SetCursesAttr(FORMAT_NORMAL);
+	//
+	// Clear the text buffers
+	//
 
-  for (y = 0 ; y < MAX_MSG_LINES ; y++)
-  {
-    for (x = 0 ; x < LINE_LENGTH ; x++)
-    {
-      mvwaddch(TextWindow, y, x, ' ');
-    }
+	TextWindow = MessageWindow;
 
-  }
-  wrefresh(TextWindow);
+	SetCursesAttr(FORMAT_NORMAL);
 
-  TextWindow = stdscr;
+	for (y = 0; y < MAX_MSG_LINES; y++) {
+		for (x = 0; x < LINE_LENGTH; x++)
+			mvwaddch(TextWindow, y, x, ' ');
 
-  SetCursesAttr(FORMAT_NORMAL);
+	}
+	wrefresh(TextWindow);
 
-  for (y = 0 ; y < MAX_TEXT_LINES ; y++)
-  {
-    for (x = 0 ; x < LINE_LENGTH ; x++)
-    {
-      mvwaddch(TextWindow, y, x, ' ');
-    }
+	TextWindow = stdscr;
 
-  }
-  wrefresh(TextWindow);
+	SetCursesAttr(FORMAT_NORMAL);
 
-  return 1;
+	for (y = 0; y < MAX_TEXT_LINES; y++) {
+		for (x = 0; x < LINE_LENGTH; x++)
+			mvwaddch(TextWindow, y, x, ' ');
+
+	}
+	wrefresh(TextWindow);
+
+	return 1;
 }
 
 /* =============================================================================
@@ -1201,18 +1126,18 @@ int init_app(void)
  */
 void close_app(void)
 {
-  delwin(MessageWindow);
-  delwin(EffectsWindow);
-  delwin(StatusWindow);
-  delwin(MapWindow);
+	delwin(MessageWindow);
+	delwin(EffectsWindow);
+	delwin(StatusWindow);
+	delwin(MapWindow);
 
-  nl();
+	nl();
 
-  echo();
+	echo();
 
-  nocbreak();
+	nocbreak();
 
-  endwin();
+	endwin();
 
 }
 
@@ -1221,111 +1146,86 @@ void close_app(void)
  */
 ActionType get_normal_input(void)
 {
-  int idx;
-  int got_dir;
-  int Found;
-  ActionType Action;
-  int i;
+	int idx;
+	int got_dir;
+	int Found;
+	ActionType Action;
+	int i;
 
-  Event = ACTION_NULL;
-  Runkey = 0;
+	Event = ACTION_NULL;
+	Runkey = 0;
 
-  while (Event == ACTION_NULL)
-    {
-      wrefresh(MapWindow);
-      EventChar = getch();
-      GotChar = 1;
+	while (Event == ACTION_NULL) {
+		wrefresh(MapWindow);
+		EventChar = getch();
+		GotChar = 1;
 
-      //
-      // Decide the event corresponding to the key pressed
-      //
+		//
+		// Decide the event corresponding to the key pressed
+		//
 
-      /* Decode key press as a ULarn Action */
+		/* Decode key press as a ULarn Action */
 
-      /* 
-       * Check ASCII key bindings if no virtual key matches and 
-       * got a valid ASCII char 
-       */
-      Found = 0;
+		/*
+		 * Check ASCII key bindings if no virtual key matches and
+		 * got a valid ASCII char
+		 */
+		Found = 0;
 
-      if (!Found && GotChar)
-	{
-	  Action = ACTION_NULL;
+		if (!Found && GotChar) {
+			Action = ACTION_NULL;
 
-	  while ((Action < ACTION_COUNT) && (!Found))
-	    {
-	      for (i = 0 ; i < MAX_KEY_BINDINGS ; i++)
-		{
-		  if (KeyMap[Action][i].ModKey == M_ASCII)
-		    {
-		      /* ASCII key binding */
-		      if (EventChar == KeyMap[Action][i].VirtKey)
-			{
-			  Found = 1;
+			while ((Action < ACTION_COUNT) && (!Found)) {
+				for (i = 0; i < MAX_KEY_BINDINGS; i++) {
+					if (KeyMap[Action][i].ModKey == M_ASCII) {
+						/* ASCII key binding */
+						if (EventChar == KeyMap[Action][i].VirtKey)
+							Found = 1;
+					}
+				}
+
+				if (!Found)
+					Action++;
 			}
-		    }	      
 		}
-	
-	      if (!Found)
-		{
-		  Action++;
+
+		if (Found)
+			Event = Action;
+		else{
+			/* check run key */
+			if ((EventChar == RunKeyMap.VirtKey) &&
+			    (RunKeyMap.ModKey == M_ASCII))
+				Runkey = 1;
 		}
-	    }
+
+
+		//
+		// Clear enhanced interface events in enhanced interface is not active
+		//
+		if (!enhance_interface) {
+			if ((Event == ACTION_OPEN_DOOR) ||
+			    (Event == ACTION_OPEN_CHEST))
+				Event = ACTION_NULL;
+		}
 	}
-      
-      if (Found)
-	{
-	  Event = Action;
+
+	if (Runkey) {
+		idx = 0;
+		got_dir = 0;
+
+		while ((idx < NUM_DIRS) && (!got_dir)) {
+			if (DirActions[idx] == Event)
+				got_dir = 1;
+			else
+				idx++;
+		}
+
+		if (got_dir)
+			/* modify into a run event */
+			Event = Event + 1;
 	}
-      else
-	{
-	  /* check run key */
-	  if ((EventChar == RunKeyMap.VirtKey) &&
-	      (RunKeyMap.ModKey == M_ASCII))
-	    {
-	      Runkey = 1;
-	    }
-	}
-            
-      
-      //
-      // Clear enhanced interface events in enhanced interface is not active
-      //
-      if (!enhance_interface)
-	{
-	  if ((Event == ACTION_OPEN_DOOR) ||
-	      (Event == ACTION_OPEN_CHEST)) 
-	    {
-	      Event = ACTION_NULL;
-	    }
-	}
-    }
-  
-  if (Runkey)
-    {
-      idx = 0;
-      got_dir = 0;
-      
-      while ((idx < NUM_DIRS) && (!got_dir))
-	{
-	  if (DirActions[idx] == Event)
-	    {
-	      got_dir = 1;
-	    }
-	  else
-	    {
-	      idx++;
-	    }
-	}
-      
-    if (got_dir)
-      {
-	/* modify into a run event */
-	Event = Event + 1;
-      }
-    }
-  
-  return Event;
+
+	return Event;
 }
 
 /* =============================================================================
@@ -1333,50 +1233,43 @@ ActionType get_normal_input(void)
  */
 char get_prompt_input(char *prompt, char *answers, int ShowCursor)
 {
-  char *ch;
+	char *ch;
 
-  Print(prompt);
+	Print(prompt);
 
-  if (ShowCursor)
-    {
-      CaretActive = 1;
-    }
+	if (ShowCursor)
+		CaretActive = 1;
 
-  //
-  // Process events until a character in answers has been pressed.
-  //
-  GotChar = 0;
-  while (!GotChar)
-    {
-      wrefresh(TextWindow);
-      
-      EventChar = getch();
-      GotChar = 1;
+	//
+	// Process events until a character in answers has been pressed.
+	//
+	GotChar = 0;
+	while (!GotChar) {
+		wrefresh(TextWindow);
 
-      if (GotChar)
-	{
+		EventChar = getch();
+		GotChar = 1;
 
-	  //
-	  // Search for the input character in the answers string
-	  //
-	  ch = strchr(answers, EventChar);
+		if (GotChar) {
 
-	  if (ch == NULL)
-	    {
-	      //
-	      // Not an answer we want
-	      //
-	      GotChar = 0;
-	    }
-	} 
-    }
+			//
+			// Search for the input character in the answers string
+			//
+			ch = strchr(answers, EventChar);
 
-  if (ShowCursor)
-    {
-      CaretActive = 0;
-    }
+			if (ch == NULL) {
+				//
+				// Not an answer we want
+				//
+				GotChar = 0;
+			}
+		}
+	}
 
-  return EventChar;
+	if (ShowCursor)
+		CaretActive = 0;
+
+	return EventChar;
 }
 
 /* =============================================================================
@@ -1384,59 +1277,52 @@ char get_prompt_input(char *prompt, char *answers, int ShowCursor)
  */
 void get_password_input(char *password, int Len)
 {
-  char ch;
-  char inputchars[256];
-  int Pos;
-  int value;
+	char ch;
+	char inputchars[256];
+	int Pos;
+	int value;
 
-  /* get the printable characters on this system */
-  Pos = 0;
-  for (value = 0 ; value < 256 ; value++)
-  {
-    if (isprint(value))
-    {
-      inputchars[Pos] = (char) value;
-      Pos++;
-    }
-  }
+	/* get the printable characters on this system */
+	Pos = 0;
+	for (value = 0; value < 256; value++) {
+		if (isprint(value)) {
+			inputchars[Pos] = (char)value;
+			Pos++;
+		}
+	}
 
-  /* add CR, BS and null terminator */
-  inputchars[Pos++] = '\010';
-  inputchars[Pos++] = '\015';
-  inputchars[Pos] = '\0';
+	/* add CR, BS and null terminator */
+	inputchars[Pos++] = '\010';
+	inputchars[Pos++] = '\015';
+	inputchars[Pos] = '\0';
 
-  Pos = 0;
-  do
-  {
-    ch = get_prompt_input("", inputchars, 1);
+	Pos = 0;
+	do{
+		ch = get_prompt_input("", inputchars, 1);
 
-    if (isprint((int) ch) && (Pos < Len))
-    {
-      password[Pos] = ch;
-      Pos++;
-      Printc('*');
-    }
-    else if (ch == '\010')
-    {
-      //
-      // Backspace
-      //
+		if (isprint((int)ch) && (Pos < Len)) {
+			password[Pos] = ch;
+			Pos++;
+			Printc('*');
+		}else if (ch == '\010') {
+			//
+			// Backspace
+			//
 
-      if (Pos > 0)
-      {
-        CursorX--;
-        Printc(' ');
-        CursorX--;
-        Pos--;
+			if (Pos > 0) {
+				CursorX--;
+				Printc(' ');
+				CursorX--;
+				Pos--;
 
-	wmove(TextWindow, CursorY-1, CursorX-1);
-	wrefresh(TextWindow);
-      }
-    }
+				wmove(TextWindow, CursorY - 1, CursorX - 1);
+				wrefresh(TextWindow);
+			}
+		}
 
-  } while (ch != '\015');
+	} while (ch != '\015');
 
-  password[Pos] = 0;
+	password[Pos] = 0;
 
 
 }
@@ -1446,59 +1332,52 @@ void get_password_input(char *password, int Len)
  */
 static void get_string_input(char *string, int Len)
 {
-  char ch;
-  char inputchars[256];
-  int Pos;
-  int value;
+	char ch;
+	char inputchars[256];
+	int Pos;
+	int value;
 
-  /* get the printable characters on this system */
-  Pos = 0;
-  for (value = 0 ; value < 256 ; value++)
-  {
-    if (isprint(value))
-    {
-      inputchars[Pos] = (char) value;
-      Pos++;
-    }
-  }
+	/* get the printable characters on this system */
+	Pos = 0;
+	for (value = 0; value < 256; value++) {
+		if (isprint(value)) {
+			inputchars[Pos] = (char)value;
+			Pos++;
+		}
+	}
 
-  /* add CR, BS and null terminator */
-  inputchars[Pos++] = '\010';
-  inputchars[Pos++] = '\015';
-  inputchars[Pos] = '\0';
+	/* add CR, BS and null terminator */
+	inputchars[Pos++] = '\010';
+	inputchars[Pos++] = '\015';
+	inputchars[Pos] = '\0';
 
-  Pos = 0;
-  do
-  {
-    ch = get_prompt_input("", inputchars, 1);
+	Pos = 0;
+	do{
+		ch = get_prompt_input("", inputchars, 1);
 
-    if (isprint((int) ch) && (Pos < Len))
-    {
-      string[Pos] = ch;
-      Pos++;
-      Printc(ch);
-    }
-    else if (ch == '\010')
-    {
-      //
-      // Backspace
-      //
+		if (isprint((int)ch) && (Pos < Len)) {
+			string[Pos] = ch;
+			Pos++;
+			Printc(ch);
+		}else if (ch == '\010') {
+			//
+			// Backspace
+			//
 
-      if (Pos > 0)
-      {
-        CursorX--;
-        Printc(' ');
-        CursorX--;
-        Pos--;
+			if (Pos > 0) {
+				CursorX--;
+				Printc(' ');
+				CursorX--;
+				Pos--;
 
-	wmove(TextWindow, CursorY-1, CursorX-1);
-	wrefresh(TextWindow);
-      }
-    }
+				wmove(TextWindow, CursorY - 1, CursorX - 1);
+				wrefresh(TextWindow);
+			}
+		}
 
-  } while (ch != '\015');
+	} while (ch != '\015');
 
-  string[Pos] = 0;
+	string[Pos] = 0;
 
 }
 #endif
@@ -1507,75 +1386,60 @@ static void get_string_input(char *string, int Len)
  */
 int get_num_input(int defval)
 {
-  char ch;
-  int Pos = 0;
-  int value = 0;
-  int neg = 0;
+	char ch;
+	int Pos = 0;
+	int value = 0;
+	int neg = 0;
 
-  do
-  {
-    ch = get_prompt_input("", "-*0123456789\010\015", 1);
+	do{
+		ch = get_prompt_input("", "-*0123456789\010\015", 1);
 
-    if ((ch == '-') && (Pos == 0))
-    {
-      //
-      // Minus
-      //
-      neg = 1;
-      Printc(ch);
-      Pos++;
-    }
-    if (ch == '*')
-    {
-      return defval;
-    }
-    else if (ch == '\010')
-    {
-      //
-      // Backspace
-      //
+		if ((ch == '-') && (Pos == 0)) {
+			//
+			// Minus
+			//
+			neg = 1;
+			Printc(ch);
+			Pos++;
+		}
+		if (ch == '*')
+			return defval;
+		else if (ch == '\010') {
+			//
+			// Backspace
+			//
 
-      if (Pos > 0)
-      {
-        if ((Pos == 1) && neg)
-        {
-          neg = 0;
-        }
-        else
-        {
-          value = value / 10;
-        }
+			if (Pos > 0) {
+				if ((Pos == 1) && neg)
+					neg = 0;
+				else
+					value = value / 10;
 
-        CursorX--;
-        Printc(' ');
-        CursorX--;
-        Pos--;
-	wmove(TextWindow, CursorY-1, CursorX-1);
-	wrefresh(TextWindow);
-      }
-    }
-    else if ((ch >= '0') && (ch <= '9'))
-    {
-      //
-      // digit
-      //
-      value = value * 10 + (ch - '0');
-      Printc(ch);
-      Pos++;
-    }
+				CursorX--;
+				Printc(' ');
+				CursorX--;
+				Pos--;
+				wmove(TextWindow, CursorY - 1, CursorX - 1);
+				wrefresh(TextWindow);
+			}
+		}else if ((ch >= '0') && (ch <= '9')) {
+			//
+			// digit
+			//
+			value = value * 10 + (ch - '0');
+			Printc(ch);
+			Pos++;
+		}
 
-  } while (ch != '\015');
+	} while (ch != '\015');
 
-  if (Pos == 0)
-  {
-    return defval;
-  }
-  else
-  {
-    if (neg) value = -value;
+	if (Pos == 0)
+		return defval;
+	else{
+		if (neg) value = -value;
 
-    return value;
-  }
+		return value;
+	}
 }
 
 /* =============================================================================
@@ -1583,52 +1447,42 @@ int get_num_input(int defval)
  */
 ActionType get_dir_input(char *prompt, int ShowCursor)
 {
-  int got_dir;
-  int idx;
+	int got_dir;
+	int idx;
 
-  //
-  // Display the prompt at the current position
-  //
-  Print(prompt);
+	//
+	// Display the prompt at the current position
+	//
+	Print(prompt);
 
-  //
-  // Show the cursor if required
-  //
-  if (ShowCursor)
-    {
-      
-      CaretActive = 1;
-    }
+	//
+	// Show the cursor if required
+	//
+	if (ShowCursor)
 
-  Event = ACTION_NULL;
-  got_dir = 0;
+		CaretActive = 1;
 
-  while (!got_dir)
-  {     
-    get_normal_input();
-    
-    idx = 0;
+	Event = ACTION_NULL;
+	got_dir = 0;
 
-    while ((idx < NUM_DIRS) && (!got_dir))
-    {
-      if (DirActions[idx] == Event)
-      {
-        got_dir = 1;
-      }
-      else
-      {
-        idx++;
-      }
-    }
+	while (!got_dir) {
+		get_normal_input();
 
-  }
+		idx = 0;
 
-  if (ShowCursor)
-    {
-      CaretActive = 0;
-    }
+		while ((idx < NUM_DIRS) && (!got_dir)) {
+			if (DirActions[idx] == Event)
+				got_dir = 1;
+			else
+				idx++;
+		}
 
-  return Event;
+	}
+
+	if (ShowCursor)
+		CaretActive = 0;
+
+	return Event;
 
 }
 
@@ -1637,13 +1491,11 @@ ActionType get_dir_input(char *prompt, int ShowCursor)
  */
 void UpdateStatus(void)
 {
-  if (CurrentDisplayMode == DISPLAY_TEXT)
-  {
-    /* Don't redisplay if in text mode */
-    return;
-  }
+	if (CurrentDisplayMode == DISPLAY_TEXT)
+		/* Don't redisplay if in text mode */
+		return;
 
-  PaintStatus();
+	PaintStatus();
 
 }
 
@@ -1652,13 +1504,11 @@ void UpdateStatus(void)
  */
 void UpdateEffects(void)
 {
-  if (CurrentDisplayMode == DISPLAY_TEXT)
-  {
-    /* Don't redisplay if in text mode */
-    return;
-  }
+	if (CurrentDisplayMode == DISPLAY_TEXT)
+		/* Don't redisplay if in text mode */
+		return;
 
-  PaintEffects();
+	PaintEffects();
 
 }
 
@@ -1667,17 +1517,15 @@ void UpdateEffects(void)
  */
 void UpdateStatusAndEffects(void)
 {
-  if (CurrentDisplayMode == DISPLAY_TEXT)
-  {
-    /* Don't redisplay if in text mode */
-    return;
-  }
-  
-  //
-  // Do effects first as update status will mark all effects as current
-  //
-  PaintEffects();
-  PaintStatus();
+	if (CurrentDisplayMode == DISPLAY_TEXT)
+		/* Don't redisplay if in text mode */
+		return;
+
+	//
+	// Do effects first as update status will mark all effects as current
+	//
+	PaintEffects();
+	PaintStatus();
 
 }
 
@@ -1686,51 +1534,45 @@ void UpdateStatusAndEffects(void)
  */
 void set_display(DisplayModeType Mode)
 {
-  //
-  // Save the current settings
-  //
-  if (CurrentDisplayMode == DISPLAY_MAP)
-  {
-    MsgCursorX = CursorX;
-    MsgCursorY = CursorY;
-    CurrentMsgFormat = CurrentFormat;
-  }
-  else if (CurrentDisplayMode == DISPLAY_TEXT)
-  {
-    TextCursorX = CursorX;
-    TextCursorY = CursorY;
-    CurrentTextFormat = CurrentFormat;
-  }
+	//
+	// Save the current settings
+	//
+	if (CurrentDisplayMode == DISPLAY_MAP) {
+		MsgCursorX = CursorX;
+		MsgCursorY = CursorY;
+		CurrentMsgFormat = CurrentFormat;
+	}else if (CurrentDisplayMode == DISPLAY_TEXT) {
+		TextCursorX = CursorX;
+		TextCursorY = CursorY;
+		CurrentTextFormat = CurrentFormat;
+	}
 
-  CurrentDisplayMode = Mode;
+	CurrentDisplayMode = Mode;
 
-  //
-  // Set the text buffer settings for the new display mode
-  //
-  if (CurrentDisplayMode == DISPLAY_MAP)
-  {
-    CursorX = MsgCursorX;
-    CursorY = MsgCursorY;
-    CurrentFormat = CurrentMsgFormat;
+	//
+	// Set the text buffer settings for the new display mode
+	//
+	if (CurrentDisplayMode == DISPLAY_MAP) {
+		CursorX = MsgCursorX;
+		CursorY = MsgCursorY;
+		CurrentFormat = CurrentMsgFormat;
 
-    MaxLine = MAX_MSG_LINES;
+		MaxLine = MAX_MSG_LINES;
 
-    TextWindow = MessageWindow;
+		TextWindow = MessageWindow;
 
-  }
-  else if (CurrentDisplayMode == DISPLAY_TEXT)
-  {
-    CursorX = TextCursorX;
-    CursorY = TextCursorY;
-    CurrentFormat = CurrentTextFormat;
+	}else if (CurrentDisplayMode == DISPLAY_TEXT) {
+		CursorX = TextCursorX;
+		CursorY = TextCursorY;
+		CurrentFormat = CurrentTextFormat;
 
-    MaxLine = MAX_TEXT_LINES;
+		MaxLine = MAX_TEXT_LINES;
 
-    TextWindow = stdscr;
+		TextWindow = stdscr;
 
-  }
+	}
 
-  PaintWindow();
+	PaintWindow();
 }
 
 /* =============================================================================
@@ -1749,40 +1591,36 @@ void set_display(DisplayModeType Mode)
  */
 static void IncCursorY(int Count)
 {
-  /*int Scroll;*/
-  int inc;
-  int x;
+	/*int Scroll;*/
+	int inc;
+	int x;
 
-  inc = Count;
-  /*Scroll = 0;*/
+	inc = Count;
+	/*Scroll = 0;*/
 
-  while (inc > 0)
-  {
-    CursorY = CursorY + 1;
+	while (inc > 0) {
+		CursorY = CursorY + 1;
 
-    if (CursorY > MaxLine)
-    {
-      /*Scroll = 1;*/
-      CursorY--;
+		if (CursorY > MaxLine) {
+			/*Scroll = 1;*/
+			CursorY--;
 
-      scrollok(TextWindow, 1);
+			scrollok(TextWindow, 1);
 
-      scroll(TextWindow);
-      
-      scrollok(TextWindow, 0);
+			scroll(TextWindow);
 
-      SetCursesAttr(FORMAT_NORMAL);
-      for (x = 0 ; x < LINE_LENGTH ; x++)
-      {
-	mvwaddch(TextWindow, CursorY-1, x, ' ');
-      }
+			scrollok(TextWindow, 0);
 
-    }
+			SetCursesAttr(FORMAT_NORMAL);
+			for (x = 0; x < LINE_LENGTH; x++)
+				mvwaddch(TextWindow, CursorY - 1, x, ' ');
 
-    inc--;
-  }
-  
-  wrefresh(TextWindow);
+		}
+
+		inc--;
+	}
+
+	wrefresh(TextWindow);
 }
 
 /* =============================================================================
@@ -1801,12 +1639,11 @@ static void IncCursorY(int Count)
  */
 static void IncCursorX(int Count)
 {
-  CursorX = CursorX + Count;
-  if (CursorX > LINE_LENGTH)
-  {
-    CursorX = 1;
-    IncCursorY(1);
-  }
+	CursorX = CursorX + Count;
+	if (CursorX > LINE_LENGTH) {
+		CursorX = 1;
+		IncCursorY(1);
+	}
 }
 
 /* =============================================================================
@@ -1814,26 +1651,23 @@ static void IncCursorX(int Count)
  */
 void ClearText(void)
 {
-  int x, y;
+	int x, y;
 
-  //
-  // Clear the text buffer
-  //
-  SetCursesAttr(FORMAT_NORMAL);
+	//
+	// Clear the text buffer
+	//
+	SetCursesAttr(FORMAT_NORMAL);
 
-  for (y = 0 ; y < MaxLine ; y++)
-  {
-    for (x = 0 ; x < LINE_LENGTH ; x++)
-    {
-      mvwaddch(TextWindow, y, x, ' ');
-    }
+	for (y = 0; y < MaxLine; y++) {
+		for (x = 0; x < LINE_LENGTH; x++)
+			mvwaddch(TextWindow, y, x, ' ');
 
-  }
+	}
 
-  wrefresh(TextWindow);
+	wrefresh(TextWindow);
 
-  CursorX = 1;
-  CursorY = 1;
+	CursorX = 1;
+	CursorY = 1;
 
 }
 
@@ -1842,20 +1676,19 @@ void ClearText(void)
  */
 void UlarnBeep(void)
 {
-  //
-  // Play a beep
-  //
-  if (!nobeep)
-    {
+	//
+	// Play a beep
+	//
+	if (!nobeep) {
 #ifdef W32_TTY
-      //
-      // beep seems to cause problems under windows, so put a bell
-      //
-      putch(7);
+		//
+		// beep seems to cause problems under windows, so put a bell
+		//
+		putch(7);
 #else
-      beep();
+		beep();
 #endif
-    }
+	}
 }
 
 /* =============================================================================
@@ -1863,8 +1696,8 @@ void UlarnBeep(void)
  */
 void MoveCursor(int x, int y)
 {
-  CursorX = x;
-  CursorY = y;
+	CursorX = x;
+	CursorY = y;
 }
 
 static int RefreshEachChar = 1;
@@ -1874,36 +1707,33 @@ static int RefreshEachChar = 1;
  */
 void Printc(char c)
 {
-  int incx;
+	int incx;
 
-  switch (c)
-    {
-    case '\t':
-      incx = ((((CursorX - 1) / 8) + 1) * 8 + 1) - CursorX;
-      IncCursorX(incx);
-      break;
+	switch (c) {
+	case '\t':
+		incx = ((((CursorX - 1) / 8) + 1) * 8 + 1) - CursorX;
+		IncCursorX(incx);
+		break;
 
-    case '\n':
-      CursorX = 1;
-      IncCursorY(1);
-      break;
-      
-    case '\015':
-      break;
-      
-    default:
+	case '\n':
+		CursorX = 1;
+		IncCursorY(1);
+		break;
 
-      SetCursesAttr(CurrentFormat);
-      mvwaddch(TextWindow, CursorY-1, CursorX - 1, c);
+	case '\015':
+		break;
 
-      if (RefreshEachChar)
-	{
-	  wrefresh(TextWindow);
+	default:
+
+		SetCursesAttr(CurrentFormat);
+		mvwaddch(TextWindow, CursorY - 1, CursorX - 1, c);
+
+		if (RefreshEachChar)
+			wrefresh(TextWindow);
+
+		IncCursorX(1);
+		break;
 	}
-
-      IncCursorX(1);
-      break;
-    }
 }
 
 /* =============================================================================
@@ -1911,25 +1741,23 @@ void Printc(char c)
  */
 void Print(char *string)
 {
-  int Len;
-  int pos;
+	int Len;
+	int pos;
 
-  if (string == NULL) return;
+	if (string == NULL) return;
 
-  Len = strlen(string);
+	Len = strlen(string);
 
-  if (Len == 0) return;
-  
-  RefreshEachChar = 0;
+	if (Len == 0) return;
 
-  for (pos = 0 ; pos < Len ; pos++)
-  {
-    Printc(string[pos]);
-  }
+	RefreshEachChar = 0;
 
-  RefreshEachChar = 1;
+	for (pos = 0; pos < Len; pos++)
+		Printc(string[pos]);
 
-  wrefresh(TextWindow);
+	RefreshEachChar = 1;
+
+	wrefresh(TextWindow);
 }
 
 /* =============================================================================
@@ -1937,14 +1765,14 @@ void Print(char *string)
  */
 void Printf(char *fmt, ...)
 {
-  char buf[2048];
-  va_list argptr;
+	char buf[2048];
+	va_list argptr;
 
-  va_start(argptr, fmt);
-  vsprintf(buf, fmt, argptr);
-  va_end(argptr);
+	va_start(argptr, fmt);
+	vsprintf(buf, fmt, argptr);
+	va_end(argptr);
 
-  Print(buf);
+	Print(buf);
 }
 
 /* =============================================================================
@@ -1952,11 +1780,11 @@ void Printf(char *fmt, ...)
  */
 void Standout(char *String)
 {
-  CurrentFormat = FORMAT_STANDOUT;
+	CurrentFormat = FORMAT_STANDOUT;
 
-  Print(String);
+	Print(String);
 
-  CurrentFormat = FORMAT_NORMAL;
+	CurrentFormat = FORMAT_NORMAL;
 }
 
 /* =============================================================================
@@ -1964,7 +1792,7 @@ void Standout(char *String)
  */
 void SetFormat(FormatType format)
 {
-  CurrentFormat = format;
+	CurrentFormat = format;
 }
 
 /* =============================================================================
@@ -1972,13 +1800,12 @@ void SetFormat(FormatType format)
  */
 void ClearToEOL(void)
 {
-  int x;
+	int x;
 
-  for (x = CursorX ; x <= LINE_LENGTH ; x++)
-  {
-    SetCursesAttr(FORMAT_NORMAL);
-    mvwaddch(TextWindow, CursorY-1, x-1, ' ');
-  }
+	for (x = CursorX; x <= LINE_LENGTH; x++) {
+		SetCursesAttr(FORMAT_NORMAL);
+		mvwaddch(TextWindow, CursorY - 1, x - 1, ' ');
+	}
 
 }
 
@@ -1987,22 +1814,16 @@ void ClearToEOL(void)
  */
 void ClearToEOPage(int x, int y)
 {
-  int tx, ty;
+	int tx, ty;
 
-  SetCursesAttr(FORMAT_NORMAL);
+	SetCursesAttr(FORMAT_NORMAL);
 
-  for (tx = x ; tx <= LINE_LENGTH ; tx++)
-  {
-    mvwaddch(TextWindow, y-1, tx-1, ' ');
-  }
+	for (tx = x; tx <= LINE_LENGTH; tx++)
+		mvwaddch(TextWindow, y - 1, tx - 1, ' ');
 
-  for (ty = y+1 ; ty <= MaxLine ; ty++)
-  {
-    for (tx = 1 ; tx <= LINE_LENGTH ; tx++)
-    {
-      mvwaddch(TextWindow, ty-1, tx-1, ' ');
-    }
-  }
+	for (ty = y + 1; ty <= MaxLine; ty++)
+		for (tx = 1; tx <= LINE_LENGTH; tx++)
+			mvwaddch(TextWindow, ty - 1, tx - 1, ' ');
 
 }
 
@@ -2011,27 +1832,25 @@ void ClearToEOPage(int x, int y)
  */
 void show1cell(int x, int y)
 {
-  int TileId;
-  int Attr;
-  int Color;
+	int TileId;
+	int Attr;
+	int Color;
 
-  /* see nothing if blind		*/
+	/* see nothing if blind		*/
 	if (c[BLINDCOUNT]) return;
 
-  /* we end up knowing about it */
+	/* we end up knowing about it */
 	know[x][y] = item[x][y];
-  if (mitem[x][y].mon != MONST_NONE)
-  {
-    stealth[x][y] |= STEALTH_SEEN;
-  }
+	if (mitem[x][y].mon != MONST_NONE)
+		stealth[x][y] |= STEALTH_SEEN;
 
 
-  GetTile(x, y, &TileId, &Attr, &Color);
+	GetTile(x, y, &TileId, &Attr, &Color);
 
-  wattrset(MapWindow, Attr | COLOR_PAIR(Color));
-  mvwaddch(MapWindow, y, x, TileId);
+	wattrset(MapWindow, Attr | COLOR_PAIR(Color));
+	mvwaddch(MapWindow, y, x, TileId);
 
-  wrefresh(MapWindow);
+	wrefresh(MapWindow);
 }
 
 /* =============================================================================
@@ -2039,33 +1858,29 @@ void show1cell(int x, int y)
  */
 void showplayer(void)
 {
-  int TileId;
-  int Attr;
-  int Color;
+	int TileId;
+	int Attr;
+	int Color;
 
-  //
-  // Determine if we need to scroll the map
-  //
+	//
+	// Determine if we need to scroll the map
+	//
 
-  if (c[BLINDCOUNT] == 0)
-    {
-      TileId = '@';
+	if (c[BLINDCOUNT] == 0) {
+		TileId = '@';
 #ifdef W32_TTY
-      Attr = A_BOLD;
+		Attr = A_BOLD;
 #else
-      Attr = 0;
+		Attr = 0;
 #endif
-      Color = C_RED;
-    }
-  else
-    {
-      GetTile(playerx, playery, &TileId, &Attr, &Color);
-    }
- 
-  wattrset(MapWindow, Attr | COLOR_PAIR(Color));
-  mvwaddch(MapWindow, playery, playerx, TileId);
-  wmove(MapWindow, playery, playerx);
-  wrefresh(MapWindow);
+		Color = C_RED;
+	}else
+		GetTile(playerx, playery, &TileId, &Attr, &Color);
+
+	wattrset(MapWindow, Attr | COLOR_PAIR(Color));
+	mvwaddch(MapWindow, playery, playerx, TileId);
+	wmove(MapWindow, playery, playerx);
+	wrefresh(MapWindow);
 }
 
 /* =============================================================================
@@ -2073,80 +1888,69 @@ void showplayer(void)
  */
 void showcell(int x, int y)
 {
-  int minx, maxx;
-  int miny, maxy;
-  int mx, my;
-  int TileId;
-  int Attr;
-  int Color;
+	int minx, maxx;
+	int miny, maxy;
+	int mx, my;
+	int TileId;
+	int Attr;
+	int Color;
 
-  /*
-   * Decide how much the player knows about around him/her.
-   */
-  if (c[AWARENESS])
-    {
-      minx = x-3;
-      maxx = x+3;
-      miny = y-3;
-      maxy = y+3;
-    }
-  else
-    {
-      minx = x-1;
-      maxx = x+1;
-      miny = y-1;
-      maxy = y+1;
-    }
-  
-  if (c[BLINDCOUNT])
-    {
-      minx = x;
-      maxx = x;
-      miny = y;
-      maxy = y;
-      
-    }
-  
-  /*
-   * Limit the area to the map extents
-   */
-  if (minx < 0) minx = 0;
-  if (maxx > MAXX-1) maxx = MAXX-1;
-  if (miny < 0) miny=0;
-  if (maxy > MAXY-1) maxy = MAXY-1;
-  
-  for (my = miny; my <= maxy; my++)
-    {
-      for (mx = minx; mx <= maxx; mx++)
-	{
-	  if ((mx == playerx) && (my == playery))
-	    {
-	      know[mx][my] = item[mx][my];
-	    }
-	  else if ((know[mx][my] != item[mx][my]) ||       /* item changed    */
-		   ((mx == lastpx) && (my == lastpy)) ||   /* last player pos */
-		   ((mitem[mx][my].mon != MONST_NONE) &&   /* unseen monster  */
-		    ((stealth[mx][my] & STEALTH_SEEN) == 0)))
-	    {
-	      //
-	      // Only draw areas not already known (and hence displayed)
-	      //
-	      know[mx][my] = item[mx][my];
-	      if (mitem[mx][my].mon != MONST_NONE)
-		{
-		  stealth[mx][my] |= STEALTH_SEEN;
-		}
-	      
-	      GetTile(mx, my, &TileId, &Attr, &Color);
-
-	      wattrset(MapWindow, Attr | COLOR_PAIR(Color));
-	      mvwaddch(MapWindow, my, mx, TileId);
-	    } // if not known
-	  
+	/*
+	 * Decide how much the player knows about around him/her.
+	 */
+	if (c[AWARENESS]) {
+		minx = x - 3;
+		maxx = x + 3;
+		miny = y - 3;
+		maxy = y + 3;
+	}else   {
+		minx = x - 1;
+		maxx = x + 1;
+		miny = y - 1;
+		maxy = y + 1;
 	}
-    }
 
-  showplayer();
+	if (c[BLINDCOUNT]) {
+		minx = x;
+		maxx = x;
+		miny = y;
+		maxy = y;
+
+	}
+
+	/*
+	 * Limit the area to the map extents
+	 */
+	if (minx < 0) minx = 0;
+	if (maxx > MAXX - 1) maxx = MAXX - 1;
+	if (miny < 0) miny = 0;
+	if (maxy > MAXY - 1) maxy = MAXY - 1;
+
+	for (my = miny; my <= maxy; my++) {
+		for (mx = minx; mx <= maxx; mx++) {
+			if ((mx == playerx) && (my == playery))
+				know[mx][my] = item[mx][my];
+			else if ((know[mx][my] != item[mx][my]) ||      /* item changed    */
+				 ((mx == lastpx) && (my == lastpy)) ||  /* last player pos */
+				 ((mitem[mx][my].mon != MONST_NONE) &&  /* unseen monster  */
+				  ((stealth[mx][my] & STEALTH_SEEN) == 0))) {
+				//
+				// Only draw areas not already known (and hence displayed)
+				//
+				know[mx][my] = item[mx][my];
+				if (mitem[mx][my].mon != MONST_NONE)
+					stealth[mx][my] |= STEALTH_SEEN;
+
+				GetTile(mx, my, &TileId, &Attr, &Color);
+
+				wattrset(MapWindow, Attr | COLOR_PAIR(Color));
+				mvwaddch(MapWindow, my, mx, TileId);
+			} // if not known
+
+		}
+	}
+
+	showplayer();
 
 }
 
@@ -2155,7 +1959,7 @@ void showcell(int x, int y)
  */
 void drawscreen(void)
 {
-  PaintWindow();
+	PaintWindow();
 }
 
 /* =============================================================================
@@ -2163,10 +1967,10 @@ void drawscreen(void)
  */
 void draws(int minx, int miny, int maxx, int maxy)
 {
-	(void) minx;
-	(void) miny;
-	(void) maxx;
-	(void) maxy;
+	(void)minx;
+	(void)miny;
+	(void)maxx;
+	(void)maxy;
 	PaintWindow();
 }
 
@@ -2175,12 +1979,12 @@ void draws(int minx, int miny, int maxx, int maxy)
  */
 void mapeffect(int x, int y, DirEffectsType effect, int dir)
 {
-  wattrset(MapWindow, A_NORMAL | COLOR_PAIR(EffectColor[effect]));
-  mvwaddch(MapWindow, y, x, EffectTile[effect][dir]);
-  wmove(MapWindow, 0, 0);
+	wattrset(MapWindow, A_NORMAL | COLOR_PAIR(EffectColor[effect]));
+	mvwaddch(MapWindow, y, x, EffectTile[effect][dir]);
+	wmove(MapWindow, 0, 0);
 
-  touchwin(MapWindow);
-  wrefresh(MapWindow);
+	touchwin(MapWindow);
+	wrefresh(MapWindow);
 }
 
 /* =============================================================================
@@ -2188,7 +1992,7 @@ void mapeffect(int x, int y, DirEffectsType effect, int dir)
  */
 int magic_effect_frames(MagicEffectsType fx)
 {
-  return magicfx_tile[fx].Frames;
+	return magicfx_tile[fx].Frames;
 }
 
 /* =============================================================================
@@ -2196,12 +2000,12 @@ int magic_effect_frames(MagicEffectsType fx)
  */
 void magic_effect(int x, int y, MagicEffectsType fx, int frame)
 {
-  wattrset(MapWindow, COLOR_PAIR(magicfx_tile[fx].Color[frame]));
-  mvwaddch(MapWindow, y, x, magicfx_tile[fx].Tile[frame]);
-  wmove(MapWindow, 0, 0);
+	wattrset(MapWindow, COLOR_PAIR(magicfx_tile[fx].Color[frame]));
+	mvwaddch(MapWindow, y, x, magicfx_tile[fx].Tile[frame]);
+	wmove(MapWindow, 0, 0);
 
-  touchwin(MapWindow);
-  wrefresh(MapWindow);
+	touchwin(MapWindow);
+	wrefresh(MapWindow);
 }
 
 /* =============================================================================
@@ -2210,9 +2014,9 @@ void magic_effect(int x, int y, MagicEffectsType fx, int frame)
 void nap(int delay)
 {
 #ifdef UNIX
-  usleep(delay * 1000);
+	usleep(delay * 1000);
 #else
-  napms(delay);
+	napms(delay);
 #endif
 }
 
@@ -2223,87 +2027,73 @@ void GetUser(char *username, int *uid)
 {
 #ifdef UNIX
 
-  *uid = getuid();
-  
-  strcpy(username, getenv("USER"));
-  
+	*uid = getuid();
+
+	strcpy(username, getenv("USER"));
+
 #else
-  FILE *fp;
-  char TmpName[80];
-  int  TmpPid;
-  int  Found;
-  int  n;
+	FILE *fp;
+	char TmpName[80];
+	int TmpPid;
+	int Found;
+	int n;
 
-  if (username[0] == 0)
-  {
-    //
-    // Name is not yet specified, so ask player for the name
-    //
-    Print("Who are you? ");
-    get_string_input(username, USERNAME_LENGTH);
+	if (username[0] == 0) {
+		//
+		// Name is not yet specified, so ask player for the name
+		//
+		Print("Who are you? ");
+		get_string_input(username, USERNAME_LENGTH);
 
-    if (strlen(username) == 0)
-    {
-      strcpy(username, "Anon");
-    }
-  }
-  
-  /* get the Player Id */
+		if (strlen(username) == 0)
+			strcpy(username, "Anon");
+	}
 
-  fp = fopen (PIDName, "rb");
-  if (fp == NULL)
-  {
-    /* Need to create the PID file. */
-    fp = fopen(PIDName, "wb");
-    if (fp != NULL)
-    {
-      *uid = FIRST_PID;
-      fwrite(username, USERNAME_LENGTH + 1, 1, fp);
-      fwrite(uid, sizeof(int), 1, fp);
+	/* get the Player Id */
 
-      fclose(fp);
-    }
-  }
-  else
-  {
-    /* search the PID file for this player id */
-    Found = 0;
-    TmpPid = FIRST_PID;
-    while (!feof(fp) && !Found)
-    {
-      n = fread(TmpName, USERNAME_LENGTH + 1, 1, fp);
-      if (n == 1)
-      {
-        n = fread(&TmpPid, sizeof(int), 1, fp);
-      }
+	fp = fopen(PIDName, "rb");
+	if (fp == NULL) {
+		/* Need to create the PID file. */
+		fp = fopen(PIDName, "wb");
+		if (fp != NULL) {
+			*uid = FIRST_PID;
+			fwrite(username, USERNAME_LENGTH + 1, 1, fp);
+			fwrite(uid, sizeof(int), 1, fp);
 
-      if (n == 1)
-      {
-        if (strcmp(TmpName, username) == 0)
-        {
-          *uid = TmpPid;
-          Found = 1;
-        }
-      }
+			fclose(fp);
+		}
+	}else {
+		/* search the PID file for this player id */
+		Found = 0;
+		TmpPid = FIRST_PID;
+		while (!feof(fp) && !Found) {
+			n = fread(TmpName, USERNAME_LENGTH + 1, 1, fp);
+			if (n == 1)
+				n = fread(&TmpPid, sizeof(int), 1, fp);
 
-    }
+			if (n == 1) {
+				if (strcmp(TmpName, username) == 0) {
+					*uid = TmpPid;
+					Found = 1;
+				}
+			}
 
-    fclose(fp);
+		}
 
-    if (!Found)
-    {
-      *uid = TmpPid + 1;
-      fp = fopen(PIDName, "ab");
-      if (fp != NULL)
-      {
-        fwrite(username, USERNAME_LENGTH + 1, 1, fp);
-        fwrite(uid, sizeof(int), 1, fp);
+		fclose(fp);
 
-        fclose(fp);
-      }
-    }
+		if (!Found) {
+			*uid = TmpPid + 1;
+			fp = fopen(PIDName, "ab");
+			if (fp != NULL) {
+				fwrite(username, USERNAME_LENGTH + 1, 1, fp);
+				fwrite(uid, sizeof(int), 1, fp);
 
-  }
+				fclose(fp);
+			}
+		}
+
+	}
 
 #endif
 }

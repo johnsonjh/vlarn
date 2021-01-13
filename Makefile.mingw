@@ -1,4 +1,3 @@
-
 CC=gcc
 LD=gcc -o
 RC=windres
@@ -8,8 +7,8 @@ LDFLAGS=
 
 OBJECT=ularn.o ularn_win.o ularn_game.o ularn_ask.o store.o sphere.o spell.o show.o scroll.o scores.o saveutils.o savegame.o potion.o player.o object.o monster.o itm.o help.o getopt.o fortune.o dungeon_obj.o dungeon.o diag.o action.o
 
-ularn.exe: $(OBJECT) ularnpc.o
-	$(LD) ularn.exe $(OBJECT) ularnpc.o -mwindows
+vlarn.exe: $(OBJECT) ularnpc.o
+	$(LD) vlarn.exe $(OBJECT) ularnpc.o -mwindows
 
 clean:
 	del *.obj
@@ -92,6 +91,6 @@ diag.o: diag.c diag.h header.h ularn_game.h itm.h dungeon.h monster.h player.h p
 action.o: action.c action.h ularn_game.h ularn_win.h header.h savegame.h itm.h player.h monster.h dungeon.h dungeon_obj.h potion.h scroll.h show.h fortune.h
 	$(CC) $(CFLAGS) -c action.c
 
-
 ularnpc.o: ularnpc.rc ularnpc.rh
 	$(RC) -o ularnpc.o ularnpc.rc
+

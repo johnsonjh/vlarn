@@ -13,30 +13,30 @@
  * Copyright (c) 1995, 2004, Julian Olds
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
  * are met:
  *
  *   . Redistributions of source code must retain the above copyright notice,
- *     this list of conditions and the following disclaimer. 
+ *     this list of conditions and the following disclaimer.
  *
  *   . Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution. 
+ *     documentation and/or other materials provided with the distribution.
  *
- * The name of the author may not be used to endorse or promote products 
- * derived from this software without specific prior written permission. 
+ * The name of the author may not be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * =============================================================================
@@ -115,12 +115,11 @@ FreeItems(
 
 	TmpItemPtr1 = WindowMenu;
 
-	while (TmpItemPtr1 != NULL)
-	{
-      // Free and submenu items for this menu item
+	while (TmpItemPtr1 != NULL) {
+		// Free and submenu items for this menu item
 		FreeItems(TmpItemPtr1->SubItem);
 
-      // Free the IntuiText and MenuItem for this menu item.
+		// Free the IntuiText and MenuItem for this menu item.
 		TmpItemPtr2 = TmpItemPtr1;
 		TmpItemPtr1 = TmpItemPtr1->NextItem;
 		FreeMem(TmpItemPtr2->ItemFill, sizeof(struct IntuiText));
@@ -193,47 +192,40 @@ AddSubItems(
 	ItemWidth = 0;
 	ItemHeight = TextHeight;
 
-   // Find the width of the submenu as the maximum  of the sub menu item
-   // widths.
+	// Find the width of the submenu as the maximum  of the sub menu item
+	// widths.
 	ItemIndex = 0;
 
-	while (WindowItem[ItemIndex].Text != NULL)
-	{
+	while (WindowItem[ItemIndex].Text != NULL) {
 		Length = strlen(WindowItem[ItemIndex].Text);
 		TmpWidth = TextLength(MenuRPort, WindowItem[ItemIndex].Text, Length);
 
-		if (WindowItem[ItemIndex].ComSeq != 0)
-		{
+		if (WindowItem[ItemIndex].ComSeq != 0) {
 			TmpWidth += COMMWIDTH;
 			TmpWidth += TextLength(MenuRPort, "M", 1);
 		}
 
 		if (TmpWidth > ItemWidth)
-		{
 			ItemWidth = TmpWidth;
-		}
 
 		ItemIndex++;
 	}
 
-   // Allocate the submenu items and add the to the submenu for the menu item.
+	// Allocate the submenu items and add the to the submenu for the menu item.
 	TmpItemPtr2 = NULL;
 	ItemIndex = 0;
 
-	while (WindowItem[ItemIndex].Text != NULL)
-	{
+	while (WindowItem[ItemIndex].Text != NULL) {
 		if ((TmpItemPtr1 = (struct MenuItem *)
-			 AllocMem(sizeof(struct MenuItem), MEMF_CLEAR)) == NULL)
-		{
+				   AllocMem(sizeof(struct MenuItem), MEMF_CLEAR)) == NULL) {
 			MenuError(SMARTMENU_MEMORY_ERROR);
 			return FALSE;
 		}
 
-        if ((ItemText = (struct IntuiText *)
-			 AllocMem(sizeof(struct IntuiText), MEMF_CLEAR)) == NULL)
-		{
+		if ((ItemText = (struct IntuiText *)
+				AllocMem(sizeof(struct IntuiText), MEMF_CLEAR)) == NULL) {
 			MenuError(SMARTMENU_MEMORY_ERROR);
-            return FALSE;
+			return FALSE;
 		}
 
 		ItemText->FrontPen = WindowItem->FrontPen;
@@ -251,13 +243,9 @@ AddSubItems(
 		TmpItemPtr1->Width = ItemWidth;
 		TmpItemPtr1->Height = TextHeight;
 		if (WindowItem[ItemIndex].ComSeq != 0)
-		{
 			TmpItemPtr1->Flags = ITEMTEXT | COMMSEQ | ITEMENABLED | HIGHCOMP;
-		}
 		else
-		{
 			TmpItemPtr1->Flags = ITEMTEXT | ITEMENABLED | HIGHCOMP;
-		}
 
 		TmpItemPtr1->MutualExclude = 0;
 		TmpItemPtr1->ItemFill = ItemText;
@@ -266,14 +254,10 @@ AddSubItems(
 		TmpItemPtr1->SubItem = NULL;
 
 		if (WindowMenu->SubItem == NULL)
-		{
 			WindowMenu->SubItem = TmpItemPtr1;
-		}
 		else
-		{
 			TmpItemPtr2->NextItem = TmpItemPtr1;
-		}
-  		TmpItemPtr2 = TmpItemPtr1;
+		TmpItemPtr2 = TmpItemPtr1;
 
 		ItemTop += TextHeight;
 		ItemIndex++;
@@ -323,46 +307,39 @@ AddItems(
 	ItemWidth = 0;
 	ItemHeight = TextHeight;
 
-   // Calculate the width of the menu as the maximum with of all of the items.
+	// Calculate the width of the menu as the maximum with of all of the items.
 	ItemIndex = 0;
 
-	while (WindowItem[ItemIndex].Text != NULL)
-	{
+	while (WindowItem[ItemIndex].Text != NULL) {
 		Length = strlen(WindowItem[ItemIndex].Text);
 		TmpWidth = TextLength(MenuRPort, WindowItem[ItemIndex].Text, Length);
 
-		if (WindowItem[ItemIndex].ComSeq != 0)
-		{
+		if (WindowItem[ItemIndex].ComSeq != 0) {
 			TmpWidth += COMMWIDTH;
 			TmpWidth += TextLength(MenuRPort, "M", 1);
 		}
 
 		if (TmpWidth > ItemWidth)
-		{
 			ItemWidth = TmpWidth;
-		}
 
 		ItemIndex++;
 	}
 
-   // Allcoate the menu items ond fill in the data structures in accordance
-   // with the SmartMenuItem specifications.
+	// Allcoate the menu items ond fill in the data structures in accordance
+	// with the SmartMenuItem specifications.
 	TmpItemPtr2 = NULL;
 	ItemIndex = 0;
 
-	while (WindowItem[ItemIndex].Text != NULL)
-	{
+	while (WindowItem[ItemIndex].Text != NULL) {
 		if ((TmpItemPtr1 = (struct MenuItem *)
-			 AllocMem(sizeof(struct MenuItem), MEMF_CLEAR)) == NULL)
-		{
+				   AllocMem(sizeof(struct MenuItem), MEMF_CLEAR)) == NULL) {
 			MenuError(SMARTMENU_MEMORY_ERROR);
-     		return FALSE;
+			return FALSE;
 		}
-        if ((ItemText = (struct IntuiText *)
-			 AllocMem(sizeof(struct IntuiText), MEMF_CLEAR)) == NULL)
-		{
+		if ((ItemText = (struct IntuiText *)
+				AllocMem(sizeof(struct IntuiText), MEMF_CLEAR)) == NULL) {
 			MenuError(SMARTMENU_MEMORY_ERROR);
-         	return FALSE;
+			return FALSE;
 		}
 
 		ItemText->FrontPen = WindowItem->FrontPen;
@@ -380,13 +357,9 @@ AddItems(
 		TmpItemPtr1->Width = ItemWidth;
 		TmpItemPtr1->Height = TextHeight;
 		if (WindowItem[ItemIndex].ComSeq != 0)
-		{
 			TmpItemPtr1->Flags = ITEMTEXT | COMMSEQ | ITEMENABLED | HIGHCOMP;
-		}
 		else
-		{
 			TmpItemPtr1->Flags = ITEMTEXT | ITEMENABLED | HIGHCOMP;
-		}
 
 		TmpItemPtr1->MutualExclude = 0;
 		TmpItemPtr1->ItemFill = ItemText;
@@ -395,25 +368,18 @@ AddItems(
 		TmpItemPtr1->SubItem = NULL;
 
 		if (WindowMenu->FirstItem == NULL)
-		{
 			WindowMenu->FirstItem = TmpItemPtr1;
-		}
 		else
-		{
 			TmpItemPtr2->NextItem = TmpItemPtr1;
-		}
 		TmpItemPtr2 = TmpItemPtr1;
 
-      // Add sub items if required.
-		if (WindowItem[ItemIndex].SubItem != NULL)
-		{
+		// Add sub items if required.
+		if (WindowItem[ItemIndex].SubItem != NULL) {
 			if (!AddSubItems(
-					TmpItemPtr1,
-					WindowItem[ItemIndex].SubItem,
-					TextHeight))
-			{
+				    TmpItemPtr1,
+				    WindowItem[ItemIndex].SubItem,
+				    TextHeight))
 				return FALSE;
-			}
 		}
 
 		ItemTop += TextHeight;
@@ -444,21 +410,20 @@ MenuQuit(void)
 	struct Menu *TmpMenuPtr1;
 	struct Menu *TmpMenuPtr2;
 
-   // Free all memory for menu structures
+	// Free all memory for menu structures
 	TmpMenuPtr1 = MenuPtr;
 
-	while (TmpMenuPtr1 != NULL)
-	{
+	while (TmpMenuPtr1 != NULL) {
 		FreeItems(TmpMenuPtr1->FirstItem);
 		TmpMenuPtr2 = TmpMenuPtr1;
 		TmpMenuPtr1 = TmpMenuPtr1->NextMenu;
 		FreeMem(TmpMenuPtr2, sizeof(struct Menu));
 	}
 
-   // Remove the menu from the menu strip
+	// Remove the menu from the menu strip
 	ClearMenuStrip(MenuWindow);
 
-   // Set the quit flag
+	// Set the quit flag
 	Quit = TRUE;
 }
 
@@ -481,34 +446,32 @@ MakeMenuStructure(
 	struct Screen *WindowScreen;
 	int TextHeight;
 
-   // Store the window for the menu.
+	// Store the window for the menu.
 	MenuWindow = MWindow;
 	MenuRPort = MenuWindow->RPort;
 
 	MenuPtr = NULL;
 	SmartMenuPtr = WindowMenu;
 
-   // Get the font hight for the screen font.
+	// Get the font hight for the screen font.
 	WindowScreen = MenuWindow->WScreen;
 	TextHeight = WindowScreen->Font->ta_YSize;
 
-   // Initialise sizes and positions/
+	// Initialise sizes and positions/
 	TmpMenuPtr2 = NULL;
 	MenuIndex = 0;
 	MenuLeft = TextLength(MenuRPort, " ", 1);;
 	MenuTop = 0;
 	MenuHeight = TextHeight;
 
-   // Create the menu structures
-	while (WindowMenu[MenuIndex].Text != NULL)
-	{
+	// Create the menu structures
+	while (WindowMenu[MenuIndex].Text != NULL) {
 		Length = strlen(WindowMenu[MenuIndex].Text);
 		MenuWidth = TextLength(MenuRPort, WindowMenu[MenuIndex].Text, Length);
 		MenuWidth += TextLength(MenuRPort, " ", 1);
 
 		if ((TmpMenuPtr1 = (struct Menu *)
-		 	 AllocMem(sizeof(struct Menu), MEMF_CLEAR)) == NULL)
-		{
+				   AllocMem(sizeof(struct Menu), MEMF_CLEAR)) == NULL) {
 			MenuError(SMARTMENU_MEMORY_ERROR);
 			return FALSE;
 		}
@@ -523,31 +486,24 @@ MakeMenuStructure(
 		TmpMenuPtr1->FirstItem = NULL;
 
 		if (MenuPtr == NULL)
-		{
 			MenuPtr = TmpMenuPtr1;
-		}
 		else
-		{
 			TmpMenuPtr2->NextMenu = TmpMenuPtr1;
-		}
 		TmpMenuPtr2 = TmpMenuPtr1;
 
-		if (WindowMenu[MenuIndex].FirstItem != NULL)
-		{
+		if (WindowMenu[MenuIndex].FirstItem != NULL) {
 			if (!AddItems(
-					TmpMenuPtr1,
-					WindowMenu[MenuIndex].FirstItem,
-					TextHeight))
-			{
+				    TmpMenuPtr1,
+				    WindowMenu[MenuIndex].FirstItem,
+				    TextHeight))
 				return FALSE;
-			}
-      }
+		}
 
 		MenuLeft += MenuWidth;;
 		MenuIndex++;
 	}
 
-   // Set the menu
+	// Set the menu
 	SetMenuStrip(MenuWindow, MenuPtr);
 
 	return TRUE;
@@ -568,8 +524,7 @@ DoMenuSelection(
 	struct MenuItem *Item;
 
 	Number = code;
-	while (Number != MENUNULL)
-	{
+	while (Number != MENUNULL) {
 		Item = ItemAddress(MenuPtr, Number);
 
 		MenuNumber = MENUNUM(Number);
@@ -577,14 +532,10 @@ DoMenuSelection(
 		SubNumber = SUBNUM(Number);
 
 		if (SubNumber == NOSUB)
-		{
 			SmartMenuPtr[MenuNumber].FirstItem[ItemNumber].SelectFunction();
-		}
 		else
-		{
 			SmartMenuPtr[MenuNumber].FirstItem[ItemNumber].
-				SubItem[SubNumber].SelectFunction();
-		}
+			SubItem[SubNumber].SelectFunction();
 
 		Number = Item->NextSelect;
 	}
