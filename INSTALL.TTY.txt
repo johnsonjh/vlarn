@@ -1,0 +1,41 @@
+Compiling/Installing TTY VLarn
+------------------------------
+
+VLarn should compile on any Unix like OS (Linux, NetBSD, Solaris, etc).
+
+The code has only been tested on GCC on Unix based systems.
+It may or may not work on other compilers.
+
+It has been tested on the following systems:
+
+Pentium 4 running Red Hat Linux 7.1
+Amiga A4000/040 running NetBSD 1.5.2
+Sun UltraSparc running Solaris 2.5.2
+
+There is no configure script provided (or necessary.)
+
+Some Unix systems may need 'dos2unix' (or an equivalent command to strip ^M)
+to be run on the source files and the Makefile before compiling. 
+
+NOTE: Source installation is the only form I support for Unix systems.
+      I do not release VLarn executables for the X11 version as there
+      are way too many variants.
+
+To compile and install VLarn:
+
+1. Edit Makefile.TTY to set system specific include and library paths.
+   This may not be necessary as the default include path is the most
+   common location for the necessary include files.
+   Change the INSTALL_PATH and LIB_PATH in to specify the desired install 
+   location.
+   Set LIB to the curses library you are using (usually -lncurses or -lcurses)
+
+2. Edit config.h
+   a) Set LIBDIR to the install location of the lib directory
+   b) Make sure that only the appropriate O/S define is uncommented.
+      (UNIX_TTY for the TTY version).
+
+4. Compile using make -f Makefile.TTY
+
+5. Install using make -f Makefile.TTY install
+

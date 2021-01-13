@@ -1,0 +1,37 @@
+Compiling/Installing X11 VLarn
+------------------------------
+
+VLarn should compile on any Unix-like OS (Linux, NetBSD, Solaris, etc).
+
+The code has only been tested with GCC on Unix based systems.
+
+It has been tested on the following systems:
+
+Pentium 4 running Red Hat Linux 7.1
+Amiga A4000/040 running NetBSD 1.5.2
+Sun UltraSparc running Solaris 2.5.2
+
+There is no configure script provided (or necessary.)
+
+Some Unix systems may need 'dos2unix' (or an equivalent command to strip ^M)
+to be run on the source files and the Makefile before compiling. 
+
+NOTE: Source installation is the only form supported on Unix systems.
+
+To compile and install VLarn:
+
+1. Edit Makefile.X11 to set system specific include and library paths.
+   This may not be necessary as the default include path is the most
+   common location for the necessary include files.
+   Change the INSTALL_PATH and LIB_PATH in to specify the desired install 
+   location.
+
+2. Edit config.h
+   a) Set LIBDIR to the install location of the lib directory
+   b) Make sure that only the appropriate OS define is uncommented.
+      (UNIX_X11 for the X11 version).
+
+4. Compile using make -f Makefile.X11
+
+5. Install using make -f Makefile.X11 install
+
