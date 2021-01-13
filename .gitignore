@@ -1,0 +1,534 @@
+### CVS ###
+/CVS/*
+**/CVS/*
+.cvsignore
+*/.cvsignore
+
+### Patch ###
+*.rej
+*.orig
+
+### PuTTY ###
+*.ppk
+*.privkey
+
+### SlickEd ###
+*.vpwhistu
+*.vpwhist
+
+### Xcode ###
+xcuserdata/
+DerivedData/
+*.moved-aside
+*.pbxuser
+
+### GCC ###
+/*.gcno
+
+### Diff ###
+*.diff
+
+### Compare ###
+*.compare
+
+### Merge Output ###
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+### Go ###
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+a.out
+bin
+
+### Packges ###
+*.tar
+*.tar.*
+*.jar
+*.exe
+*.msi
+*.zip
+*.tgz
+*.log
+*.log.*
+*.sig
+pkg/
+src/
+
+### Go test -c ###
+*.test
+
+### Coverage ###
+*.out
+*.coverage
+*.gocov
+*.gcov
+/cov
+*.coveragexml
+coverage*[.json, .xml, .info]
+*.dotCover
+
+### Go patch ###
+vendor/
+/vendor/
+govend/
+/Godeps/
+/vend/
+/Glidedep/
+
+### Tempfiles ###
+*~
+
+### IDE ###
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+.idea/**/contentModel.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+.idea/artifacts
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+.idea_modules/
+.intellij
+.goland
+.idea/replstate.xml
+.idea/httpRequests
+.idea/caches/build_file_checksums.ser
+modules.xml
+.idea/misc.xml
+.idea/sonarlint
+*.komodoproject
+.komodotools
+.fixme
+.fuck
+.ohshit
+.XXX
+
+### Gnuplot ###
+*-gnuplottex-*
+*.gnuplottemp
+
+### Metadata Leak ###
+*.aliases
+*.lvlps
+.cache/
+.autojump
+Builds/
+*.lvcompile
+*.lvindexcache
+.*.lb
+*.dvi
+*.xdv
+*-converted-to.*
+*.ltjruby
+*.mtc[0-9]*
+*.slf[0-9]*
+*.slt[0-9]*
+*.stc[0-9]*
+*.mw
+*.pdfpc
+.pdf.anno*
+
+### SageTeX ###
+*.sagetex.sage
+*.sagetex.py
+*.sagetex.scmd
+
+### PythonTeX ###
+pythontex-files-*/
+
+### Intermediate Transforms ###
+*.listing
+*.sourcelisting
+*.tdo
+
+### LaTeX ###
+latex.out/
+TSWLatexianTemp*
+
+### BibTex ###
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+*~b[0-9]*
+*~[0-9]b*
+
+### Emacs ###
+./auto/*
+*.el
+
+### LibreOffice ###
+.~lock.*
+.~llock.*
+
+### Apple ###
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+forcefsck
+autofsck
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+.diskutil
+
+### Joe ###
+DEADJOE
+
+### mail ###
+dead.letter
+
+### Word ###
+~$*.doc*
+Backup of *.doc*
+
+### Excel ###
+~$*.xls*
+*.xlk
+
+### Novell ###
+test-results/
+.monodev*
+.netware
+mono_crash.*
+
+### Octave ###
+*.mlappinstall
+*.mltbx
+
+### Helpsearch ###
+helpsearch*/
+
+### MATLAB ###
+.matlab
+codegen/
+octave-workspace
+
+### QtC ###
+*.cxxflags
+*.cflags
+
+### CRM ###
+.metadata
+.salesforce
+.build.properties
+
+### Eclipse ###
+salesforce.schema
+Referenced Packages
+local.properties
+
+### IC ###
+IlluminatedCloud
+
+### Sublime ###
+.history
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-project
+*.sublimetext-project
+GitHub.sublime-settings
+
+### SVN ###
+.svn/
+
+### Valgrind ###
+callgrind.out
+callgrind.out.*
+cachegrind.out
+cachegrind.out.*
+
+### Vim/Neovim ###
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+[._]*.un~
+
+### SFTP ###
+sftp-config.json
+
+### Control Data ###
+Package Control.last-run
+Package Control.ca-list
+Package Control.ca-bundle
+Package Control.system-ca-bundle
+Package Control.cache/
+Package Control.ca-certs/
+Package Control.merged-ca-bundle
+Package Control.user-ca-bundle
+oscrypto-ca-bundle.crt
+bh_unicode_properties.cache
+
+### Datastore ###
+.[dD][sS]_[sS]tore
+
+### Welkin ###
+**/.localHistory
+*.sfuo
+TestCache.xml
+TestsResultsCache.xml
+
+### MKS ###
+.mksrc
+
+### mksh ###
+.mkshrc
+.lkshrc
+
+### Build Fail ###
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+Generated\ Files/
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+[Dd]ebugPS/
+[Rr]eleasePS/
+
+### .NET ###
+project.lock.json
+project.fragment.lock.json
+
+### CZ ###
+_Chutzpah*
+
+### Java ###
+*.class
+*.ctxt
+.mtj.tmp/
+hs_err_pid*
+
+### Debugger ###
+*.gdb*
+*.id0
+*.id1
+*.id2
+*.nam
+*.til
+*.idb
+
+### Packages ###
+*.arj
+*.zip
+*.rar
+*.nar
+*.ear
+*.apk
+*.gdbrc
+
+### SAS ###
+*.sas7baud
+*.sas7bdat
+*.sas7bvew
+*.sas7bndx
+*.sas7bcat
+*.sas7bacs
+*.sas7bfdb
+*.sas7bmdb
+*.sas7bdmd
+*.sas7bitm
+*.sas7butl
+*.sas7bput
+*.sas7bbak
+
+### Jira ###
+atlassian-ide-plugin.xml
+
+### Crash Tools ###
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+### Chocolatey ###
+*.nupkg
+
+### CMake ###
+Testing
+_deps
+*-prefix/
+cmake-build-*/
+
+### Artifacts ###
+tmp
+Debug
+Release
+Flash
+.Adobe
+*.opt
+*.pp
+*.xml
+.config/
+.launches/
+.xdchelp
+*.uniflashsession
+.*.aux
+*.glob
+*.mli.d
+*.mllib.d
+*.mlpack.d
+*.native
+*.o
+.coq-native/
+.csdp.cache
+.lia.cache
+.nia.cache
+.nlia.cache
+.nra.cache
+csdp.cache
+lia.cache
+nia.cache
+nlia.cache
+nra.cache
+
+### DiskImage ###
+*.dmg
+*.iso
+*.toast
+*.vcd
+*.rawimg
+*.vmdk
+*.qcow2
+
+### Undo ###
+*.~undo-tree
+
+### FUSE ###
+.fuse_hidden*
+
+### KDE ###
+.directory
+
+### Linux ###
+.Trash-*
+lost+found
+
+### macOS ###
+.DS_Store
+
+### Node ###
+.ntvs_analysis.dat
+
+### SQL ###
+*sqldump*
+
+### Windows ###
+*.VC.VC.opendb
+UpgradeLog*.XML
+UpgradeLog*.htm
+ServiceFabricBackup/
+*.rptproj.bak
+_UpgradeReport_Files/
+*.build.csdef
+[Ee]xpressS/
+*.binlog
+.fakemake
+**/*.HTMLClient/GeneratedArtifacts
+**/*.DesktopClient/GeneratedArtifacts
+**/*.DesktopClient/ModelManifest.xml
+**/*.Server/GeneratedArtifacts
+**/*.Server/ModelManifest.xml
+_Pvt_Extensions
+Thumbs.db
+*.btm
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+*.stackdump
+$RECYCLE.BIN/
+*.msix
+*.vsix
+*.lnk1
+
+### XCI ###
+iOSInjectionProject/
+
+### BT ###
+*.torrent
+*.bitorrent
+.ctorrent
+.torrentrc
+
+### CC ###
+wallet.db
+wallet.dat
+peers.json
+
+### NFS ###
+.nfs*
+
+### SSH ###
+**/.ssh/id_*
+**/.ssh/*_id_*
+**/.ssh/known_hosts
+
+### VSCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### Zsh ###
+*.zwc
+*.zwc.old
+*zcompdump*
+.zcalc_history
+._zplugin
+.zplugin_lstupd
+zsdoc/data
+.directory_history
+.venv
+.zenv
+.zshrc
+.zprofile
+
+### Zunit ###
+/tests/_output/*
+!/tests/_output/.gitkeep
+
