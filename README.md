@@ -37,15 +37,12 @@ system-dependent code isolated in separate modules.
 
 ## Distribution
 
-- [Gridfinity Gitlab](https://gitlab.gridfinity.com/jeff/vlarn)
 - [SourceHut](https://sr.ht/~trn/vlarn/)
 - [GitHub](https://github.com/johnsonjh/vlarn)
 
 ## Issue Tracking
 
-- [Gridfinity Gitlab Issues](https://gitlab.gridfinity.com/jeff/vlarn/-/issues)
-
-- Alternately, you may contact the VLarn maintainer, Jeffrey H. Johnson
+- You may contact the VLarn maintainer, Jeffrey H. Johnson, via e-mail at
   \<[jhj@trnsz.com](mailto:jhj@trnsz.com)\>, with bug reports or questions.
   Please include '_VLarn_' in the Subject line.
 
@@ -90,3 +87,4 @@ _ULarn 1.7_, as well as Nathan Tenny's '_Variant ULarn_' release 1.5.4.
 - Fixed bugs in Vaporise Rock spell for difficulty level 4+
 - Removed unneeded function calls causing extra map redraws
 - Fixed calculation of AC and WC when destroying armor or weapons
+
