@@ -32,8 +32,7 @@
 #define SCORESIZE 25
 
 /* Player died reasons */
-typedef enum
-{
+typedef enum {
   DIED_MONSTER,
   DIED_QUIT,
   DIED_SUSPENDED,

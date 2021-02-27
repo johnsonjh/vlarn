@@ -57,7 +57,6 @@
 
 #include <graphics/gfx.h>
 
-
 /* =============================================================================
  * FUNCTION: FreeBitmap
  *
@@ -96,6 +95,5 @@ void FreeBitmap(struct BitMap *Bitmap);
  *   BitMap *: A pointer to the bitmap inthe file, or NULL if the read failed.
  */
 struct BitMap *ReadIff(char *FileName, ULONG *Palette);
-
 
 #endif

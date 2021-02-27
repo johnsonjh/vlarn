@@ -68,8 +68,7 @@
 /*
  * Text formats
  */
-typedef enum FormatType
-{
+typedef enum FormatType {
   FORMAT_NORMAL,
   FORMAT_STANDOUT,
   FORMAT_STANDOUT2,
@@ -99,17 +98,15 @@ extern int yrepcount;
 /*
  * Display modes for the main window
  */
-typedef enum DisplayModeType
-{
-  DISPLAY_MAP,     /* Map display mode for moving around dungeons */
-  DISPLAY_TEXT     /* Text display mode for scores, shops etc.    */
+typedef enum DisplayModeType {
+  DISPLAY_MAP, /* Map display mode for moving around dungeons */
+  DISPLAY_TEXT /* Text display mode for scores, shops etc.    */
 } DisplayModeType;
 
 //
 // Effects types for map_effect
 //
-typedef enum DirEffectsType
-{
+typedef enum DirEffectsType {
   EFFECT_MLE,
   EFFECT_SSP,
   EFFECT_BAL,
@@ -121,8 +118,7 @@ typedef enum DirEffectsType
 //
 // Effects for show_nagic_effect.
 //
-typedef enum MagicEffectsType
-{
+typedef enum MagicEffectsType {
   MAGIC_SPARKLE,
   MAGIC_SLEEP,
   MAGIC_WEB,
@@ -145,8 +141,7 @@ typedef enum MagicEffectsType
 // Actions that can be selected in the game.
 //
 
-typedef enum ActionType
-{
+typedef enum ActionType {
   ACTION_NULL,
   ACTION_DIAG,
   ACTION_MOVE_WEST,
@@ -366,7 +361,6 @@ ActionType get_dir_input(char *prompt, int ShowCursor);
  *   None.
  */
 void set_display(DisplayModeType Mode);
-
 
 /* =============================================================================
  * Status and effects display update functions

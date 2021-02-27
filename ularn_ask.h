@@ -93,7 +93,7 @@ void pager(void);
  *   'y' or 'Y' if the player selected yes
  *   'n' or 'N' if the player selected no.
  */
-int getyn (void);
+int getyn(void);
 
 /* =============================================================================
  * FUNCTION: getpassword
@@ -109,7 +109,7 @@ int getyn (void);
  *
  *   1 if the password was entered correctly or 0 if not.
  */
-int getpassword (void);
+int getpassword(void);
 
 /* =============================================================================
  * FUNCTION: dirsub

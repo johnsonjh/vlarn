@@ -131,7 +131,7 @@ void showwield(void);
  *
  *   None.
  */
-void showread (void);
+void showread(void);
 
 /* =============================================================================
  * FUNCTION:  showeat
@@ -148,7 +148,7 @@ void showread (void);
  *
  *   None.
  */
-void showeat (void);
+void showeat(void);
 
 /* =============================================================================
  * FUNCTION: showquaff
@@ -165,7 +165,7 @@ void showeat (void);
  *
  *   None.
  */
-void showquaff (void);
+void showquaff(void);
 
 /* =============================================================================
  * FUNCTION: seemagic
@@ -206,7 +206,7 @@ void seemagic(int arg);
  *
  *   None.
  */
-void show1 (int idx, char *str2[], int known[]);
+void show1(int idx, char *str2[], int known[]);
 
 /* =============================================================================
  * FUNCTION: show3
@@ -222,6 +222,6 @@ void show1 (int idx, char *str2[], int known[]);
  *
  *   None.
  */
-void show3 (int index);
+void show3(int index);
 
 #endif

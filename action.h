@@ -47,7 +47,7 @@
  *
  *   None.
  */
-void run (int dir);
+void run(int dir);
 
 /* =============================================================================
  * FUNCTION: wield
@@ -64,7 +64,7 @@ void run (int dir);
  *
  *   None.
  */
-void wield (void);
+void wield(void);
 
 /* =============================================================================
  * FUNCTION: wear
@@ -80,7 +80,7 @@ void wield (void);
  *
  *   None.
  */
-void wear (void);
+void wear(void);
 
 /* =============================================================================
  * FUNCTION: dropobj
@@ -96,7 +96,7 @@ void wear (void);
  *
  *   None.
  */
-void dropobj (void);
+void dropobj(void);
 
 /* =============================================================================
  * FUNCTION: readscr
@@ -114,7 +114,7 @@ void dropobj (void);
  *
  *   None.
  */
-void readscr (void);
+void readscr(void);
 
 /* =============================================================================
  * FUNCTION: eatcookie
@@ -130,7 +130,7 @@ void readscr (void);
  *
  *   None.
  */
-void eatcookie (void);
+void eatcookie(void);
 
 /* =============================================================================
  * FUNCTION: quaff
@@ -146,7 +146,7 @@ void eatcookie (void);
  *
  *   None.
  */
-void quaff (void);
+void quaff(void);
 
 /* =============================================================================
  * FUNCTION: opendoor
@@ -212,7 +212,7 @@ void openchest(void);
  *
  *   None.
  */
-void quit (void);
+void quit(void);
 
 /* =============================================================================
  * FUNCTION: do_create
@@ -231,4 +231,3 @@ void quit (void);
 void do_create(void);
 
 #endif
-

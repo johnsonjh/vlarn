@@ -39,30 +39,30 @@
  * Copyright (c) 1995, 2004, Julian Olds
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
  * are met:
  *
  *   . Redistributions of source code must retain the above copyright notice,
- *     this list of conditions and the following disclaimer. 
+ *     this list of conditions and the following disclaimer.
  *
  *   . Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution. 
+ *     documentation and/or other materials provided with the distribution.
  *
- * The name of the author may not be used to endorse or promote products 
- * derived from this software without specific prior written permission. 
+ * The name of the author may not be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  *
  * =============================================================================
@@ -84,7 +84,6 @@
  * =============================================================================
  */
 
-
 #ifndef __SMART_MENU_H
 #define __SMART_MENU_H
 
@@ -93,17 +92,17 @@
 extern int Quit;
 
 struct SmartMenuItem {
-	char *Text;
-	char ComSeq;
-   UBYTE FrontPen;
-   UBYTE BackPen;
-	void (*SelectFunction)(void);
-	struct SmartMenuItem *SubItem;
+  char *Text;
+  char ComSeq;
+  UBYTE FrontPen;
+  UBYTE BackPen;
+  void (*SelectFunction)(void);
+  struct SmartMenuItem *SubItem;
 };
 
 struct SmartMenu {
-	char *Text;
-	struct SmartMenuItem *FirstItem;
+  char *Text;
+  struct SmartMenuItem *FirstItem;
 };
 
 /* =============================================================================
@@ -123,8 +122,7 @@ struct SmartMenu {
  *
  *   None.
  */
-void
-MenuNil(void);
+void MenuNil(void);
 
 /* =============================================================================
  * FUNCTION: MenuQuit
@@ -144,8 +142,7 @@ MenuNil(void);
  *
  *   None.
  */
-void
-MenuQuit(void);
+void MenuQuit(void);
 
 /* =============================================================================
  * FUNCTION: MakeMenuStructure
@@ -165,10 +162,7 @@ MenuQuit(void);
  *
  *   int: TRUE if the menu was successfully created.
  */
-int
-MakeMenuStructure(
-	struct Window *MWindow,
-	struct SmartMenu *WindowMenu);
+int MakeMenuStructure(struct Window *MWindow, struct SmartMenu *WindowMenu);
 
 /* =============================================================================
  * FUNCTION: DoMenuSelection
@@ -185,8 +179,6 @@ MakeMenuStructure(
  *
  *   None.
  */
-void
-DoMenuSelection(
-	USHORT code);
+void DoMenuSelection(USHORT code);
 
 #endif

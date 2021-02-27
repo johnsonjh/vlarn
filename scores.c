@@ -25,20 +25,20 @@
  * =============================================================================
  */
 
-#include "header.h"
-#include "ularn_game.h"
-#include "ularn_win.h"
-#include "ularn_ask.h"
-#include "monster.h"
-#include "itm.h"
+#include "scores.h"
 #include "dungeon.h"
+#include "header.h"
+#include "itm.h"
+#include "monster.h"
 #include "player.h"
 #include "potion.h"
 #include "scroll.h"
-#include "store.h"
-#include "sphere.h"
 #include "show.h"
-#include "scores.h"
+#include "sphere.h"
+#include "store.h"
+#include "ularn_ask.h"
+#include "ularn_game.h"
+#include "ularn_win.h"
 
 /* =============================================================================
  * Local variables
@@ -55,40 +55,37 @@
 #define SCORE_VERSION 2
 
 struct score_header_type {
-	char Id[4];
-	int Format;
+  char Id[4];
+  int Format;
 };
 
-static struct score_header_type CurrentHeader =
-{
-	{ 'u', 'l', 's', 'b' },
-	SCORE_VERSION
-};
+static struct score_header_type CurrentHeader = {{'u', 'l', 's', 'b'},
+                                                 SCORE_VERSION};
 
 /* This is the structure for the scoreboard   */
 struct score_type {
-	long score;                     /* the score of the player  */
-	int suid;                       /* the user id number of the player*/
-	DiedReasonType reason;          /* the reason the player died */
-	short what;                     /* the number of the monster that killedplayer */
-	short level;                    /* the level player was on when he died */
-	short hardlev;                  /* the level of difficulty player played at */
-	short order;                    /* the relative ordering place of this entry */
-	char who[LOGNAMESIZE + 1];      /* the name of the character    */
-	char char_class[20];            /* the character class */
-	short sciv[IVENSIZE][2];        /* this is the inventory list of the character*/
+  long score;                /* the score of the player  */
+  int suid;                  /* the user id number of the player*/
+  DiedReasonType reason;     /* the reason the player died */
+  short what;                /* the number of the monster that killedplayer */
+  short level;               /* the level player was on when he died */
+  short hardlev;             /* the level of difficulty player played at */
+  short order;               /* the relative ordering place of this entry */
+  char who[LOGNAMESIZE + 1]; /* the name of the character    */
+  char char_class[20];       /* the character class */
+  short sciv[IVENSIZE][2];   /* this is the inventory list of the character*/
 };
 
 /* This is the structure for the winning scoreboard */
 struct win_score_type {
-	long score;                     /* the score of the player  */
-	short timeused;                 /* the time used in mobuls to win the game*/
-	long taxes;                     /* taxes he owes to LRS   */
-	int suid;                       /* the user id number of the player*/
-	short hardlev;                  /* the level of difficulty player played at*/
-	short order;                    /* the relative ordering place of this entry*/
-	char who[LOGNAMESIZE + 1];      /* the name of the character    */
-	char char_class[20];            /* the character class */
+  long score;                /* the score of the player  */
+  short timeused;            /* the time used in mobuls to win the game*/
+  long taxes;                /* taxes he owes to LRS   */
+  int suid;                  /* the user id number of the player*/
+  short hardlev;             /* the level of difficulty player played at*/
+  short order;               /* the relative ordering place of this entry*/
+  char who[LOGNAMESIZE + 1]; /* the name of the character    */
+  char char_class[20];       /* the character class */
 };
 
 /* storage for the scoreboard  */
@@ -98,42 +95,39 @@ static struct score_type scoreboard[SCORESIZE];
 static struct win_score_type winboard[SCORESIZE];
 
 /* Died reason messages */
-static char *whydead[DIED_COUNT] =
-{
-	"killed by a monster",
-	"quit",
-	"suspended",
-	"self-annihilated",
-	"shot by an arrow",
-	"hit by a dart",
-	"fell into a pit",
-	"fell into a pit to HELL",
-	"a winner",
-	"trapped in solid rock",
-	"killed by a missing save file",
-	"killed by an old save file",
-	"caught by the greedy cheater checker trap",
-	"killed by a protected save file",
-	"killed his family and committed suicide",
-	"erased by a wayward finger",
-	"fell through a trap door to HELL",
-	"fell through a trap door",
-	"drank some poisonous water",
-	"fried by an electric shock",
-	"slipped in a volcano shaft",
-	"killed by a stupid act of frustration",
-	"attacked by a revolting demon",
-	"hit by his own magic",
-	"demolished by an unseen attacker",
-	"fell into the dreadful sleep",
-	"killed by an exploding chest",
-	"died of internal complications",
-	"annihilated by a sphere",
-	"died a post mortem death",
-	"wasted by a malloc() failure",
-	"wasted by an annoyed genie",
-	"took an elevator straight to HELL"
-};
+static char *whydead[DIED_COUNT] = {"killed by a monster",
+                                    "quit",
+                                    "suspended",
+                                    "self-annihilated",
+                                    "shot by an arrow",
+                                    "hit by a dart",
+                                    "fell into a pit",
+                                    "fell into a pit to HELL",
+                                    "a winner",
+                                    "trapped in solid rock",
+                                    "killed by a missing save file",
+                                    "killed by an old save file",
+                                    "caught by the greedy cheater checker trap",
+                                    "killed by a protected save file",
+                                    "killed his family and committed suicide",
+                                    "erased by a wayward finger",
+                                    "fell through a trap door to HELL",
+                                    "fell through a trap door",
+                                    "drank some poisonous water",
+                                    "fried by an electric shock",
+                                    "slipped in a volcano shaft",
+                                    "killed by a stupid act of frustration",
+                                    "attacked by a revolting demon",
+                                    "hit by his own magic",
+                                    "demolished by an unseen attacker",
+                                    "fell into the dreadful sleep",
+                                    "killed by an exploding chest",
+                                    "died of internal complications",
+                                    "annihilated by a sphere",
+                                    "died a post mortem death",
+                                    "wasted by a malloc() failure",
+                                    "wasted by an annoyed genie",
+                                    "took an elevator straight to HELL"};
 
 /*
  * The last error reading/writing the score file
@@ -165,70 +159,70 @@ static int highlight_win = 0;
  *
  *   The player's score.
  */
-static long calc_score(int Winner)
-{
-	int gold_value;
-	int idx;
-	int dlev;
-	int deepest;
-	int score;
-	int stupidity_penalty;
+static long calc_score(int Winner) {
+  int gold_value;
+  int idx;
+  int dlev;
+  int deepest;
+  int score;
+  int stupidity_penalty;
 
-	/*
-	 * Start by calculating the player's net worth, converting items to their
-	 * value in gold according to what the trading post would pay.
-	 * This is a bit mean for gems as the bank pays 5x this.
-	 */
-	gold_value = c[GOLD] + c[BANKACCOUNT];
+  /*
+   * Start by calculating the player's net worth, converting items to their
+   * value in gold according to what the trading post would pay.
+   * This is a bit mean for gems as the bank pays 5x this.
+   */
+  gold_value = c[GOLD] + c[BANKACCOUNT];
 
-	for (idx = 0; idx < IVENSIZE; idx++)
-		gold_value += item_value(iven[idx], ivenarg[idx]);
+  for (idx = 0; idx < IVENSIZE; idx++)
+    gold_value += item_value(iven[idx], ivenarg[idx]);
 
-	if (!Winner) {
-		/*
-		 * If the player isn't a winner, devalue score value of gold by 1/10.
-		 */
+  if (!Winner) {
+    /*
+     * If the player isn't a winner, devalue score value of gold by 1/10.
+     */
 
-		gold_value -= gold_value / 10;
-	}else
-		/* bonus for winning */
-		gold_value += 100000 * c[HARDGAME];
+    gold_value -= gold_value / 10;
+  } else
+    /* bonus for winning */
+    gold_value += 100000 * c[HARDGAME];
 
-	/*
-	 * Add score for the deepest level visited
-	 */
+  /*
+   * Add score for the deepest level visited
+   */
 
-	deepest = 0;
-	stupidity_penalty = 1;
-	for (dlev = 0; dlev < NLEVELS; dlev++) {
-		if (beenhere[dlev]) {
-			if ((dlev == MAXLEVEL) && (deepest == 0)) {
-				/* The stupid player went directly into the volcano */
-				if (Winner)
-					/*
-					 * If the player actually managed to WIN doing this (pretty unlikely)
-					 * then give a reward
-					 */
-					gold_value *= 2;
-				else
-					stupidity_penalty = 1;
-			}else
-				deepest = dlev;
-		}
-	}
+  deepest = 0;
+  stupidity_penalty = 1;
+  for (dlev = 0; dlev < NLEVELS; dlev++) {
+    if (beenhere[dlev]) {
+      if ((dlev == MAXLEVEL) && (deepest == 0)) {
+        /* The stupid player went directly into the volcano */
+        if (Winner)
+          /*
+           * If the player actually managed to WIN doing this (pretty unlikely)
+           * then give a reward
+           */
+          gold_value *= 2;
+        else
+          stupidity_penalty = 1;
+      } else
+        deepest = dlev;
+    }
+  }
 
-	if (stupidity_penalty) {
-		deepest = 0;
-		gold_value /= 2;
-	}
+  if (stupidity_penalty) {
+    deepest = 0;
+    gold_value /= 2;
+  }
 
-	/* Calculate the final score */
-	score = gold_value + c[EXPERIENCE] + deepest * 50;
+  /* Calculate the final score */
+  score = gold_value + c[EXPERIENCE] + deepest * 50;
 
-	/* no negative score */
-	if (score < 0) score = 0;
+  /* no negative score */
+  if (score < 0)
+    score = 0;
 
-	return score;
+  return score;
 }
 
 /* =============================================================================
@@ -246,56 +240,55 @@ static long calc_score(int Winner)
  *   -1 if unable to read in the scoreboard,
  *    0 if all is OK
  */
-static int readboard(void)
-{
-	FILE *fp;
-	int n;
-	struct score_header_type header;
+static int readboard(void) {
+  FILE *fp;
+  int n;
+  struct score_header_type header;
 
-	fp = fopen(scorefile, "rb");
+  fp = fopen(scorefile, "rb");
 
-	if (fp == (FILE *)NULL) {
-		Printf("Can't open scorefile '%s' for reading\n", scorefile);
-		return -1;
-	}
+  if (fp == (FILE *)NULL) {
+    Printf("Can't open scorefile '%s' for reading\n", scorefile);
+    return -1;
+  }
 
-	n = fread((char *)&header, sizeof(struct score_header_type), 1, fp);
-	if (n != 1) {
-		Print("Can't read score board header\n");
-		fclose(fp);
-		return -2;
-	}
+  n = fread((char *)&header, sizeof(struct score_header_type), 1, fp);
+  if (n != 1) {
+    Print("Can't read score board header\n");
+    fclose(fp);
+    return -2;
+  }
 
-	if (strncmp(header.Id, CurrentHeader.Id, 4) != 0) {
-		Print("Not a valid ularn score board\n");
-		fclose(fp);
-		return -3;
-	}
+  if (strncmp(header.Id, CurrentHeader.Id, 4) != 0) {
+    Print("Not a valid ularn score board\n");
+    fclose(fp);
+    return -3;
+  }
 
-	if (header.Format != CurrentHeader.Format) {
-		Print("Incorrect score board version\n");
-		fclose(fp);
-		return -4;
-	}
+  if (header.Format != CurrentHeader.Format) {
+    Print("Incorrect score board version\n");
+    fclose(fp);
+    return -4;
+  }
 
-	n = fread((char *)scoreboard, sizeof(struct score_type) * SCORESIZE, 1, fp);
+  n = fread((char *)scoreboard, sizeof(struct score_type) * SCORESIZE, 1, fp);
 
-	if (n != 1) {
-		Print("Can't read scoreboard\n");
-		fclose(fp);
-		return -5;
-	}
+  if (n != 1) {
+    Print("Can't read scoreboard\n");
+    fclose(fp);
+    return -5;
+  }
 
-	n = fread((char *)winboard, sizeof(struct win_score_type) * SCORESIZE, 1, fp);
-	if (n != 1) {
-		Print("Can't read scoreboard");
-		fclose(fp);
-		return -6;
-	}
+  n = fread((char *)winboard, sizeof(struct win_score_type) * SCORESIZE, 1, fp);
+  if (n != 1) {
+    Print("Can't read scoreboard");
+    fclose(fp);
+    return -6;
+  }
 
-	fclose(fp);
+  fclose(fp);
 
-	return 0;
+  return 0;
 }
 
 /* =============================================================================
@@ -313,41 +306,41 @@ static int readboard(void)
  *   -1 if unable to write the scoreboard,
  *    0 if all is OK
  */
-static int writeboard(void)
-{
-	FILE *fp;
-	int n;
+static int writeboard(void) {
+  FILE *fp;
+  int n;
 
-	fp = fopen(scorefile, "wb");
-	if (fp == (FILE *)NULL) {
-		Print("Can't open scorefile for writing\n");
-		return -1;
-	}
+  fp = fopen(scorefile, "wb");
+  if (fp == (FILE *)NULL) {
+    Print("Can't open scorefile for writing\n");
+    return -1;
+  }
 
-	n = fwrite((char *)&CurrentHeader, sizeof(struct score_header_type), 1, fp);
-	if (n != 1) {
-		Print("Can't write scorefile\n");
-		fclose(fp);
-		return -1;
-	}
+  n = fwrite((char *)&CurrentHeader, sizeof(struct score_header_type), 1, fp);
+  if (n != 1) {
+    Print("Can't write scorefile\n");
+    fclose(fp);
+    return -1;
+  }
 
-	n = fwrite((char *)scoreboard, sizeof(struct score_type) * SCORESIZE, 1, fp);
-	if (n != 1) {
-		Print("Can't write scorefile\n");
-		fclose(fp);
-		return -1;
-	}
+  n = fwrite((char *)scoreboard, sizeof(struct score_type) * SCORESIZE, 1, fp);
+  if (n != 1) {
+    Print("Can't write scorefile\n");
+    fclose(fp);
+    return -1;
+  }
 
-	n = fwrite((char *)winboard, sizeof(struct win_score_type) * SCORESIZE, 1, fp);
-	if (n != 1) {
-		Print("Can't write scorefile\n");
-		fclose(fp);
-		return -1;
-	}
+  n = fwrite((char *)winboard, sizeof(struct win_score_type) * SCORESIZE, 1,
+             fp);
+  if (n != 1) {
+    Print("Can't write scorefile\n");
+    fclose(fp);
+    return -1;
+  }
 
-	fclose(fp);
+  fclose(fp);
 
-	return 0;
+  return 0;
 }
 
 /* =============================================================================
@@ -367,51 +360,50 @@ static int writeboard(void)
  *
  *   0 if no sorting done, else returns 1
  */
-static int sortboard(void)
-{
-	int i, pos;
-	long largest_score;
-	int largest_score_idx;
+static int sortboard(void) {
+  int i, pos;
+  long largest_score;
+  int largest_score_idx;
 
-	/* mark all scores as unsorted */
-	for (i = 0; i < SCORESIZE; i++) {
-		scoreboard[i].order = -1;
-		winboard[i].order = -1;
-	}
+  /* mark all scores as unsorted */
+  for (i = 0; i < SCORESIZE; i++) {
+    scoreboard[i].order = -1;
+    winboard[i].order = -1;
+  }
 
-	/* work out the position of each score in the visitor's board */
-	for (pos = 0; pos < SCORESIZE; pos++) {
-		/* find the score in position pos */
-		largest_score = -1;
-		largest_score_idx = -1;
-		for (i = 0; i < SCORESIZE; i++) {
-			if ((scoreboard[i].order < 0) && (scoreboard[i].score >= largest_score)) {
-				largest_score_idx = i;
-				largest_score = scoreboard[i].score;
-			}
-		}
+  /* work out the position of each score in the visitor's board */
+  for (pos = 0; pos < SCORESIZE; pos++) {
+    /* find the score in position pos */
+    largest_score = -1;
+    largest_score_idx = -1;
+    for (i = 0; i < SCORESIZE; i++) {
+      if ((scoreboard[i].order < 0) && (scoreboard[i].score >= largest_score)) {
+        largest_score_idx = i;
+        largest_score = scoreboard[i].score;
+      }
+    }
 
-		if (largest_score_idx >= 0)
-			scoreboard[largest_score_idx].order = (short)pos;
-	}
+    if (largest_score_idx >= 0)
+      scoreboard[largest_score_idx].order = (short)pos;
+  }
 
-	/* work out the position of each score in the winner's board */
-	for (pos = 0; pos < SCORESIZE; pos++) {
-		/* find the score in position pos */
-		largest_score = -1;
-		largest_score_idx = -1;
-		for (i = 0; i < SCORESIZE; i++) {
-			if ((winboard[i].order < 0) && (winboard[i].score >= largest_score)) {
-				largest_score_idx = i;
-				largest_score = winboard[i].score;
-			}
-		}
+  /* work out the position of each score in the winner's board */
+  for (pos = 0; pos < SCORESIZE; pos++) {
+    /* find the score in position pos */
+    largest_score = -1;
+    largest_score_idx = -1;
+    for (i = 0; i < SCORESIZE; i++) {
+      if ((winboard[i].order < 0) && (winboard[i].score >= largest_score)) {
+        largest_score_idx = i;
+        largest_score = winboard[i].score;
+      }
+    }
 
-		if (largest_score_idx >= 0)
-			winboard[largest_score_idx].order = (short)pos;
-	}
+    if (largest_score_idx >= 0)
+      winboard[largest_score_idx].order = (short)pos;
+  }
 
-	return 1;
+  return 1;
 }
 
 /* =============================================================================
@@ -435,117 +427,119 @@ static int sortboard(void)
  * Returns the new position on the scoreboard if the player made the high
  * score list.
  */
-static int newscore(long score, int winner, DiedReasonType died_reason, int what)
-{
-	int i;
-	int board_idx;
-	long gold;
-	long taxes;
+static int newscore(long score, int winner, DiedReasonType died_reason,
+                    int what) {
+  int i;
+  int board_idx;
+  long gold;
+  long taxes;
 
-	gold = c[GOLD] + c[BANKACCOUNT];
+  gold = c[GOLD] + c[BANKACCOUNT];
 
-	if (readboard() < 0)
-		return -1;
+  if (readboard() < 0)
+    return -1;
 
-	if (cheat)
-		/* Cheaters can never get on the scoreboard */
-		return -1;
+  if (cheat)
+    /* Cheaters can never get on the scoreboard */
+    return -1;
 
-	if (winner) {
-		/* if a winner then delete all non-winning scores */
-		for (i = 0; i < SCORESIZE; i++)
-			if (scoreboard[i].suid == userid)
-				scoreboard[i].score = 0;
+  if (winner) {
+    /* if a winner then delete all non-winning scores */
+    for (i = 0; i < SCORESIZE; i++)
+      if (scoreboard[i].suid == userid)
+        scoreboard[i].score = 0;
 
-		/* Calculate the amount of tax owing */
-		taxes = (long)(outstanding_taxes + (gold * TAXRATE));
-		outstanding_taxes = taxes;
+    /* Calculate the amount of tax owing */
+    taxes = (long)(outstanding_taxes + (gold * TAXRATE));
+    outstanding_taxes = taxes;
 
-		/*
-		 * Find where in the winner's score board the player's score is to
-		 * be stored
-		 */
-		board_idx = -1;
+    /*
+     * Find where in the winner's score board the player's score is to
+     * be stored
+     */
+    board_idx = -1;
 
-		/* if he has a slot on the winning scoreboard update it if greater score*/
-		for (i = 0; i < SCORESIZE; i++)
-			if (winboard[i].suid == userid)
-				board_idx = i;
+    /* if he has a slot on the winning scoreboard update it if greater score*/
+    for (i = 0; i < SCORESIZE; i++)
+      if (winboard[i].suid == userid)
+        board_idx = i;
 
-		if (board_idx == -1) {
-			/* he had no entry. look for last entry and see if he has a greater score */
-			for (i = 0; i < SCORESIZE; i++) {
-				if (winboard[i].order == SCORESIZE - 1)
-					if (score > winboard[i].score)
-						board_idx = i;
-			}
-		}
+    if (board_idx == -1) {
+      /* he had no entry. look for last entry and see if he has a greater score
+       */
+      for (i = 0; i < SCORESIZE; i++) {
+        if (winboard[i].order == SCORESIZE - 1)
+          if (score > winboard[i].score)
+            board_idx = i;
+      }
+    }
 
-		if (board_idx >= 0) {
-			/* Update the taxes owed */
-			winboard[board_idx].taxes = taxes;
+    if (board_idx >= 0) {
+      /* Update the taxes owed */
+      winboard[board_idx].taxes = taxes;
 
-			if ((winboard[board_idx].score < score) || (c[HARDGAME] > winboard[board_idx].hardlev)) {
-				/* Store the new score in this slot */
-				strcpy(winboard[board_idx].who, logname);
-				strcpy(winboard[board_idx].char_class, char_class);
-				winboard[board_idx].score = score;
-				winboard[board_idx].hardlev = (short)c[HARDGAME];
-				winboard[board_idx].suid = userid;
-				winboard[board_idx].timeused = (short)(gtime / 100);
-			}
-		}
+      if ((winboard[board_idx].score < score) ||
+          (c[HARDGAME] > winboard[board_idx].hardlev)) {
+        /* Store the new score in this slot */
+        strcpy(winboard[board_idx].who, logname);
+        strcpy(winboard[board_idx].char_class, char_class);
+        winboard[board_idx].score = score;
+        winboard[board_idx].hardlev = (short)c[HARDGAME];
+        winboard[board_idx].suid = userid;
+        winboard[board_idx].timeused = (short)(gtime / 100);
+      }
+    }
 
-	}else {
-		/* Not a winner, so update the visitors score board */
+  } else {
+    /* Not a winner, so update the visitors score board */
 
-		/* Find where in the visitor's score board the player's score is to
-		 * be stores
-		 */
+    /* Find where in the visitor's score board the player's score is to
+     * be stores
+     */
 
-		board_idx = -1;
+    board_idx = -1;
 
-		/* Check if he already has a slot on the scoreboard */
-		for (i =  0; i < SCORESIZE; i++)
-			if (scoreboard[i].suid == userid)
-				board_idx = i;
+    /* Check if he already has a slot on the scoreboard */
+    for (i = 0; i < SCORESIZE; i++)
+      if (scoreboard[i].suid == userid)
+        board_idx = i;
 
-		/* he had no entry. look for last entry and see if he has a greater score */
-		if (board_idx == -1) {
-			for (i = 0; i < SCORESIZE; i++)
-				if (scoreboard[i].order == SCORESIZE - 1)
-					board_idx = i;
-		}
+    /* he had no entry. look for last entry and see if he has a greater score */
+    if (board_idx == -1) {
+      for (i = 0; i < SCORESIZE; i++)
+        if (scoreboard[i].order == SCORESIZE - 1)
+          board_idx = i;
+    }
 
-		if (board_idx >= 0) {
-			if ((scoreboard[board_idx].score < score) ||
-			    (c[HARDGAME] > scoreboard[board_idx].hardlev)) {
-				/* This is a better score, so store the new score in this slot */
-				strcpy(scoreboard[board_idx].who, logname);
-				strcpy(scoreboard[board_idx].char_class, char_class);
-				scoreboard[board_idx].score = score;
-				scoreboard[board_idx].reason = died_reason;
-				scoreboard[board_idx].what = (short)what;
-				scoreboard[board_idx].hardlev = (short)c[HARDGAME];
-				scoreboard[board_idx].suid = userid;
-				scoreboard[board_idx].level = (char)level;
-				for (i = 0; i < IVENSIZE; i++) {
-					scoreboard[board_idx].sciv[i][0] = iven[i];
-					scoreboard[board_idx].sciv[i][1] = ivenarg[i];
-				}
-			}else
-				/* The new score isn't better */
-				board_idx = -1;
-		}
-	}
+    if (board_idx >= 0) {
+      if ((scoreboard[board_idx].score < score) ||
+          (c[HARDGAME] > scoreboard[board_idx].hardlev)) {
+        /* This is a better score, so store the new score in this slot */
+        strcpy(scoreboard[board_idx].who, logname);
+        strcpy(scoreboard[board_idx].char_class, char_class);
+        scoreboard[board_idx].score = score;
+        scoreboard[board_idx].reason = died_reason;
+        scoreboard[board_idx].what = (short)what;
+        scoreboard[board_idx].hardlev = (short)c[HARDGAME];
+        scoreboard[board_idx].suid = userid;
+        scoreboard[board_idx].level = (char)level;
+        for (i = 0; i < IVENSIZE; i++) {
+          scoreboard[board_idx].sciv[i][0] = iven[i];
+          scoreboard[board_idx].sciv[i][1] = ivenarg[i];
+        }
+      } else
+        /* The new score isn't better */
+        board_idx = -1;
+    }
+  }
 
-	/* resort the score board */
-	sortboard();
+  /* resort the score board */
+  sortboard();
 
-	if (writeboard() < 0)
-		return -1;
+  if (writeboard() < 0)
+    return -1;
 
-	return board_idx;
+  return board_idx;
 }
 
 /* =============================================================================
@@ -566,44 +560,43 @@ static int newscore(long score, int winner, DiedReasonType died_reason, int what
  *
  *   None
  */
-static void print_died_reason(DiedReasonType Reason, int Monster, int lev)
-{
-	char ch;
-	char *mod;
+static void print_died_reason(DiedReasonType Reason, int Monster, int lev) {
+  char ch;
+  char *mod;
 
-	if (Reason == DIED_MONSTER) {
-		ch = monster[Monster].name[0];
+  if (Reason == DIED_MONSTER) {
+    ch = monster[Monster].name[0];
 
-		if ((ch == 'a') || (ch == 'e') || (ch == 'i') || (ch == 'o') || (ch == 'u'))
-			mod = "an";
-		else
-			mod = "a";
-		Printf(" killed by %s %s", mod, monster[Monster].name);
-	}else {
-		if (!sex && ((Reason == DIED_KILLED_FAMILY) ||
-			     (Reason == DIED_OWN_MAGIC))) {
-			/* fix up died string for female characters */
+    if ((ch == 'a') || (ch == 'e') || (ch == 'i') || (ch == 'o') || (ch == 'u'))
+      mod = "an";
+    else
+      mod = "a";
+    Printf(" killed by %s %s", mod, monster[Monster].name);
+  } else {
+    if (!sex &&
+        ((Reason == DIED_KILLED_FAMILY) || (Reason == DIED_OWN_MAGIC))) {
+      /* fix up died string for female characters */
 
-			switch (Reason) {
-			case DIED_KILLED_FAMILY:
-				Printf(" killed her family and committed suicide");
-				break;
+      switch (Reason) {
+      case DIED_KILLED_FAMILY:
+        Printf(" killed her family and committed suicide");
+        break;
 
-			case DIED_OWN_MAGIC:
-				Printf(" hit by her own magic");
-				break;
+      case DIED_OWN_MAGIC:
+        Printf(" hit by her own magic");
+        break;
 
-			default:
-				break;
-			}
-		}else
-			Printf(" %s", whydead[Reason]);
-	}
+      default:
+        break;
+      }
+    } else
+      Printf(" %s", whydead[Reason]);
+  }
 
-	if (Reason != DIED_WINNER)
-		Printf(" on %s\n", levelname[lev]);
-	else
-		Printf("\n");
+  if (Reason != DIED_WINNER)
+    Printf(" on %s\n", levelname[lev]);
+  else
+    Printf("\n");
 }
 
 /* =============================================================================
@@ -620,47 +613,41 @@ static void print_died_reason(DiedReasonType Reason, int Monster, int lev)
  *
  *   The number of entries onthe winner's score board.
  */
-static int show_winners(void)
-{
-	struct win_score_type *p;
-	int win_count;
-	int i, j;
+static int show_winners(void) {
+  struct win_score_type *p;
+  int win_count;
+  int i, j;
 
-	/* is there anyone on the scoreboard? */
-	win_count = 0;
-	for (i = 0; i < SCORESIZE; i++)
-		if (winboard[i].score != 0)
-			win_count++;
+  /* is there anyone on the scoreboard? */
+  win_count = 0;
+  for (i = 0; i < SCORESIZE; i++)
+    if (winboard[i].score != 0)
+      win_count++;
 
-	if (win_count > 0) {
-		ClearText();
-		clearpager();
-		Print("   Score       Diff   Time Needed  VLarn Winners List\n");
-		pager();
+  if (win_count > 0) {
+    ClearText();
+    clearpager();
+    Print("   Score       Diff   Time Needed  VLarn Winners List\n");
+    pager();
 
-		/* needed to print out the winners in order */
+    /* needed to print out the winners in order */
 
-		for (i = 0; i < win_count; i++) {
-			for (j = 0; j < SCORESIZE; j++) {
-				/* pointer to the scoreboard entry */
-				p = &winboard[j];
+    for (i = 0; i < win_count; i++) {
+      for (j = 0; j < SCORESIZE; j++) {
+        /* pointer to the scoreboard entry */
+        p = &winboard[j];
 
-				if ((p->order == i) && (p->score > 0)) {
-					Printf("%-10ld%8d%8d Mobuls  (%s) %s\n",
-					       p->score,
-					       p->hardlev,
-					       p->timeused,
-					       p->char_class,
-					       p->who);
-					pager();
-				}
+        if ((p->order == i) && (p->score > 0)) {
+          Printf("%-10ld%8d%8d Mobuls  (%s) %s\n", p->score, p->hardlev,
+                 p->timeused, p->char_class, p->who);
+          pager();
+        }
+      }
+    }
+  }
 
-			}
-		}
-	}
-
-	/* return number of people on scoreboard */
-	return win_count;
+  /* return number of people on scoreboard */
+  return win_count;
 }
 
 /* =============================================================================
@@ -677,90 +664,88 @@ static int show_winners(void)
  *
  *   Returns the number of players on scoreboard that were shown
  */
-static int show_visitors(int show_inv)
-{
-	int i, j, n;
-	int count;
-	int oscrollknown[MAXSCROLL];
-	int opotionknown[MAXPOTION];
+static int show_visitors(int show_inv) {
+  int i, j, n;
+  int count;
+  int oscrollknown[MAXSCROLL];
+  int opotionknown[MAXPOTION];
 
-	/*
-	 * Make all scrolls and potions known for displaying the scoreboard,
-	 * storing the old known status for restoration later.
-	 */
-	for (i = 0; i < MAXSCROLL; i++) {
-		oscrollknown[i] = scrollknown[i];
-		scrollknown[i] = 1;
-	}
+  /*
+   * Make all scrolls and potions known for displaying the scoreboard,
+   * storing the old known status for restoration later.
+   */
+  for (i = 0; i < MAXSCROLL; i++) {
+    oscrollknown[i] = scrollknown[i];
+    scrollknown[i] = 1;
+  }
 
-	for (i = 0; i < MAXPOTION; i++) {
-		opotionknown[i] = potionknown[i];
-		potionknown[i] = 1;
-	}
+  for (i = 0; i < MAXPOTION; i++) {
+    opotionknown[i] = potionknown[i];
+    potionknown[i] = 1;
+  }
 
-	c[WEAR] = -1;
-	c[WIELD] = -1;
-	c[SHIELD] = -1;
+  c[WEAR] = -1;
+  c[WIELD] = -1;
+  c[SHIELD] = -1;
 
-	/* is the scoreboard empty? */
-	count = 0;
-	for (i = 0; i < SCORESIZE; i++)
-		if (scoreboard[i].score != 0)
-			count++;
+  /* is the scoreboard empty? */
+  count = 0;
+  for (i = 0; i < SCORESIZE; i++)
+    if (scoreboard[i].score != 0)
+      count++;
 
-	if (count > 0) {
-		ClearText();
-		clearpager();
-		Print("  Score Diff  VLarn Visitor Log\n");
-		pager();
+  if (count > 0) {
+    ClearText();
+    clearpager();
+    Print("  Score Diff  VLarn Visitor Log\n");
+    pager();
 
-		for (i = 0; i < count; i++) {
-			for (j = 0; j < SCORESIZE; j++) {
-				if ((scoreboard[j].order == i) && (scoreboard[j].score > 0)) {
-					if ((j == highlight_pos) && (!highlight_win))
-						SetFormat(FORMAT_STANDOUT);
+    for (i = 0; i < count; i++) {
+      for (j = 0; j < SCORESIZE; j++) {
+        if ((scoreboard[j].order == i) && (scoreboard[j].score > 0)) {
+          if ((j == highlight_pos) && (!highlight_win))
+            SetFormat(FORMAT_STANDOUT);
 
-					Printf("%7ld %3ld   (%s) %s ",
-					       scoreboard[j].score,
-					       (long)scoreboard[j].hardlev,
-					       scoreboard[j].char_class,
-					       scoreboard[j].who);
+          Printf("%7ld %3ld   (%s) %s ", scoreboard[j].score,
+                 (long)scoreboard[j].hardlev, scoreboard[j].char_class,
+                 scoreboard[j].who);
 
-					print_died_reason(scoreboard[j].reason, scoreboard[j].what, scoreboard[j].level);
+          print_died_reason(scoreboard[j].reason, scoreboard[j].what,
+                            scoreboard[j].level);
 
-					if ((j == highlight_pos) && (!highlight_win))
-						SetFormat(FORMAT_NORMAL);
+          if ((j == highlight_pos) && (!highlight_win))
+            SetFormat(FORMAT_NORMAL);
 
-					pager();
+          pager();
 
-					if (show_inv) {
-						for (n = 0; n < IVENSIZE; n++) {
-							iven[n] = scoreboard[j].sciv[n][0];
-							ivenarg[n] = scoreboard[j].sciv[n][1];
-						}
+          if (show_inv) {
+            for (n = 0; n < IVENSIZE; n++) {
+              iven[n] = scoreboard[j].sciv[n][0];
+              ivenarg[n] = scoreboard[j].sciv[n][1];
+            }
 
-						for (n = 0; n < IVENSIZE; n++) {
-							if (iven[n] != ONOTHING) {
-								show3(n);
-								pager();
-							}
-						}
-						pager();
-					}
-				}
-			}       /* for each score in the score board */
-		}               /* for each score position */
+            for (n = 0; n < IVENSIZE; n++) {
+              if (iven[n] != ONOTHING) {
+                show3(n);
+                pager();
+              }
+            }
+            pager();
+          }
+        }
+      } /* for each score in the score board */
+    }   /* for each score position */
 
-	}                       /* if any scores in the scoreboard */
+  } /* if any scores in the scoreboard */
 
-	/* Restore the known scrolls and potions */
-	for (i = 0; i < MAXSCROLL; i++)
-		scrollknown[i] = oscrollknown[i];
+  /* Restore the known scrolls and potions */
+  for (i = 0; i < MAXSCROLL; i++)
+    scrollknown[i] = oscrollknown[i];
 
-	for (i = 0; i < MAXPOTION; i++)
-		potionknown[i] = opotionknown[i];
+  for (i = 0; i < MAXPOTION; i++)
+    potionknown[i] = opotionknown[i];
 
-	return count; /* return the number of players just shown */
+  return count; /* return the number of players just shown */
 }
 
 /* =============================================================================
@@ -781,33 +766,34 @@ static int show_visitors(int show_inv)
  *
  *   None.
  */
-static void show_player_score(DiedReasonType Reason, int Monster, long score)
-{
-	char *cls;
+static void show_player_score(DiedReasonType Reason, int Monster, long score) {
+  char *cls;
 
-	cls = class[c[LEVEL]];
+  cls = class[c[LEVEL]];
 
-	if (char_class[0] == 0)
-		strcpy(char_class, "<unknown>");
+  if (char_class[0] == 0)
+    strcpy(char_class, "<unknown>");
 
-	Print("-----------------------------------------------------------------------------\n");
-	Print("                            V L A R N    S C O R E S\n");
-	Print("-----------------------------------------------------------------------------\n\n");
-	Printf(" Score: %ld      Diff: %d  ", score, c[HARDGAME]);
-	Printf(" Level: %s       Char: %s\n", cls, char_class);
-	Printf("\t%s", logname);
+  Print("----------------------------------------------------------------------"
+        "-------\n");
+  Print("                            V L A R N    S C O R E S\n");
+  Print("----------------------------------------------------------------------"
+        "-------\n\n");
+  Printf(" Score: %ld      Diff: %d  ", score, c[HARDGAME]);
+  Printf(" Level: %s       Char: %s\n", cls, char_class);
+  Printf("\t%s", logname);
 
-	print_died_reason(Reason, Monster, level);
+  print_died_reason(Reason, Monster, level);
 
-	if (wizard)
-		Print(" (wizard)");
+  if (wizard)
+    Print(" (wizard)");
 
-	if (cheat)
-		Print(" (cheater)");
+  if (cheat)
+    Print(" (cheater)");
 
-	Print("\n");
-	Print("-----------------------------------------------------------------------------");
-
+  Print("\n");
+  Print("----------------------------------------------------------------------"
+        "-------");
 }
 
 /* =============================================================================
@@ -817,253 +803,242 @@ static void show_player_score(DiedReasonType Reason, int Monster, long score)
 /* =============================================================================
  * FUNCTION: makeboard
  */
-int makeboard(void)
-{
-	int i;
+int makeboard(void) {
+  int i;
 
-	for (i = 0; i < SCORESIZE; i++) {
-		winboard[i].taxes = 0;
-		winboard[i].score = 0;
-		winboard[i].hardlev = 0;
-		winboard[i].order = (short)i;
+  for (i = 0; i < SCORESIZE; i++) {
+    winboard[i].taxes = 0;
+    winboard[i].score = 0;
+    winboard[i].hardlev = 0;
+    winboard[i].order = (short)i;
 
-		scoreboard[i].score = 0;
-		scoreboard[i].hardlev = 0;
-		scoreboard[i].order = (short)i;
-	}
+    scoreboard[i].score = 0;
+    scoreboard[i].hardlev = 0;
+    scoreboard[i].order = (short)i;
+  }
 
-	if (writeboard())
-		return -1;
+  if (writeboard())
+    return -1;
 
 #ifdef UNIX
-	chmod(scorefile, 0666);
+  chmod(scorefile, 0666);
 #endif
 
-	return 0;
+  return 0;
 }
 
 /* =============================================================================
  * FUNCTION: hashewon
  */
-int hashewon(void)
-{
-	int i;
-	int rt;
+int hashewon(void) {
+  int i;
+  int rt;
 
-	c[HARDGAME] = 0;
+  c[HARDGAME] = 0;
 
-	rt = readboard();
+  rt = readboard();
 
-	if (rt < 0)
-		return 0;
+  if (rt < 0)
+    return 0;
 
-	/* search through winners scoreboard */
-	for (i = 0; i < SCORESIZE; i++) {
-		if ((winboard[i].suid == userid) && (winboard[i].score > 0)) {
-			c[HARDGAME] = winboard[i].hardlev + 1;
-			outstanding_taxes = winboard[i].taxes;
-			return 1;
-		}
-	}
+  /* search through winners scoreboard */
+  for (i = 0; i < SCORESIZE; i++) {
+    if ((winboard[i].suid == userid) && (winboard[i].score > 0)) {
+      c[HARDGAME] = winboard[i].hardlev + 1;
+      outstanding_taxes = winboard[i].taxes;
+      return 1;
+    }
+  }
 
-	return 0;
+  return 0;
 }
 
 /* =============================================================================
  * FUNCTION: paytaxes
  */
-long paytaxes(long x)
-{
-	int i;
-	long amt;
+long paytaxes(long x) {
+  int i;
+  long amt;
 
-	if (x <= 0)
-		return 0L;
+  if (x <= 0)
+    return 0L;
 
-	if (readboard() < 0)
-		return 0L;
+  if (readboard() < 0)
+    return 0L;
 
-	/* look for players winning entry */
-	for (i = 0; i < SCORESIZE; i++) {
-		if ((winboard[i].suid == userid) && (winboard[i].score > 0)) {
-			/* calculate the amount to pay (making sure the player doesn't overpay */
-			amt = winboard[i].taxes;
-			if (x < amt) amt = x;
+  /* look for players winning entry */
+  for (i = 0; i < SCORESIZE; i++) {
+    if ((winboard[i].suid == userid) && (winboard[i].score > 0)) {
+      /* calculate the amount to pay (making sure the player doesn't overpay */
+      amt = winboard[i].taxes;
+      if (x < amt)
+        amt = x;
 
-			winboard[i].taxes -= amt;
-			outstanding_taxes -= amt;
+      winboard[i].taxes -= amt;
+      outstanding_taxes -= amt;
 
-			if (writeboard() < 0)
-				return 0;
+      if (writeboard() < 0)
+        return 0;
 
-			return amt;
-		}
-	}
+      return amt;
+    }
+  }
 
-	return 0L; /* couldn't find user on winning scoreboard */
+  return 0L; /* couldn't find user on winning scoreboard */
 }
 
 /* =============================================================================
  * FUNCTION: showscores
  */
-void showscores(void)
-{
-	int i, j;
+void showscores(void) {
+  int i, j;
 
-	if (readboard() < 0) {
-		get_prompt_input("\nPress return to continue", "\015", 0);
-		return;
-	}
+  if (readboard() < 0) {
+    get_prompt_input("\nPress return to continue", "\015", 0);
+    return;
+  }
 
-	i = show_winners();
+  i = show_winners();
 
-	if (i > 0)
-		get_prompt_input("\nPress return to continue", "\015", 0);
+  if (i > 0)
+    get_prompt_input("\nPress return to continue", "\015", 0);
 
-	j = show_visitors(0);
+  j = show_visitors(0);
 
-	if ((i + j) == 0)
-		Print("\nThe scoreboard is empty.\n");
-	else
-		Print("\n");
+  if ((i + j) == 0)
+    Print("\nThe scoreboard is empty.\n");
+  else
+    Print("\n");
 
-	get_prompt_input("\nPress return to continue", "\015", 0);
-
+  get_prompt_input("\nPress return to continue", "\015", 0);
 }
 
 /* =============================================================================
  * FUNCTION: showallscores
  */
-void showallscores(void)
-{
-	int i, j;
+void showallscores(void) {
+  int i, j;
 
-	if (readboard() < 0)
-		return;
+  if (readboard() < 0)
+    return;
 
-	i = show_winners();
-	j = show_visitors(1);
+  i = show_winners();
+  j = show_visitors(1);
 
-	if ((i + j) == 0)
-		Print("\nThe scoreboard is empty.\n");
-	else
-		Print("\n");
+  if ((i + j) == 0)
+    Print("\nThe scoreboard is empty.\n");
+  else
+    Print("\n");
 
-	get_prompt_input("\nPress return to continue", "\015", 0);
-
+  get_prompt_input("\nPress return to continue", "\015", 0);
 }
 
 /* =============================================================================
  * FUNCTION: endgame
  */
-void endgame(void)
-{
-	/* deallocate any allocated memory */
+void endgame(void) {
+  /* deallocate any allocated memory */
 
-	free_cells();
-	free_spheres();
+  free_cells();
+  free_spheres();
 
-	/* close the application */
-	close_app();
+  /* close the application */
+  close_app();
 
-	/* and exit */
-	exit(0);
+  /* and exit */
+  exit(0);
 }
 
 /* =============================================================================
  * FUNCTION: died
  */
-void died(DiedReasonType Reason, int Monster)
-{
-	int win;
-	int can_revive;
-	long score;
+void died(DiedReasonType Reason, int Monster) {
+  int win;
+  int can_revive;
+  long score;
 
-	can_revive = 1;
+  can_revive = 1;
 
-	if (c[LIFEPROT] > 0) {
-		/* if life protection */
-		switch (Reason) {
-		case DIED_QUIT:
-		case DIED_SUSPENDED:
-		case DIED_FELL_INTO_BOTTOMLESS_PIT:
-		case DIED_WINNER:
-		case DIED_MISSING_SAVE_FILE:
-		case DIED_OLD_SAVE_FILE:
-		case DIED_GREEDY_CHEATER:
-		case DIED_PROTECTED_SAVE_FILE:
-		case DIED_KILLED_FAMILY:
-		case DIED_FELL_THROUGH_BOTTOMLESS_TRAPDOOR:
-		case DIED_INTERNAL_COMPLICATIONS:
-		case DIED_POST_MORTEM_DEATH:
-		case DIED_MALLOC_FAILURE:
-		case DIED_ELEVATOR_TO_HELL:
-		case DIED_QUICK_QUIT:
-			can_revive = 0;
-			break;
+  if (c[LIFEPROT] > 0) {
+    /* if life protection */
+    switch (Reason) {
+    case DIED_QUIT:
+    case DIED_SUSPENDED:
+    case DIED_FELL_INTO_BOTTOMLESS_PIT:
+    case DIED_WINNER:
+    case DIED_MISSING_SAVE_FILE:
+    case DIED_OLD_SAVE_FILE:
+    case DIED_GREEDY_CHEATER:
+    case DIED_PROTECTED_SAVE_FILE:
+    case DIED_KILLED_FAMILY:
+    case DIED_FELL_THROUGH_BOTTOMLESS_TRAPDOOR:
+    case DIED_INTERNAL_COMPLICATIONS:
+    case DIED_POST_MORTEM_DEATH:
+    case DIED_MALLOC_FAILURE:
+    case DIED_ELEVATOR_TO_HELL:
+    case DIED_QUICK_QUIT:
+      can_revive = 0;
+      break;
 
-		default:
-			break;
-		}
+    default:
+      break;
+    }
 
-		if (can_revive) {
-			--c[LIFEPROT];
-			c[HP] = c[HPMAX];
-			--c[CONSTITUTION];
-			Print("\nYou feel wiiieeeeerrrrrd all over! ");
-			UlarnBeep();
-			nap(4000);
+    if (can_revive) {
+      --c[LIFEPROT];
+      c[HP] = c[HPMAX];
+      --c[CONSTITUTION];
+      Print("\nYou feel wiiieeeeerrrrrd all over! ");
+      UlarnBeep();
+      nap(4000);
 
-			/* only case where died() returns */
-			return;
-		}
-	}
+      /* only case where died() returns */
+      return;
+    }
+  }
 
-	/* remove checkpoint file if used */
-	if (ckpflag)
-		unlink(ckpfile);
+  /* remove checkpoint file if used */
+  if (ckpflag)
+    unlink(ckpfile);
 
-	/* if we are not to display the scores */
-	if ((Reason == DIED_QUICK_QUIT) || (Reason == DIED_SUSPENDED)) {
-		/* for quick exit or saved game */
-		ClearText();
-		Printf("Tidying up...\n");
+  /* if we are not to display the scores */
+  if ((Reason == DIED_QUICK_QUIT) || (Reason == DIED_SUSPENDED)) {
+    /* for quick exit or saved game */
+    ClearText();
+    Printf("Tidying up...\n");
 
-		endgame();
-	}
+    endgame();
+  }
 
-	win = (Reason == DIED_WINNER);
+  win = (Reason == DIED_WINNER);
 
-	/* Now calculate the player's final score */
-	score = calc_score(win);
+  /* Now calculate the player's final score */
+  score = calc_score(win);
 
-	set_display(DISPLAY_TEXT);
-	ClearText();
+  set_display(DISPLAY_TEXT);
+  ClearText();
 
-	/* Show the players final score */
-	show_player_score(Reason, Monster, score);
+  /* Show the players final score */
+  show_player_score(Reason, Monster, score);
 
-	get_prompt_input("\nPress return to continue", "\015", 0);
+  get_prompt_input("\nPress return to continue", "\015", 0);
 
+  if (!(wizard || cheat)) {
+    /* wizards and cheaters can't get on the score boards */
 
-	if (!(wizard || cheat)) {
-		/* wizards and cheaters can't get on the score boards */
+    highlight_pos = newscore(score, win, Reason, Monster);
+    highlight_win = win;
+  }
 
-		highlight_pos = newscore(score, win, Reason, Monster);
-		highlight_win = win;
-	}
+  if (scorerror == 0)
+    /* if we updated the scoreboard*/
+    showscores();
 
-	if (scorerror == 0)
-		/* if we updated the scoreboard*/
-		showscores();
+  /* if (win && mail) mailbill(); */
 
-	/* if (win && mail) mailbill(); */
+  ClearText();
+  Print("\n");
 
-	ClearText();
-	Print("\n");
-
-	/* exit the game */
-	endgame();
+  /* exit the game */
+  endgame();
 }
-
-

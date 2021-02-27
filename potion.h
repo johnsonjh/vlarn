@@ -22,34 +22,34 @@
 #ifndef __POTION_H
 #define __POTION_H
 
-#define MAXPOTION 35  /* maximum number of potions that are possible  */
+#define MAXPOTION 35 /* maximum number of potions that are possible  */
 
 /*** Potions ***/
-#define PSLEEP        0
-#define PHEALING      1
-#define PRAISELEVEL   2
-#define PINCABILITY   3
-#define PWISDOM       4
-#define PSTRENGTH     5
-#define PCHARISMA     6
-#define PDIZZINESS    7
-#define PLEARNING     8
-#define PGOLDDET      9
-#define PMONSTDET    10
-#define PFORGETFUL   11
-#define PWATER       12
-#define PBLINDNESS   13
-#define PCONFUSION   14
-#define PHEROISM     15
-#define PSTURDINESS  16
-#define PGIANTSTR    17
-#define PFIRERESIST  18
-#define PTREASURE    19
-#define PINSTHEAL    20
-#define PCUREDIANTH  21
-#define PPOISON      22
-#define PSEEINVIS    23
-#define P_MAX        23  /* Greatest defined potion number */
+#define PSLEEP 0
+#define PHEALING 1
+#define PRAISELEVEL 2
+#define PINCABILITY 3
+#define PWISDOM 4
+#define PSTRENGTH 5
+#define PCHARISMA 6
+#define PDIZZINESS 7
+#define PLEARNING 8
+#define PGOLDDET 9
+#define PMONSTDET 10
+#define PFORGETFUL 11
+#define PWATER 12
+#define PBLINDNESS 13
+#define PCONFUSION 14
+#define PHEROISM 15
+#define PSTURDINESS 16
+#define PGIANTSTR 17
+#define PFIRERESIST 18
+#define PTREASURE 19
+#define PINSTHEAL 20
+#define PCUREDIANTH 21
+#define PPOISON 22
+#define PSEEINVIS 23
+#define P_MAX 23 /* Greatest defined potion number */
 
 /*
  * The amount to boost ability scores for a potion of heroism

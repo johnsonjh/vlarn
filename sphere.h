@@ -45,7 +45,7 @@
  *
  *   None.
  */
-void rmsphere (int x, int y);
+void rmsphere(int x, int y);
 
 /* =============================================================================
  * FUNCTION: newsphere
@@ -67,7 +67,7 @@ void rmsphere (int x, int y);
  *
  *   None.
  */
-void newsphere (int x, int y, int dir, int life);
+void newsphere(int x, int y, int dir, int life);
 
 /* =============================================================================
  * FUNCTION: movsphere
@@ -135,6 +135,3 @@ void write_spheres(FILE *fp);
 void read_spheres(FILE *fp);
 
 #endif
-
-
-

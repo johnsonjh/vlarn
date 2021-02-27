@@ -14,7 +14,6 @@ int mailbill(void);
 
 /* module: data.c */
 
-
 /* module: diag.c */
 
 int diag(void);
@@ -298,10 +297,7 @@ int mailbill();
 
 /* module: config.c */
 
-
-
 /* module: data.c */
-
 
 /* module: diag.c */
 
@@ -565,42 +561,39 @@ int clearvt100();
 
 #endif /* __STD__ */
 
-
-
-	/************** extern decls for all data items **********/
+/************** extern decls for all data items **********/
 
 extern char *tempfilename, *libdir;
-extern char bot1f,bot2f,bot3f;	/* in display.c */
+extern char bot1f, bot2f, bot3f; /* in display.c */
 extern char ckpfile[], monstnamelist[];
-extern char larnlevels[],lastmonst[];
-extern char savefilename[],scorefile[], beenhere[];
-extern char objnamelist[],optsfile[],*potionname[],stealth[MAXX][MAXY];
-extern char *scrollname[],*spelcode[],*speldescript[];
-extern int scrollknown[],potionknown[];
-extern char *class[],course[],diagfile[],fortfile[],helpfile[];
-extern char *inbuffer,drug[], know[MAXX][MAXY], item[MAXX][MAXY];
-extern char *levelname[],loginname[],logname[],*lpbuf,*lpend;
+extern char larnlevels[], lastmonst[];
+extern char savefilename[], scorefile[], beenhere[];
+extern char objnamelist[], optsfile[], *potionname[], stealth[MAXX][MAXY];
+extern char *scrollname[], *spelcode[], *speldescript[];
+extern int scrollknown[], potionknown[];
+extern char *class[], course[], diagfile[], fortfile[], helpfile[];
+extern char *inbuffer, drug[], know[MAXX][MAXY], item[MAXX][MAXY];
+extern char *levelname[], loginname[], logname[], *lpbuf, *lpend;
 /* extern char *lpnt, *password, mitem[MAXX][MAXY], moved[MAXX][MAXY];  */
-extern char *lpnt, *password, moved[MAXX][MAXY]; 
-extern char *objectname[], *spelname[],*spelmes[],char_class[], iven[];
-extern char nosignal, nobeep,oldx,oldy,playerx,playery, dropflag;
-extern char restorflag,nomove, srcount, char_picked;
+extern char *lpnt, *password, moved[MAXX][MAXY];
+extern char *objectname[], *spelname[], *spelmes[], char_class[], iven[];
+extern char nosignal, nobeep, oldx, oldy, playerx, playery, dropflag;
+extern char restorflag, nomove, srcount, char_picked;
 extern char nowelcome, level, cheat, enable_scroll;
 extern char nch[], ndgg[], ckpflag, monstlevel[];
-extern char nlpts[], nplt[],nsw[], mail,boldon, splev[];
+extern char nlpts[], nplt[], nsw[], mail, boldon, splev[];
 extern char potprob[], predostuff, scprob[], spelknow[], do_fork, sex;
-extern char spelweird[MAXMONST+8][SPNUM], wizard;
-extern char diroffx[],diroffy[],hitflag,hit2flag,hit3flag;
-extern char rmst, lasthx,lasthy,lastpx,lastpy;
+extern char spelweird[MAXMONST + 8][SPNUM], wizard;
+extern char diroffx[], diroffy[], hitflag, hit2flag, hit3flag;
+extern char rmst, lasthx, lasthy, lastpx, lastpy;
 extern char ramboflag, compress;
 
 extern short hitp[MAXX][MAXY], ivenarg[], screen[MAXX][MAXY];
-extern short iarg[MAXX][MAXY], lastnum;	/* must be short for gold piles */
+extern short iarg[MAXX][MAXY], lastnum; /* must be short for gold piles */
 
-extern int yrepcount,userid;
+extern int yrepcount, userid;
 extern int ipoint, iepoint;
 
 extern time_t initialtime;
-extern long outstanding_taxes,skill[],gtime,c[],cbak[];
+extern long outstanding_taxes, skill[], gtime, c[], cbak[];
 extern long lasttime;
-

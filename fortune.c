@@ -22,8 +22,8 @@
 
 #include <stdio.h>
 
-#include "header.h"
 #include "fortune.h"
+#include "header.h"
 
 /* =============================================================================
  * Local variables
@@ -36,13 +36,13 @@
  * fortune file
  */
 struct FortuneType {
-	char Line[MAX_FORTUNE_LEN];
-	struct FortuneType *Next;
+  char Line[MAX_FORTUNE_LEN];
+  struct FortuneType *Next;
 };
 
 static struct FortuneType *fortunes = NULL;
-static int fortune_read = 0;    /* true if we have loaded the fortune info */
-static int nlines = 0;          /* # lines in fortune database */
+static int fortune_read = 0; /* true if we have loaded the fortune info */
+static int nlines = 0;       /* # lines in fortune database */
 
 /* =============================================================================
  * Exported functions
@@ -52,80 +52,77 @@ static int nlines = 0;          /* # lines in fortune database */
  * FUNCTION: fortune
  */
 
-char *fortune(char *file)
-{
-	FILE *fp;
-	char *Line;
-	char Buffer[80];
-	struct FortuneType *NewFortune;
-	int Len;
-	int Pos;
+char *fortune(char *file) {
+  FILE *fp;
+  char *Line;
+  char Buffer[80];
+  struct FortuneType *NewFortune;
+  int Len;
+  int Pos;
 
-	if (fortune_read == 0) {
-		/* open the file */
-		fp = fopen(file, "r");
-		if (fp == NULL)
-			/* can't find file */
-			return 0;
+  if (fortune_read == 0) {
+    /* open the file */
+    fp = fopen(file, "r");
+    if (fp == NULL)
+      /* can't find file */
+      return 0;
 
-		/* Read the fortune lines from the file */
-		while (!feof(fp)) {
-			Line = fgets(Buffer, MAX_FORTUNE_LEN, fp);
-			if (Line != NULL) {
-				/* trim white space and CR/LF fromt he end of the line */
-				Len = strlen(Buffer);
-				Len--;
-				while ((Len > 0) && isspace((int)Buffer[Len])) {
-					Buffer[Len] = 0;
-					Len--;
-				}
+    /* Read the fortune lines from the file */
+    while (!feof(fp)) {
+      Line = fgets(Buffer, MAX_FORTUNE_LEN, fp);
+      if (Line != NULL) {
+        /* trim white space and CR/LF fromt he end of the line */
+        Len = strlen(Buffer);
+        Len--;
+        while ((Len > 0) && isspace((int)Buffer[Len])) {
+          Buffer[Len] = 0;
+          Len--;
+        }
 
-				/* Allocate a new fortune */
-				NewFortune = (struct FortuneType *)malloc(sizeof(struct FortuneType));
+        /* Allocate a new fortune */
+        NewFortune = (struct FortuneType *)malloc(sizeof(struct FortuneType));
 
-				if (NewFortune == NULL)
-					return NULL;
+        if (NewFortune == NULL)
+          return NULL;
 
-				strcpy(NewFortune->Line, Buffer);
-				NewFortune->Next = fortunes;
-				fortunes = NewFortune;
-				nlines++;
+        strcpy(NewFortune->Line, Buffer);
+        NewFortune->Next = fortunes;
+        fortunes = NewFortune;
+        nlines++;
+      }
+    }
 
-			}
-		}
+    fortune_read = 1;
 
-		fortune_read = 1;
+    fclose(fp);
+  }
 
-		fclose(fp);
-	}
+  if (fortune_read) {
+    if (nlines > 0) {
+      Pos = rund(nlines);
+      NewFortune = fortunes;
 
-	if (fortune_read) {
-		if (nlines > 0) {
-			Pos = rund(nlines);
-			NewFortune = fortunes;
+      while (Pos > 0) {
+        NewFortune = NewFortune->Next;
+        Pos--;
+      }
 
-			while (Pos > 0) {
-				NewFortune = NewFortune->Next;
-				Pos--;
-			}
-
-			return NewFortune->Line;
-		}else
-			return NULL;
-	}else
-		return NULL;
+      return NewFortune->Line;
+    } else
+      return NULL;
+  } else
+    return NULL;
 }
 
 /* =============================================================================
  * FUNCTION: free_fortunes
  */
-void free_fortunes(void)
-{
-	struct FortuneType *Fortune;
+void free_fortunes(void) {
+  struct FortuneType *Fortune;
 
-	while (fortunes != NULL) {
-		Fortune = fortunes->Next;
-		free(fortunes);
-		fortunes = Fortune;
-	}
+  while (fortunes != NULL) {
+    Fortune = fortunes->Next;
+    free(fortunes);
+    fortunes = Fortune;
+  }
 }

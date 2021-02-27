@@ -29,11 +29,10 @@
 #ifndef __SPELL_H
 #define __SPELL_H
 
-#include "ularn_win.h"
 #include "dungeon.h"
+#include "ularn_win.h"
 
-typedef enum
-{
+typedef enum {
   SPELL_PRO, /* Protection             */
   SPELL_MLE, /* Magic missile          */
   SPELL_DEX, /* Dexterity              */
@@ -79,7 +78,7 @@ typedef enum
 /* The dexterity boost from the DEX spell */
 #define SDEXTERITY_BOOST 3
 /* The strength boost from the STR spell */
-#define SSTRENGTH_BOOST  3
+#define SSTRENGTH_BOOST 3
 /* The protection boost from the PRO spell */
 #define SPELL_PRO_BOOST 2
 /* The protection boost from a globe of invulnerability */
@@ -130,7 +129,8 @@ extern char *speldescript[SPELL_COUNT];
  *
  *   None.
  */
-void godirect(SpellType spnum, int dam, char *str, int delay, DirEffectsType cshow);
+void godirect(SpellType spnum, int dam, char *str, int delay,
+              DirEffectsType cshow);
 
 /* =============================================================================
  * FUNCTION: annihilate

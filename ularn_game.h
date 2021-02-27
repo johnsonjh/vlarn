@@ -61,18 +61,17 @@
  * Game options
  */
 extern char do_fork;
-extern char boldon;   /* 1=bold objects,  0=inverse objects */
-extern char mail;     /* 1=mail letters after win game */
-extern char ckpflag;  /* 1 if want checkpointing of game, 0 otherwise */
-extern char nobeep;   /* true if program is not to beep*/
+extern char boldon;  /* 1=bold objects,  0=inverse objects */
+extern char mail;    /* 1=mail letters after win game */
+extern char ckpflag; /* 1 if want checkpointing of game, 0 otherwise */
+extern char nobeep;  /* true if program is not to beep*/
 
 /* *************** File Names *************** */
 
-#define SCORENAME     "Vscore"
-#define HELPNAME      "Vhelp"
-#define LEVELSNAME    "Vmaps"
-#define FORTSNAME     "Vfortune"
-
+#define SCORENAME "Vscore"
+#define HELPNAME "Vhelp"
+#define LEVELSNAME "Vmaps"
+#define FORTSNAME "Vfortune"
 
 /* maximum number moves before the game is called*/
 #define TIMELIMIT 90000
@@ -122,14 +121,14 @@ extern char diagfile[];
 /* the wizard's password */
 extern char *password;
 
-extern int userid;                /* the players login user id number */
+extern int userid; /* the players login user id number */
 extern char loginname[USERNAME_LENGTH + 1]; /* players login name */
 extern char logname[LOGNAMESIZE + 1]; /* players name storage for scoring */
 
-extern char nowelcome;   /* if nowelcome, don't display welcome message */
-extern char nomove;      /* if nomove no count next iteration as move   */
-extern char dropflag;    /* if 1 then don't lookforobject() next round */
-extern char restorflag;  /* 1 means restore has been done */
+extern char nowelcome;         /* if nowelcome, don't display welcome message */
+extern char nomove;            /* if nomove no count next iteration as move   */
+extern char dropflag;          /* if 1 then don't lookforobject() next round */
+extern char restorflag;        /* 1 means restore has been done */
 extern char enhance_interface; /* 1 means use the enhanced command interface */
 
 /*
@@ -137,7 +136,7 @@ extern char enhance_interface; /* 1 means use the enhanced command interface */
  */
 extern char diroffx[];
 extern char diroffy[];
-extern int  ReverseDir[];
+extern int ReverseDir[];
 extern char *dirname[];
 
 /* =============================================================================
@@ -176,7 +175,7 @@ void newgame(void);
  *
  *   None.
  */
-void sethard (int hard);
+void sethard(int hard);
 
 /* =============================================================================
  * FUNCTION: read_options
@@ -193,6 +192,5 @@ void sethard (int hard);
  *   None.
  */
 void read_options(void);
-
 
 #endif

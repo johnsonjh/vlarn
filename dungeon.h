@@ -56,11 +56,11 @@
  * Exported variables
  */
 
-#define MAXLEVEL 16   /*  max # levels in the dungeon + 1 */
-#define MAXVLEVEL 5   /*  max # of levels in the volcano */
-#define NLEVELS (MAXLEVEL+MAXVLEVEL)
-#define DBOTTOM (MAXLEVEL-1)
-#define VBOTTOM (MAXLEVEL+MAXVLEVEL-1)
+#define MAXLEVEL 16 /*  max # levels in the dungeon + 1 */
+#define MAXVLEVEL 5 /*  max # of levels in the volcano */
+#define NLEVELS (MAXLEVEL + MAXVLEVEL)
+#define DBOTTOM (MAXLEVEL - 1)
+#define VBOTTOM (MAXLEVEL + MAXVLEVEL - 1)
 
 /*
  * Dungeon level size. MUST bo odd.
@@ -76,8 +76,7 @@ typedef struct _s {
   short itemarg;
 } StolenItem;
 
-typedef struct
-{
+typedef struct {
   char mon;
   char n;
   StolenItem it[6];
@@ -99,16 +98,16 @@ typedef struct
  *   2b. The monster is awake (STEALTH_AWAKE set)
  *       (Awake monsters are assumed to be making noise)
  */
-#define STEALTH_SEEN  1
+#define STEALTH_SEEN 1
 #define STEALTH_AWAKE 2
 
-extern char item[MAXX][MAXY];         /* objects in maze if any */
-extern char know[MAXX][MAXY];         /* contains what the player thinks is here */
-extern char moved[MAXX][MAXY];        /* monster movement flags  */
-extern char stealth[MAXX][MAXY];      /* 0=sleeping 1=awake monst    */
-extern short hitp[MAXX][MAXY];        /* monster hp on level  */
-extern short iarg[MAXX][MAXY];        /* arg for the item array */
-extern short screen[MAXX][MAXY];      /* The screen as the player knows it */
+extern char item[MAXX][MAXY];    /* objects in maze if any */
+extern char know[MAXX][MAXY];    /* contains what the player thinks is here */
+extern char moved[MAXX][MAXY];   /* monster movement flags  */
+extern char stealth[MAXX][MAXY]; /* 0=sleeping 1=awake monst    */
+extern short hitp[MAXX][MAXY];   /* monster hp on level  */
+extern short iarg[MAXX][MAXY];   /* arg for the item array */
+extern short screen[MAXX][MAXY]; /* The screen as the player knows it */
 extern struct_mitem mitem[MAXX][MAXY]; /* Items stolen by monstes array */
 
 /*
@@ -125,7 +124,7 @@ extern struct_mitem mitem[MAXX][MAXY]; /* Items stolen by monstes array */
  */
 extern char beenhere[NLEVELS];
 
-extern int level;        /* cavelevel player is on = c[CAVELEVEL]*/
+extern int level; /* cavelevel player is on = c[CAVELEVEL]*/
 
 extern char *levelname[]; /* Dungeon level names */
 
@@ -134,31 +133,36 @@ extern char *levelname[]; /* Dungeon level names */
  * Destroy object at present location
  * As the player is there, obviously it is known to be destroyed.
  */
-#define forget()               \
-{                              \
-  item[playerx][playery] = ONOTHING;  \
-  know[playerx][playery] = ONOTHING;  \
-}
+#define forget()                                                               \
+  {                                                                            \
+    item[playerx][playery] = ONOTHING;                                         \
+    know[playerx][playery] = ONOTHING;                                         \
+  }
 
 /*
  * MACRO: disappear
  * Wipe out a monster at a location.
  * Redraw the location if it is not unknown.
  */
-#define disappear(x,y) \
-{                      \
-  mitem[x][y].mon = 0; \
-  if (know[x][y] != OUNKNOWN) show1cell(x, y); \
-}
+#define disappear(x, y)                                                        \
+  {                                                                            \
+    mitem[x][y].mon = 0;                                                       \
+    if (know[x][y] != OUNKNOWN)                                                \
+      show1cell(x, y);                                                         \
+  }
 
 /* verify coordinates */
-#define vxy(x, y)             \
-{                             \
-  if (x < 0) x = 0;           \
-  if (y < 0) y = 0;           \
-  if (x >= MAXX) x = MAXX-1;  \
-  if (y >= MAXY) y = MAXY-1;  \
-}
+#define vxy(x, y)                                                              \
+  {                                                                            \
+    if (x < 0)                                                                 \
+      x = 0;                                                                   \
+    if (y < 0)                                                                 \
+      y = 0;                                                                   \
+    if (x >= MAXX)                                                             \
+      x = MAXX - 1;                                                            \
+    if (y >= MAXY)                                                             \
+      y = MAXY - 1;                                                            \
+  }
 
 /* =============================================================================
  * FUNCTION: init_cells
@@ -249,7 +253,7 @@ void dropgold(int amount);
  *   0 if the monster could be created
  *  -1 if no location for the monster could be found
  */
-int fillmonst (int what);
+int fillmonst(int what);
 
 /* =============================================================================
  * FUNCTION: eat
@@ -267,7 +271,7 @@ int fillmonst (int what);
  *
  *   None.
  */
-void eat (int xx, int yy);
+void eat(int xx, int yy);
 
 /* =============================================================================
  * FUNCTION: savelevel
@@ -342,7 +346,7 @@ void AnalyseWalls(int x1, int y1, int x2, int y2);
  *
  *   None.
  */
-void newcavelevel (int x);
+void newcavelevel(int x);
 
 /* =============================================================================
  * FUNCTION: verifyxy

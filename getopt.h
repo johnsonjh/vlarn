@@ -22,7 +22,7 @@
  *
  * =============================================================================
  */
- 
+
 #ifndef __GETOPT_H
 #define __GETOPT_H
 
@@ -114,6 +114,6 @@ extern int opterr;
  *
  *   See description.
  */
-int ugetopt (int argc, char **argv, const char *optstring);
+int ugetopt(int argc, char **argv, const char *optstring);
 
 #endif

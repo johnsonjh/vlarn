@@ -1,4 +1,4 @@
-# File header for each source file
+#File header for each source file
 
 /* =============================================================================
  * PROGRAM:
@@ -20,7 +20,7 @@
  * =============================================================================
  */
 
-# Function comment for function declaration
+#Function comment for function declaration
 /* =============================================================================
  * FUNCTION:
  *
@@ -33,12 +33,12 @@
  *
  */
 
-# Function comment of function implementation
+#Function comment of function implementation
 /* =============================================================================
  * FUNCTION:
  */
 
-# Section markers
+#Section markers
 
 /* =============================================================================
  * Local variables
@@ -55,4 +55,3 @@
 /* =============================================================================
  * Exported functions
  */
-

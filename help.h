@@ -33,7 +33,7 @@
  *
  * =============================================================================
  */
- 
+
 #ifndef __HELP_H
 #define __HELP_H
 
@@ -51,7 +51,7 @@
  *
  *   None.
  */
-void help (void);
+void help(void);
 
 /* =============================================================================
  * FUNCTION: welcome
@@ -67,6 +67,6 @@ void help (void);
  *
  *   None.
  */
-void welcome (void);
+void welcome(void);
 
 #endif

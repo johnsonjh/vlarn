@@ -24,16 +24,15 @@
 #ifndef __ITM_H
 #define __ITM_H
 
-typedef enum
-{
-  OUNKNOWN,  /* Marker for unknown areas */
-  ONOTHING,  /* Nothing                  */
+typedef enum {
+  OUNKNOWN, /* Marker for unknown areas */
+  ONOTHING, /* Nothing                  */
 
   /* Dungeon features */
   OALTAR,
-  OTHRONE,        /* throne */
-  OTHRONE2,       /* throne that has summoned a gnome king */
-  ODEADTHRONE,    /* throne with jeweles pried off */
+  OTHRONE,     /* throne */
+  OTHRONE2,    /* throne that has summoned a gnome king */
+  ODEADTHRONE, /* throne with jeweles pried off */
   OPIT,
   OSTAIRSUP,
   OELEVATORUP,
@@ -49,10 +48,10 @@ typedef enum
   OWALL,
 
   /* gold piles */
-  OGOLDPILE,     /* gold, amount = itemarg */
-  ODGOLD,        /* gold, amount = itemarg * 10 */
-  OKGOLD,        /* gold, amount = itemarg * 1000 */
-  OMAXGOLD,      /* gold, amount = itemarg * 10000 */
+  OGOLDPILE, /* gold, amount = itemarg */
+  ODGOLD,    /* gold, amount = itemarg * 10 */
+  OKGOLD,    /* gold, amount = itemarg * 1000 */
+  OMAXGOLD,  /* gold, amount = itemarg * 10000 */
 
   OLARNEYE, /* The Eye of Larn - enables you to see demons */
 
@@ -66,23 +65,23 @@ typedef enum
   OPLATEARMOR,
   OSSPLATE,
   OSHIELD,
-  OELVENCHAIN,      /* elven chain - strong and light, impervious to rust */
+  OELVENCHAIN, /* elven chain - strong and light, impervious to rust */
 
   /* weapons */
   OSWORDofSLASHING, /* impervious to rust, light, strong */
   OHAMMER,          /* Bessman's Flailing Hammer */
   OSWORD,
-  O2SWORD,          /* 2 handed sword */
+  O2SWORD, /* 2 handed sword */
   OSPEAR,
   ODAGGER,
   OBATTLEAXE,
   OLONGSWORD,
   OFLAIL,
   OLANCE,
-  OVORPAL,          /* 1/20 chance of beheading most monsters */
-  OSLAYER,          /* magical sword - increases intelligence by 10,
-                       halves damage caused by demons, demon prince
-                       and lucifer - strong as lance of death against them*/
+  OVORPAL, /* 1/20 chance of beheading most monsters */
+  OSLAYER, /* magical sword - increases intelligence by 10,
+              halves damage caused by demons, demon prince
+              and lucifer - strong as lance of death against them*/
 
   /* rings */
   ORINGOFEXTRA,
@@ -95,24 +94,25 @@ typedef enum
   ODAMRING,
 
   /* Magic items */
-  OBELT,          /* belt of striking */
-  OSCROLL,        /* a scroll */
-  OPOTION,        /* a potion */
-  OBOOK,          /* a book */
-  OCHEST,         /* a treasure chest */
-  OORB,           /* orb of enlightement - gives expanded awareness while held */
-  OAMULET,        /* Amulet of invisibility */
-  OORBOFDRAGON,   /* Orb or dragon slaying */
-  OSPIRITSCARAB,  /* Scarab of spirit protection */
-  OCUBEofUNDEAD,  /* Cube of undead control */
-  ONOTHEFT,       /* Device of theft prevention */
-  OBRASSLAMP,     /* brass lamp - genie pops up and offers spell */
-  OHANDofFEAR,    /* hand of fear - scare monster spell lasts
-                     twice as long if have this */
-  OSPHTALISMAN,   /* talisman of the sphere */
-  OWWAND,         /* wand of wonder - cant fall in trap doors/pits */
-  OPSTAFF,        /* staff of power - cancels drain life attack */
-  OLIFEPRESERVER, /* Amulet of life preservation  - stops n drainlevel attacks */ 
+  OBELT,         /* belt of striking */
+  OSCROLL,       /* a scroll */
+  OPOTION,       /* a potion */
+  OBOOK,         /* a book */
+  OCHEST,        /* a treasure chest */
+  OORB,          /* orb of enlightement - gives expanded awareness while held */
+  OAMULET,       /* Amulet of invisibility */
+  OORBOFDRAGON,  /* Orb or dragon slaying */
+  OSPIRITSCARAB, /* Scarab of spirit protection */
+  OCUBEofUNDEAD, /* Cube of undead control */
+  ONOTHEFT,      /* Device of theft prevention */
+  OBRASSLAMP,    /* brass lamp - genie pops up and offers spell */
+  OHANDofFEAR,   /* hand of fear - scare monster spell lasts
+                    twice as long if have this */
+  OSPHTALISMAN,  /* talisman of the sphere */
+  OWWAND,        /* wand of wonder - cant fall in trap doors/pits */
+  OPSTAFF,       /* staff of power - cancels drain life attack */
+  OLIFEPRESERVER, /* Amulet of life preservation  - stops n drainlevel attacks
+                   */
 
   /* gems */
   ODIAMOND,
@@ -121,17 +121,17 @@ typedef enum
   OSAPPHIRE,
 
   /* Buildings/entrances */
-  OSCHOOL,        /* College of larn                */
-  ODNDSTORE,      /* DnD store                      */
-  OBANK2,         /* 8th brange of the bank of larn */
-  OBANK,          /* First nation bank of larn      */
-  OENTRANCE,      /* dungeon entrance               */
-  OVOLDOWN,       /* volcano entrance               */
-  OVOLUP,         /* Volcanic tube up               */
-  OHOME,          /* Player's home                  */
-  OTRADEPOST,     /* Larn trading post              */
-  OLRS,           /* Larn Revenue Service           */
-  OPAD,           /* Dealer McDope's Pad            */
+  OSCHOOL,    /* College of larn                */
+  ODNDSTORE,  /* DnD store                      */
+  OBANK2,     /* 8th brange of the bank of larn */
+  OBANK,      /* First nation bank of larn      */
+  OENTRANCE,  /* dungeon entrance               */
+  OVOLDOWN,   /* volcano entrance               */
+  OVOLUP,     /* Volcanic tube up               */
+  OHOME,      /* Player's home                  */
+  OTRADEPOST, /* Larn trading post              */
+  OLRS,       /* Larn Revenue Service           */
+  OPAD,       /* Dealer McDope's Pad            */
 
   /* Traps */
   OTRAPARROWIV,
@@ -142,9 +142,9 @@ typedef enum
   OIVTRAPDOOR,
   OIVTELETRAP,
 
-  OANNIHILATION,  /* sphere of annihilation */
+  OANNIHILATION, /* sphere of annihilation */
   OCOOKIE,
-  OURN,           /* golden urn - not implemented */
+  OURN, /* golden urn - not implemented */
 
   /* Drugs */
   OSPEED,
@@ -155,10 +155,9 @@ typedef enum
   OCOUNT
 } ObjectIdType;
 
-
 /*** How enchantment happened ***/
-#define ENCH_SCROLL  0  /* Enchantment from reading a scroll */
-#define ENCH_ALTAR   1  /* Enchantment from an altar         */
+#define ENCH_SCROLL 0 /* Enchantment from reading a scroll */
+#define ENCH_ALTAR 1 /* Enchantment from an altar         */
 
 extern char objnamelist[OCOUNT];
 
