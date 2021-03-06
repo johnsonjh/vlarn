@@ -1,5 +1,4 @@
-BSD 3-Clause License (Revised)
-==============================
+# BSD 3-Clause License (Revised)
 
 _Copyright © `1986-2018` `The Larn/Ularn/Vlarn Authors`_
 
@@ -18,8 +17,7 @@ that the following conditions are met:
    and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
 
-3. Neither the names of the `Regents of the University of
-   California`, nor `The Larn/Ularn/Vlarn Authors`, nor the
+3. Neither the names of the `Regents of the University of California`, nor `The Larn/Ularn/Vlarn Authors`, nor the
    names of any contributors may be used to endorse or
    promote products derived from this software without
    specific prior written permission.
