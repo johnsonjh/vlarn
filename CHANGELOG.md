@@ -17,17 +17,16 @@
 
 # 5.0.0-alpha.3 / 2021-01-12
 
-- Merge pull request #6 from
-  johnsonjh/restyled/deepsource-transform-815826f8
+- Merge pull request #6 from johnsonjh/restyled/deepsource-transform-815826f8
 - Merge pull request #5 from johnsonjh/deepsource-transform-815826f8
 - Restyled by prettier-markdown
-- Format code with prettier, standardjs, rubocop, black, gofmt, yapf,
-  autopep8, isort and standardrb
+- Format code with prettier, standardjs, rubocop, black, gofmt, yapf, autopep8,
+  isort and standardrb
 - Add Codacy badge
 - Update READMD
 - Merge pull request #4 from johnsonjh/updated-readme
-- Format code with black, gofmt, yapf, autopep8, isort, standardrb,
-  standardjs, prettier and rubocop
+- Format code with black, gofmt, yapf, autopep8, isort, standardrb, standardjs,
+  prettier and rubocop
 - Update README.md
 - Add .deepsource.toml
 - Merge pull request #1 from johnsonjh/whitesource/configure
