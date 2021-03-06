@@ -37,13 +37,16 @@ system-dependent code isolated in separate modules.
 
 ## Distribution
 
-- [SourceHut](https://sr.ht/~trn/vlarn/)
 - [GitHub](https://github.com/johnsonjh/vlarn)
+- [GitLab](https://gitlab.com/johnsonjh/vlarn)
+- [GitLab (trnsz)](https://gitlab.trnsz.com/johnsonjh/vlarn)
+- [NotABug](https://notabug.org/trn/vlarn)
+- [SourceHut](https://sr.ht/~trn/vlarn)
 
 ## Issue Tracking
 
 - You may contact the VLarn maintainer, Jeffrey H. Johnson, via e-mail at
-  \<[jhj@trnsz.com](mailto:jhj@trnsz.com)\>, with bug reports or questions.
+  \<[trnsz@pobox.com](mailto:trnsz@pobox.com)\>, with bug reports or questions.
   Please include '_VLarn_' in the Subject line.
 
 ## Name and Branding
