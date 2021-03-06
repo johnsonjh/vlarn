@@ -90,4 +90,3 @@ _ULarn 1.7_, as well as Nathan Tenny's '_Variant ULarn_' release 1.5.4.
 - Fixed bugs in Vaporise Rock spell for difficulty level 4+
 - Removed unneeded function calls causing extra map redraws
 - Fixed calculation of AC and WC when destroying armor or weapons
-
