@@ -38,7 +38,7 @@ system-dependent code isolated in separate modules.
 ## Distribution
 
 - [GitHub](https://github.com/johnsonjh/vlarn)
-- [GitLab](https://gitlab.com/johnsonjh/vlarn)
+- [GitLab (HQ)](https://gitlab.com/johnsonjh/vlarn)
 - [GitLab (trnsz)](https://gitlab.trnsz.com/johnsonjh/vlarn)
 - [NotABug](https://notabug.org/trn/vlarn)
 - [SourceHut](https://sr.ht/~trn/vlarn)
@@ -52,7 +52,7 @@ system-dependent code isolated in separate modules.
 ## Name and Branding
 
 To avoid user confusion or version clashes with other _Larn_/_ULarn_
-derivatives, the next release of _VLarn_ will be **VLarn 5.0**.
+derivatives, the next release of _VLarn_ will be **VLarn 5.0.0**.
 
 This future release will incorporate changes and additions from Josh Bressers'
 _ULarn 1.7_, as well as Nathan Tenny's '_Variant ULarn_' release 1.5.4.
