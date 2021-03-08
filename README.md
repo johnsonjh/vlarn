@@ -25,6 +25,7 @@ text UI, with optional menu items for most commands.
 ## Availability
 
 **VLarn** is currently available for _Unix_, _Windows_, and _Amiga_ systems.
+
 Ports are currently in the works for _Multics_, _Atari ST_, and _OpenVMS_.
 
 Like _ULarn_ 1.6, **VLarn** is easily portable to different systems, with all
