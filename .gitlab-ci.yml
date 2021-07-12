@@ -3,10 +3,10 @@ image: alpine:latest
 pages:
   stage: deploy
   script:
-  - echo 'Deploying pages'
+  - true
   artifacts:
     paths:
-    - public_html
+    - public
     expire_in: 1 day
   only:
   - master
