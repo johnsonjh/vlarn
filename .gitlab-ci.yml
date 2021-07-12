@@ -1,0 +1,12 @@
+image: alpine:latest
+
+pages:
+  stage: deploy
+  script:
+  - true
+  artifacts:
+    paths:
+    - public
+    expire_in: 1 day
+  only:
+  - master
