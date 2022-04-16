@@ -632,13 +632,13 @@ static void PaintStatus(void) {
   //
   // Format the second line of the status
   //
-  sprintf(Buf, "%ld (%ld)", c[HP], c[HPMAX]);
+  sprintf(Buf, "%d (%d)", (int)c[HP], (int)c[HPMAX]);
 
   sprintf(Line,
-          "HP: %11s STR=%-2ld INT=%-2ld WIS=%-2ld CON=%-2ld DEX=%-2ld "
+          "HP: %11.11s STR=%-2ld INT=%-2ld WIS=%-2ld CON=%-2ld DEX=%-2ld "
           "CHA=%-2ld LV:",
-          Buf, c[STRENGTH] + c[STREXTRA], c[INTELLIGENCE], c[WISDOM],
-          c[CONSTITUTION], c[DEXTERITY], c[CHARISMA]);
+          Buf, c[STRENGTH] + c[STREXTRA], c[INTELLIGENCE],
+          c[WISDOM], c[CONSTITUTION], c[DEXTERITY], c[CHARISMA]);
 
   if ((level == 0) || (wizard))
     c[TELEFLAG] = 0;

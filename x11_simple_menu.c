@@ -310,11 +310,12 @@ static void XMENU_ActivatePopup(struct XMENU_Menu *Menu) {
   Window Root;
   Window Child;
   int winx, winy;
-  int winwidth, winheight;
-  int winborder, windepth;
+  unsigned int winwidth, winheight;
+  unsigned int winborder, windepth;
 
   /* Calculate the popup menu size */
 
+  (void)rc;
   PopupWidth = 0;
   PopupHeight = 0;
 
@@ -636,6 +637,7 @@ void XMENU_Redraw(void) {
   int Descent;
   Status rc;
 
+  (void)rc;
   rc = XGetWindowAttributes(MenuDisplay, MenuWindow, &win_attr);
 
   MenuWidth = win_attr.width;

@@ -279,7 +279,7 @@ int ugetopt(int argc, char **argv, const char *optstring) {
     int exact = 0;
     int ambig = 0;
     const struct option *pfound = 0;
-    int indfound = NULL;
+    int indfound = 0;
 
     while (*s && (*s != '='))
       s++;

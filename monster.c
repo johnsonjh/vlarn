@@ -286,7 +286,7 @@ static void dropsomething(int x, int y, MonsterIdType monst) {
  */
 static char *rust_armour(void) {
   int Armour;
-  int ArmourId = NULL;
+  int ArmourId;
   int Shield;
   int Rusted = 0;
   int i;

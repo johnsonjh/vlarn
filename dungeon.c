@@ -1378,7 +1378,7 @@ void createitem(int x, int y, int it, int arg) {
  * FUNCTION: something
  */
 void something(int x, int y, int lev) {
-  int item_id, item_arg = NULL;
+  int item_id, item_arg;
 
   /* correct level? */
   if (lev < 0 || lev > VBOTTOM)

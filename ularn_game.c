@@ -75,28 +75,28 @@ char libdir[MAXPATHLEN] = LIBDIR;
 char savedir[MAXPATHLEN];
 
 /* the game save filename   */
-char savefilename[MAXPATHLEN];
+char savefilename[MAXPATHLEN + 255];
 
 /* the temporary save filename   */
-char tempfilename[MAXPATHLEN];
+char tempfilename[MAXPATHLEN + 32];
 
 /* the score file       */
-char scorefile[MAXPATHLEN];
+char scorefile[MAXPATHLEN + 16];
 
 /* the help text file */
-char helpfile[MAXPATHLEN];
+char helpfile[MAXPATHLEN + 16];
 
 /* the maze data file */
-char larnlevels[MAXPATHLEN];
+char larnlevels[MAXPATHLEN + 16];
 
 /* the fortune data file */
-char fortfile[MAXPATHLEN];
+char fortfile[MAXPATHLEN + 16];
 
 /* the options file filename */
-char optsfile[MAXPATHLEN] = "vlarn.opt";
+char optsfile[MAXPATHLEN + 16] = "vlarn.opt";
 
 /* the checkpoint file filename */
-char ckpfile[MAXPATHLEN] = "vlarn.ckp";
+char ckpfile[MAXPATHLEN + 16] = "vlarn.ckp";
 
 /* the diagnostic filename  */
 char diagfile[] = "diagfile.txt";

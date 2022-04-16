@@ -95,28 +95,28 @@ extern char libdir[MAXPATHLEN];
 extern char savedir[MAXPATHLEN];
 
 /* the game save filename   */
-extern char savefilename[MAXPATHLEN];
+extern char savefilename[MAXPATHLEN + 255];
 
 /* the score file       */
-extern char scorefile[MAXPATHLEN];
+extern char scorefile[MAXPATHLEN + 16];
 
 /* the help text file */
-extern char helpfile[MAXPATHLEN];
+extern char helpfile[MAXPATHLEN + 16];
 
 /* the maze data file */
-extern char larnlevels[MAXPATHLEN];
+extern char larnlevels[MAXPATHLEN + 16];
 
 /* the fortune data file */
-extern char fortfile[MAXPATHLEN];
+extern char fortfile[MAXPATHLEN + 16];
 
 /* the options file filename */
-extern char optsfile[MAXPATHLEN];
+extern char optsfile[MAXPATHLEN + 16];
 
 /* the checkpoint file filename */
-extern char ckpfile[MAXPATHLEN];
+extern char ckpfile[MAXPATHLEN + 16];
 
 /* the diagnostic filename  */
-extern char diagfile[];
+extern char diagfile[MAXPATHLEN];
 
 /* the wizard's password */
 extern char *password;
