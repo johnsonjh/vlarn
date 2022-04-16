@@ -352,6 +352,7 @@ Copyright © 1995-2004 _Julian Olds_
 \
 Copyright © 1987-2022 _The Larn/Ularn/VLarn Authors_
 \
+\
 All rights reserved.
 
 - Redistribution and use, in source and binary forms, with or without
@@ -384,6 +385,7 @@ POSSIBILITY OF SUCH DAMAGE.
 ## X11 Simple Menu license
 
 Copyright © 2003 _Julian Olds_
+\
 \
 All rights reserved.
 
