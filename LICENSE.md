@@ -347,8 +347,9 @@ of this License.
 
 ## Amiga components license
 
-\ Copyright © 1995-2004 _Julian Olds_
-\ Copyright © 1987-2022 _The Larn/Ularn/VLarn Authors_
+Copyright © 1995-2004 _Julian Olds_
+\
+Copyright © 1987-2022 _The Larn/Ularn/VLarn Authors_
 
 \ All rights reserved.
 
