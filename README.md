@@ -10,14 +10,14 @@
 
 - [Overview](#overview)
 - [Availability](#availability)
-  - [Distribution](#distribution)
+- [Distribution](#distribution)
 - [Bug Reports](#bug-reports)
-- [History](#history)
-  - [New features in VLarn 5-alpha](#new-features-in-vlarn-5-alpha)
-  - [New features in ULarn 1.6 Patchlevel 3a](#new-features-in-ularn-16-patchlevel-3a)
-  - [New features in ULarn 1.6 Patchlevel 3](#new-features-in-ularn-16-patchlevel-3)
-- [Roadmap](#roadmap)
 - [License](#license)
+- [History](#history)
+  - [VLarn 5-alpha](#new-features-in-vlarn-5-alpha)
+  - [ULarn 1.6 Patchlevel 3a](#new-features-in-ularn-16-patchlevel-3a)
+  - [ULarn 1.6 Patchlevel 3](#new-features-in-ularn-16-patchlevel-3)
+  - [Older History](#older-history)
 
 <!-- tocstop -->
 
@@ -32,26 +32,43 @@
 
 ## Availability
 
-- **VLarn** is currently available for _Unix_, _Windows_, and _Amiga_ systems.
+- **VLarn** is currently available for **UNIX**-like
+  ([_TTY_](https://github.com/johnsonjh/vlarn/blob/master/INSTALL.TTY.txt) and
+  [_X11_](https://github.com/johnsonjh/vlarn/blob/master/INSTALL.X11.txt)),
+  **Microsoft Windows**, and
+  [**AmigaOS**](https://github.com/johnsonjh/vlarn/blob/master/Amiga-README.txt).
 
-  - Ports are currently in the works for _Multics_, _Atari ST_, and _OpenVMS_.
+- Ports are currently in-progress for **Multics** (*MR12.6e+*), **Atari ST**,
+  and **OpenVMS**, and planned for **BeOS**/**Haiku** and *16-bit* **CP/M**
+  (*e.g.* _CP/M-68K_, _CP/M-Z8K_, _CP/M-86_).
 
-- Like _ULarn_ 1.6, **VLarn** is easily portable to different systems, with
+- **VLarn**, like _ULarn_ 1.6, is easily portable to different systems, with
   all system-dependent code isolated in separate modules.
 
-### Distribution
+## Distribution
 
-- [GitHub](https://github.com/johnsonjh/vlarn)
-- [GitLab (HQ)](https://gitlab.com/johnsonjh/vlarn)
-- [GitLab (trnsz)](https://gitlab.trnsz.com/johnsonjh/vlarn)
-- [NotABug](https://notabug.org/trn/vlarn)
-- [SourceHut](https://sr.ht/~trn/vlarn)
+* **VLarn** is available from:
+  - [GitHub](https://github.com/johnsonjh/vlarn)
+  - [GitLab](https://gitlab.com/johnsonjh/vlarn)
+  - [NotABug](https://notabug.org/trn/vlarn)
+  - [SourceHut](https://sr.ht/~trn/vlarn)
 
 ## Bug Reports
 
 - You may contact the VLarn maintainer, Jeffrey H. Johnson, via e-mail at
   \<[trnsz@pobox.com](mailto:trnsz@pobox.com)\>, with bug reports or questions.
   Please include '_VLarn_' in the Subject line.
+
+## License
+
+- **VLarn**, _as a whole_, is distributed under the terms of the
+  **GNU General Public License\*, **version 2\*\*.
+
+- **VLarn** incorporates some components which are, individually, available
+  under the terms and conditions of a modified **3-clause BSD-style license**.
+
+- See the [LICENSE](https://github.com/johnsonjh/vlarn/blob/master/LICENSE.md)
+  file for complete licensing and redistribution information.
 
 ## History
 
@@ -63,7 +80,7 @@
   from _Phil Cordier_'s _ULarn 2.0_, which was derived from _Noah Morgan_'s
   _Larn 12_ with _James McNamara_'s patches.
 
-### New features in VLarn 5-alpha
+### New in VLarn 5-alpha
 
 - Adjusted maps to not require diagonal movements.
 - Extended time limits
@@ -75,12 +92,12 @@
 - Various bits of code clean-up
 - Default to ncurses (legacy curses remains supported)
 
-### New features in ULarn 1.6 Patchlevel 3a
+### New in ULarn 1.6 Patchlevel 3a
 
 - Windows message using GetMessage instead of PeekMessage
 - Fixed an end-of-game winners' scoreboard bug
 
-### New features in ULarn 1.6 Patchlevel 3
+### New in ULarn 1.6 Patchlevel 3
 
 - Resurrected curses-based (ASCII text/TTY) interface
 - Amiga (AGA) port
@@ -96,22 +113,8 @@
 - Removed unneeded function calls causing extra map redraws
 - Fixed calculation of AC and WC when destroying armor or weapons
 
-## Roadmap
+#### Older History
 
-- Future releases may incorporate, with explicit permission, changes and
-  additions from Josh Bressers' _ULarn 1.7_, as well as Nathan Tenny's
-  '_Variant ULarn_' release 1.5.4.
-
-  - To avoid user confusion or version clashes with other _Larn_/_ULarn_
-    derivatives, the next release of _VLarn_ will be **VLarn 5.0.0**.
-
-## License
-
-- **VLarn**, _as a whole_, is distributed under the terms of the
-  **GNU General Public License\*, **version 2\*\*.
-
-- **VLarn** incorporates some components which are, individually, available
-  under the terms and conditions of a modified **3-clause BSD-style license**.
-
-- See the [LICENSE](https://github.com/johnsonjh/vlarn/blob/master/LICENSE.md)
-  file for complete licensing and redistribution information.
+* See the [OLD-NEWS](https://github.com/johnsonjh/vlarn/blob/master/OLD-NEWS.txt)
+  file for additional information, including details for releases older than
+  **ULarn 1.6 Patchlevel 3**.
