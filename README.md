@@ -11,7 +11,7 @@
 - [Overview](#overview)
 - [Availability](#availability)
 - [Distribution](#distribution)
-- [Bug Reports](#bug-reports)
+- [Bug Reporting](#bug-reporting)
 - [License](#license)
 - [History](#history)
 
@@ -49,7 +49,7 @@
   - [NotABug](https://notabug.org/trn/vlarn)
   - [SourceHut](https://sr.ht/~trn/vlarn)
 
-## Bug Reports
+## Bug Reporting
 
 - You may contact the VLarn maintainer, Jeffrey H. Johnson, via e-mail at
   \<[trnsz@pobox.com](mailto:trnsz@pobox.com)\>, with bug reports or questions.
