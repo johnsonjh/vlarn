@@ -110,40 +110,40 @@ static char aa9[] = "    The Creator    ";
 
 char *class[] =
 {
-	"  novice explorer  ", "apprentice explorer", " practiced explorer",    /*  -3*/
-	"  expert explorer  ", " novice adventurer ", "     adventurer    ",    /*  -6*/
-	"apprentice conjurer", "     conjurer      ", "  master conjurer  ",    /*  -9*/
-	"  apprentice mage  ", "       mage        ", " experienced mage  ",    /* -12*/
-	"    master mage    ", " apprentice warlord", "  novice warlord   ",    /* -15*/
-	"  expert warlord   ", "   master warlord  ", " apprentice gorgon ",    /* -18*/
-	"      gorgon       ", "  practiced gorgon ", "   master gorgon   ",    /* -21*/
-	"    demi-gorgon    ", "    evil master    ", " great evil master ",    /* -24*/
-	aa1,		       aa1,   aa1,                                      /* -27*/
-	aa1,		       aa1,   aa1,                                      /* -30*/
-	aa1,		       aa1,   aa1,                                      /* -33*/
-	aa1,		       aa1,   aa1,                                      /* -36*/
-	aa1,		       aa1,   aa1,                                      /* -39*/
-	aa2,		       aa2,   aa2,                                      /* -42*/
-	aa2,		       aa2,   aa2,                                      /* -45*/
-	aa2,		       aa2,   aa2,                                      /* -48*/
-	aa3,		       aa3,   aa3,                                      /* -51*/
-	aa3,		       aa3,   aa3,                                      /* -54*/
-	aa3,		       aa3,   aa3,                                      /* -57*/
-	aa4,		       aa4,   aa4,                                      /* -60*/
-	aa4,		       aa4,   aa4,                                      /* -63*/
-	aa4,		       aa4,   aa4,                                      /* -66*/
-	aa5,		       aa5,   aa5,                                      /* -69*/
-	aa5,		       aa5,   aa5,                                      /* -72*/
-	aa5,		       aa5,   aa5,                                      /* -75*/
-	aa6,		       aa6,   aa6,                                      /* -78*/
-	aa6,		       aa6,   aa6,                                      /* -81*/
-	aa6,		       aa6,   aa6,                                      /* -84*/
-	aa7,		       aa7,   aa7,                                      /* -87*/
-	aa8,		       aa8,   aa8,                                      /* -90*/
-	aa8,		       aa8,   aa8,                                      /* -93*/
-	"  earth guardian   ", "   air guardian    ", "   fire guardian   ",    /* -96*/
-	"  water guardian   ", "   time guardian   ", " ethereal guardian ",    /* -99*/
-	aa9,		       aa9,   aa9,                                      /* -102*/
+  "  novice explorer  ", "apprentice explorer", " practiced explorer",    /*  -3*/
+  "  expert explorer  ", " novice adventurer ", "     adventurer    ",    /*  -6*/
+  "apprentice conjurer", "     conjurer      ", "  master conjurer  ",    /*  -9*/
+  "  apprentice mage  ", "       mage        ", " experienced mage  ",    /* -12*/
+  "    master mage    ", " apprentice warlord", "  novice warlord   ",    /* -15*/
+  "  expert warlord   ", "   master warlord  ", " apprentice gorgon ",    /* -18*/
+  "      gorgon       ", "  practiced gorgon ", "   master gorgon   ",    /* -21*/
+  "    demi-gorgon    ", "    evil master    ", " great evil master ",    /* -24*/
+  aa1,       aa1,   aa1,                                                  /* -27*/
+  aa1,       aa1,   aa1,                                                  /* -30*/
+  aa1,       aa1,   aa1,                                                  /* -33*/
+  aa1,       aa1,   aa1,                                                  /* -36*/
+  aa1,       aa1,   aa1,                                                  /* -39*/
+  aa2,       aa2,   aa2,                                                  /* -42*/
+  aa2,       aa2,   aa2,                                                  /* -45*/
+  aa2,       aa2,   aa2,                                                  /* -48*/
+  aa3,       aa3,   aa3,                                                  /* -51*/
+  aa3,       aa3,   aa3,                                                  /* -54*/
+  aa3,       aa3,   aa3,                                                  /* -57*/
+  aa4,       aa4,   aa4,                                                  /* -60*/
+  aa4,       aa4,   aa4,                                                  /* -63*/
+  aa4,       aa4,   aa4,                                                  /* -66*/
+  aa5,       aa5,   aa5,                                                  /* -69*/
+  aa5,       aa5,   aa5,                                                  /* -72*/
+  aa5,       aa5,   aa5,                                                  /* -75*/
+  aa6,       aa6,   aa6,                                                  /* -78*/
+  aa6,       aa6,   aa6,                                                  /* -81*/
+  aa6,       aa6,   aa6,                                                  /* -84*/
+  aa7,       aa7,   aa7,                                                  /* -87*/
+  aa8,       aa8,   aa8,                                                  /* -90*/
+  aa8,       aa8,   aa8,                                                  /* -93*/
+  "  earth guardian   ", "   air guardian    ", "   fire guardian   ",    /* -96*/
+  "  water guardian   ", "   time guardian   ", " ethereal guardian ",    /* -99*/
+  aa9,       aa9,   aa9,                                                  /* -102*/
 };
 
 /*

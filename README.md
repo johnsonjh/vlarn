@@ -6,34 +6,32 @@
 
 ---
 
-**VLarn** is a free **_roguelike_** dungeon crawl adventure game, similar in
-concept to _Hack_, _Rogue_, or _Moria_, but with a different philosophy, feel,
-and winning criteria.
+* **VLarn** is a free **_roguelike_** dungeon crawl adventure game, similar
+  in concept to _Hack_, _Rogue_, or _Moria_, but with a different philosophy,
+  feel, and winning criteria.
 
 ## Lineage
 
-_VLarn_ is an _Ultra-Larn_ derivative, descended from Julian Olds' _ULarn
-1.6.3a_, which is descended from David Richerby's, Josh Brandt's, and Josh
-Bressers' _ULarn 1.5.4_, which is descended from Phil Cordier's _ULarn 2.0_,
-which is descended from Noah Morgan's _Larn 12_, with James McNamara's patches.
+* **VLarn** is a direct descendant of Julian Olds' _Ultra Larn_ _1.6_.
+
+* Specifically, _VLarn_ is an _Ultra-Larn_ derivative, based on
+  *Julian Olds*' _ULarn 1.6.3a_, which was a rewrite of _Ultra Larn_ _1.5.4_
+  by *David Richerby*, *Josh Brandt* and *Josh Bressers* which was derived
+  from *Phil Cordier*'s _ULarn 2.0_, which was derived from *Noah Morgan*'s
+  _Larn 12_ (with *James McNamara*'s patches).
 
 ## Features
 
-_VLarn_ includes both a graphical tiled interface, as well as a classic ASCII
-text UI, with optional menu items for most commands.
+* _VLarn_ includes both a graphical tiled interface, as well as a classic
+  ASCII text UI, with optional menu items for most commands.
 
 ## Availability
 
-**VLarn** is currently available for _Unix_, _Windows_, and _Amiga_ systems.
+* **VLarn** is currently available for _Unix_, _Windows_, and _Amiga_ systems.
+  * Ports are currently in the works for _Multics_, _Atari ST_, and _OpenVMS_.
 
-Ports are currently in the works for _Multics_, _Atari ST_, and _OpenVMS_.
-
-Like _ULarn_ 1.6, **VLarn** is easily portable to different systems, with all
-system-dependent code isolated in separate modules.
-
-## History
-
-**VLarn** is a direct descendant of Julian Olds' _ULarn 1.6_ branch.
+* Like _ULarn_ 1.6, **VLarn** is easily portable to different systems, with
+all system-dependent code isolated in separate modules.
 
 ## Distribution
 
@@ -51,13 +49,18 @@ system-dependent code isolated in separate modules.
 
 ## Name and Branding
 
-To avoid user confusion or version clashes with other _Larn_/_ULarn_
-derivatives, the next release of _VLarn_ will be **VLarn 5.0.0**.
+* To avoid user confusion or version clashes with other _Larn_/_ULarn_
+  derivatives, the next release of _VLarn_ will be **VLarn 5.0.0**.
 
-This future release will incorporate changes and additions from Josh Bressers'
-_ULarn 1.7_, as well as Nathan Tenny's '_Variant ULarn_' release 1.5.4.
+## Roadmap
 
-## New features in VLarn 5-alpha
+* Future releases may incorporate, with explicit permission, changes and
+  additions from Josh Bressers' _ULarn 1.7_, as well as Nathan Tenny's
+  '_Variant ULarn_' release 1.5.4.
+
+## History
+
+### New features in VLarn 5-alpha
 
 - Adjusted maps to not require diagonal movements.
 - Extended time limits
@@ -66,16 +69,15 @@ _ULarn 1.7_, as well as Nathan Tenny's '_Variant ULarn_' release 1.5.4.
 - Lemmings less aggressive
 - Modified scoreboard system
 - Removed Dealer McDope's pad
-- Negative score prevention
 - Various bits of code clean-up
 - Default to ncurses (legacy curses remains supported)
 
-## New features in ULarn 1.6 Patchlevel 3a
+### New features in ULarn 1.6 Patchlevel 3a
 
 - Windows message using GetMessage instead of PeekMessage
 - Fixed an end-of-game winners' scoreboard bug
 
-## New features in ULarn 1.6 Patchlevel 3
+### New features in ULarn 1.6 Patchlevel 3
 
 - Resurrected curses-based (ASCII text/TTY) interface
 - Amiga (AGA) port

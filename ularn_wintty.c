@@ -1218,52 +1218,52 @@ void get_password_input(char *password, int Len) {
  */
 static void get_string_input(char *string, int Len)
 {
-	char ch;
-	char inputchars[256];
-	int Pos;
-	int value;
+  char ch;
+  char inputchars[256];
+  int Pos;
+  int value;
 
-	/* get the printable characters on this system */
-	Pos = 0;
-	for (value = 0; value < 256; value++) {
-		if (isprint(value)) {
-			inputchars[Pos] = (char)value;
-			Pos++;
-		}
-	}
+  /* get the printable characters on this system */
+  Pos = 0;
+  for (value = 0; value < 256; value++) {
+    if (isprint(value)) {
+      inputchars[Pos] = (char)value;
+      Pos++;
+    }
+  }
 
-	/* add CR, BS and null terminator */
-	inputchars[Pos++] = '\010';
-	inputchars[Pos++] = '\015';
-	inputchars[Pos] = '\0';
+  /* add CR, BS and null terminator */
+  inputchars[Pos++] = '\010';
+  inputchars[Pos++] = '\015';
+  inputchars[Pos] = '\0';
 
-	Pos = 0;
-	do{
-		ch = get_prompt_input("", inputchars, 1);
+  Pos = 0;
+  do{
+    ch = get_prompt_input("", inputchars, 1);
 
-		if (isprint((int)ch) && (Pos < Len)) {
-			string[Pos] = ch;
-			Pos++;
-			Printc(ch);
-		}else if (ch == '\010') {
-			//
-			// Backspace
-			//
+    if (isprint((int)ch) && (Pos < Len)) {
+      string[Pos] = ch;
+      Pos++;
+      Printc(ch);
+    }else if (ch == '\010') {
+      //
+      // Backspace
+      //
 
-			if (Pos > 0) {
-				CursorX--;
-				Printc(' ');
-				CursorX--;
-				Pos--;
+      if (Pos > 0) {
+        CursorX--;
+        Printc(' ');
+        CursorX--;
+        Pos--;
 
-				wmove(TextWindow, CursorY - 1, CursorX - 1);
-				wrefresh(TextWindow);
-			}
-		}
+        wmove(TextWindow, CursorY - 1, CursorX - 1);
+        wrefresh(TextWindow);
+      }
+    }
 
-	} while (ch != '\015');
+  } while (ch != '\015');
 
-	string[Pos] = 0;
+  string[Pos] = 0;
 
 }
 #endif
@@ -1693,7 +1693,7 @@ void show1cell(int x, int y) {
   int Attr;
   int Color;
 
-  /* see nothing if blind		*/
+  /* see nothing if blind */
   if (c[BLINDCOUNT])
     return;
 

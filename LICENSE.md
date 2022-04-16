@@ -1,35 +1,34 @@
-# License
+# Licensing
 
 <!-- toc -->
 
 - [Overview](#overview)
 - [GNU General Public License, Version 2](#vlarn-license)
-- [BSD-style License for Amiga Components](#amiga-components-license)
-- [BSD-style License for X11 Simple Menu](#x11-simple-menu-license)
+- [BSD-style license for Amiga components](#amiga-components-license)
+- [BSD-style license for X11 Simple Menu](#x11-simple-menu-license)
 
 <!-- tocstop -->
 
 ## Overview
 
-**VLarn**, *as a whole*, is released under the *GNU General Public License*,
-*Version 2*.
+**VLarn**, *as a whole*, is distributed under the terms of the
+**GNU General Public License**, **Version 2**.
 
 * While this version was originally based on *ULarn 1.5pl4*, the changes
   it has undergone have been so substantial that none of the original code
   remains, though many of the names and descriptions have been retained.
 
 * Some individual components of **VLarn** are ***not*** GPL licensed:
-  * `x11_simple_menu` a library of X11 menu procedures, is entirely
-    the work of *Julian Olds* and is distributed under the terms of a
-	modified 3-clause BSD-style license.
+  * `x11_simple_menu`, a library of X11 menu procedures, is entirely
+    the work of *Julian Olds*, and is distributed under the terms of a
+    **modified 3-clause BSD-style license**.
   * The Amiga modules `bio` (*Buffered I/O*), `ifftools` (*IFF ILBM Reader*),
     and `smart_menu` (*Intuition Menu Helper*) are distributed under the terms
-	of a modified 3-clause BSD-style license.
+    of a **modified 3-clause BSD-style license**.
 
 ## VLarn License
 
-* ***GNU General Public License***
-* _Version 2, June 1991_
+### ***GNU General Public License***, _Version 2, June 1991_
 
 _Copyright © 1989, 1991 Free Software Foundation, Inc.,_
 _51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA_
@@ -344,7 +343,7 @@ it more useful to permit linking proprietary applications with the library. If
 this is what you want to do, use the GNU Lesser General Public License instead
 of this License.
 
-## Amiga Components License
+## Amiga components license
 
 - Copyright © 1995-2004 *Julian Olds*
 - Copyright © 1987-2022 *The Larn/Ularn/Vlarn Authors*
@@ -363,8 +362,8 @@ All rights reserved.
 
   3. Neither the names of the *Regents of the University of California*, nor
      *The Larn/Ularn/Vlarn Authors*, nor the names of any contributors may be
-	 used to endorse or promote products derived from this software without
-	 specific prior written permission.
+     used to endorse or promote products derived from this software without
+     specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “**AS IS**”
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -378,7 +377,7 @@ IN CONTRACT, STRICT LIABILITY, OR TORT, INCLUDING NEGLIGENCE, OR OTHERWISE,
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-## X11 Simple Menu License
+## X11 Simple Menu license
 
 - Copyright © 2003 *Julian Olds*
 

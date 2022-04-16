@@ -2540,7 +2540,7 @@ void show1cell(int x, int y) {
   int sx, sy;
   int TileX, TileY;
 
-  /* see nothing if blind		*/
+  /* see nothing if blind */
   if (c[BLINDCOUNT])
     return;
 
@@ -2779,7 +2779,7 @@ void mapeffect(int x, int y, DirEffectsType effect, int dir) {
   int sx, sy;
   int TileX, TileY;
 
-  /* see nothing if blind		*/
+  /* see nothing if blind */
   if (c[BLINDCOUNT])
     return;
 
@@ -2824,7 +2824,7 @@ void magic_effect(int x, int y, MagicEffectsType fx, int frame) {
    * draw the tile that is at this location
    */
 
-  /* see nothing if blind		*/
+  /* see nothing if blind */
   if (c[BLINDCOUNT])
     return;
 

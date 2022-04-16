@@ -272,7 +272,7 @@ void ULarnSetup(int argc, char *argv[]) {
   /* the checkpoint file */
   sprintf(ckpfile, "%s/ularn_%s.ckp", home, loginname);
 
-  /* set up the desired difficulty	*/
+  /* set up the desired difficulty */
   sethard(hard);
 
   if (restore_ckp) {
@@ -316,7 +316,7 @@ void ULarnSetup(int argc, char *argv[]) {
 }
 
 /*
- *	parse()
+ *  parse()
  *
  *  execute a command
  */
@@ -776,7 +776,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance,
 
     nomove = 1;
 
-    /*	get commands and make moves	*/
+    /* get commands and make moves */
     while (nomove) {
       if (hit3flag)
         flushall();
