@@ -33,7 +33,6 @@
 ### **_GNU General Public License_**, _Version 2, June 1991_
 
 _Copyright © 1989, 1991 Free Software Foundation, Inc.,_
-\
 _51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA_
 
 Everyone is permitted to copy and distribute verbatim copies of this license
@@ -354,6 +353,7 @@ Copyright © 1987-2022 _The Larn/Ularn/VLarn Authors_
 \
 \
 All rights reserved.
+\
 
 - Redistribution and use, in source and binary forms, with or without
   modification, are permitted, provided that the following conditions are met:
@@ -388,6 +388,7 @@ Copyright © 2003 _Julian Olds_
 \
 \
 All rights reserved.
+\
 
 - Redistribution and use, in source and binary forms, with or without
   modification, are permitted, provided that the following conditions are met:
