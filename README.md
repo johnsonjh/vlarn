@@ -8,16 +8,14 @@
 
 <!-- toc -->
 
+## Table of Contents
+
 - [Overview](#overview)
 - [Availability](#availability)
 - [Distribution](#distribution)
 - [Bug Reports](#bug-reports)
 - [License](#license)
 - [History](#history)
-  - [VLarn 5-alpha](#new-features-in-vlarn-5-alpha)
-  - [ULarn 1.6 Patchlevel 3a](#new-features-in-ularn-16-patchlevel-3a)
-  - [ULarn 1.6 Patchlevel 3](#new-features-in-ularn-16-patchlevel-3)
-  - [Older History](#older-history)
 
 <!-- tocstop -->
 
