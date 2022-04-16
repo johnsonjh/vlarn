@@ -1,8 +1,8 @@
-CC?=cc
+CC?=gcc
 LD=$(CC)
-RC=windres
+RC?=windres
 
-CFLAGS+=-Wall -DUNIX_X11 -I/usr/include/X11R6
+CFLAGS+=-Wall -Wextra -Wpedantic -DUNIX_X11 -I/usr/include/X11R6
 LDFLAGS+=-L/usr/X11R6/lib
 
 INSTALL_PATH?=/opt/vlarn/bin

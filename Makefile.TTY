@@ -1,8 +1,8 @@
-CC?=cc
+CC?=gcc
 LD=$(CC)
-RC=windres
+RC?=windres
 
-CFLAGS+=-Wall -DUNIX_TTY
+CFLAGS+=-Wall -Wextra -Wpedantic -DUNIX_TTY
 LDFLAGS?=
 LIB?=-lncurses
 

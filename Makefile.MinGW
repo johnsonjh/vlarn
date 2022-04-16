@@ -1,8 +1,8 @@
 CC?=gcc
 LD=$(CC) -o
-RC=windres
+RC?=windres
 
-CFLAGS+=-Wall -fpack-struct
+CFLAGS+=-Wall -Wextra -Wpedantic -fpack-struct
 LDFLAGS?=
 
 OBJECT=ularn.o ularn_win.o ularn_game.o ularn_ask.o store.o sphere.o spell.o show.o scroll.o scores.o saveutils.o savegame.o potion.o player.o object.o monster.o itm.o help.o getopt.o fortune.o dungeon_obj.o dungeon.o diag.o action.o

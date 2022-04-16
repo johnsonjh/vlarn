@@ -1,8 +1,8 @@
 CC?=gcc
 LD=$(CC)
-RC=windres
+RC?=windres
 
-CFLAGS+=-Wall -IC:/pdcurses
+CFLAGS+=-Wall -Wextra -Wpedantic -IC:/pdcurses
 LDFLAGS+=-LC:/pdcurses/pdcurses
 LIB?=-lpdcurses
 
