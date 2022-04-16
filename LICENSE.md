@@ -1,13 +1,43 @@
-# GNU General Public License
+# License
 
-_Version 2, June 1991_
+<!-- toc -->
+
+- [Overview](#overview)
+- [GNU General Public License, Version 2](#vlarn-license)
+- [BSD-style License for Amiga Components](#amiga-components-license)
+- [BSD-style License for X11 Simple Menu](#x11-simple-menu-license)
+
+<!-- tocstop -->
+
+## Overview
+
+**VLarn**, *as a whole*, is released under the *GNU General Public License*,
+*Version 2*.
+
+* While this version was originally based on *ULarn 1.5pl4*, the changes
+  it has undergone have been so substantial that none of the original code
+  remains, though many of the names and descriptions have been retained.
+
+* Some individual components of **VLarn** are ***not*** GPL licensed:
+  * `x11_simple_menu` a library of X11 menu procedures, is entirely
+    the work of *Julian Olds* and is distributed under the terms of a
+	modified 3-clause BSD-style license.
+  * The Amiga modules `bio` (*Buffered I/O*), `ifftools` (*IFF ILBM Reader*),
+    and `smart_menu` (*Intuition Menu Helper*) are distributed under the terms
+	of a modified 3-clause BSD-style license.
+
+## VLarn License
+
+* ***GNU General Public License***
+* _Version 2, June 1991_
+
 _Copyright © 1989, 1991 Free Software Foundation, Inc.,_
 _51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA_
 
 Everyone is permitted to copy and distribute verbatim copies of this license
 document, but changing it is not allowed.
 
-## Preamble
+### Preamble
 
 The licenses for most software are designed to take away your freedom to share
 and change it. By contrast, the GNU General Public License is intended to
@@ -54,7 +84,7 @@ use or not licensed at all.
 The precise terms and conditions for copying, distribution and modification
 follow.
 
-## TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+### TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
 **0.** This License applies to any program or other work which contains a notice
 placed by the copyright holder saying it may be distributed under the terms of
@@ -232,16 +262,17 @@ Our decision will be guided by the two goals of preserving the free status of
 all derivatives of our free software and of promoting the sharing and reuse of
 software generally.
 
-## NO WARRANTY
+### NO WARRANTY
 
-**11.** BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR
-THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE
-STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM
-“AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING,
-BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
-PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
-ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+**11.** BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE
+THE PROGRAM “**AS IS**” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO
+THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM
+PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR
+CORRECTION.
 
 **12.** IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
 WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE
@@ -254,7 +285,7 @@ OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 END OF TERMS AND CONDITIONS
 
-## How to Apply These Terms to Your New Programs
+### How to Apply These Terms to Your New Programs
 
 If you develop a new program, and you want it to be of the greatest possible use
 to the public, the best way to achieve this is to make it free software which
@@ -312,3 +343,68 @@ proprietary programs. If your program is a subroutine library, you may consider
 it more useful to permit linking proprietary applications with the library. If
 this is what you want to do, use the GNU Lesser General Public License instead
 of this License.
+
+## Amiga Components License
+
+- Copyright © 1995-2004 *Julian Olds*
+- Copyright © 1987-2022 *The Larn/Ularn/Vlarn Authors*
+
+All rights reserved.
+
+* Redistribution and use, in source and binary forms, with or without
+  modification, are permitted, provided that the following conditions are met:
+
+  1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions, and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+
+  3. Neither the names of the *Regents of the University of California*, nor
+     *The Larn/Ularn/Vlarn Authors*, nor the names of any contributors may be
+	 used to endorse or promote products derived from this software without
+	 specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “**AS IS**”
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL *THE REGENTS OF THE UNIVERSITY OF CALIFORNIA* OR
+*THE LARN/ULARN/VLARN AUTHORS* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES, INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF USE, DATA, OR PROFITS, OR
+BUSINESS INTERRUPTION, HOWEVER CAUSED, AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT, INCLUDING NEGLIGENCE, OR OTHERWISE,
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+## X11 Simple Menu License
+
+- Copyright © 2003 *Julian Olds*
+
+All rights reserved.
+
+* Redistribution and use, in source and binary forms, with or without
+  modification, are permitted, provided that the following conditions are met:
+
+  1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions, and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+
+  3. The names of the author may not be used to endorse or promote products
+     derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “**AS IS**”
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL *THE REGENTS OF THE UNIVERSITY OF CALIFORNIA* OR
+*THE LARN/ULARN/VLARN AUTHORS* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES, INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF USE, DATA, OR PROFITS, OR
+BUSINESS INTERRUPTION, HOWEVER CAUSED, AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT, INCLUDING NEGLIGENCE, OR OTHERWISE,
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.

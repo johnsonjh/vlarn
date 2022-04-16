@@ -35,14 +35,14 @@ static char copyright[] =
     "  Rewrite and Windows & Amiga graphic conversion by Julian Olds";
 
 static char cmdhelp[] = "\
-Cmd line format: Vlarn [-sicnh] [-o <optsfile>] [-d #] [-r]\n\
+Cmd line format: vlarn [-sicnh] [-o <optsfile>] [-d #] [-r]\n\
   -s   show the scoreboard\n\
   -i   show scoreboard with inventories\n\
   -c   create new scoreboard (wizard only)\n\
   -n   suppress welcome message on starting game\n\
   -h   print this help text\n\
-  -o <optsfile> specify .Vlarnopts file to be used instead of \"~/.Vlarnopts\"\n\
-  -d # specify level of difficulty (example: Vlarn -d 5)\n\
+  -o <optsfile> specify .vlarnopts file to be used instead of \"~/.vlarnopts\"\n\
+  -d # specify level of difficulty (example: vlarn -d 5)\n\
   -r   restore checkpoint (.ckp) file\n";
 
 static char *optstring = "sicnhro:d:";

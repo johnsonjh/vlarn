@@ -96,7 +96,7 @@ FONT 8, "MS Sans Serif"
  CONTROL "OK", IDOK, "BUTTON", BS_PUSHBUTTON | BS_CENTER | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 96, 100, 50, 14
  CONTROL "Frame1", -1, "static", SS_ETCHEDFRAME | WS_CHILD | WS_VISIBLE, 8, 9, 224, 82, 0
  CONTROL "VLarn 5.0", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 20, 208, 11, 0
- CONTROL "VLarn by Jeffrey H. Johnson, based on v1.6 by Julian Olds", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 64, 208, 10, 0
+ CONTROL "VLarn by Jeffrey H. Johnson, based on Julian Olds' ULarn v1.6", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 64, 208, 10, 0
  CONTROL "ULarn by Phil Cordier is based on Larn by Noah Morgan", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 40, 208, 10, 0
  CONTROL "Updated by Josh Brandt and David Richerby", -1, "static", SS_CENTER | WS_CHILD | WS_VISIBLE, 16, 52, 208, 10, 0
 }

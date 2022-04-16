@@ -58,7 +58,7 @@
 #define MAX_CMDLINE_PARAM 255
 
 static char copyright[] =
-	"\nVLarn by Jeffrey H. Johnson\n"
+	"\nVLarn by Jeffrey H. Johnson <trnsz@pobox.com>\n"
 	"  Ularn created by Phil Cordier -- based on Larn by Noah Morgan\n"
 	"  Updated by Josh Brandt and David Richerby\n"
 	"  Rewrite and Windows32/X11/Amiga graphics conversion by Julian Olds";
