@@ -3,7 +3,7 @@
 <!-- toc -->
 
 - [Overview](#overview)
-- [GNU General Public License, Version 2](#vlarn-license)
+- [GNU General Public License, version 2](#vlarn-license)
 - [BSD-style license for Amiga components](#amiga-components-license)
 - [BSD-style license for X11 Simple Menu](#x11-simple-menu-license)
 
@@ -12,7 +12,7 @@
 ## Overview
 
 **VLarn**, *as a whole*, is distributed under the terms of the
-**GNU General Public License**, **Version 2**.
+**GNU General Public License**, **version 2**.
 
 * While this version was originally based on *ULarn 1.5pl4*, the changes
   it has undergone have been so substantial that none of the original code
