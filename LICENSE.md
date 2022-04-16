@@ -4,8 +4,8 @@
 
 - [Overview](#overview)
 - [**VLarn** (GPLv2)](#vlarn-license)
-  - [**Amiga components** (3BSD)](#amiga-components-license)
-  - [**X11 Simple Menu** (3BSD)](#x11-simple-menu-license)
+- [**Amiga components** (3BSD)](#amiga-components-license)
+- [**X11 Simple Menu** (3BSD)](#x11-simple-menu-license)
 
 <!-- tocstop -->
 
