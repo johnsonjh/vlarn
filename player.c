@@ -2006,4 +2006,3 @@ void read_player(FILE *fp)
 		/* class got corrupt somehow, so reset to the first class */
 		strcpy(char_class, InitialClassData[0].ClassName);
 }
-
