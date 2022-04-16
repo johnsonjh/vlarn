@@ -365,10 +365,10 @@ All rights reserved.
      this list of conditions, and the following disclaimer in the documentation
      and/or other materials provided with the distribution.
 
-  3. The names of _The Regents of the University of California_, the names of
-     _The Larn/Ularn/VLarn Authors_, and the names of any contributors may
-     **not** be used to endorse or promote products derived from this software
-     without specific prior written permission.
+  3. The names of _The Regents of the University of California_,
+     _The Larn/Ularn/VLarn Authors_, and/or any contributors may **not** be used
+     to endorse or promote products derived from this software without specific
+     prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “**AS IS**”
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -400,7 +400,7 @@ All rights reserved.
      this list of conditions, and the following disclaimer in the documentation
      and/or other materials provided with the distribution.
 
-  3. The names of the author may **not** be used to endorse or promote products
+  3. The name of the author may **not** be used to endorse or promote products
      derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “**AS IS**”
