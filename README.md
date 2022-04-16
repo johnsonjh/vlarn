@@ -30,15 +30,15 @@
 
 ## Availability
 
-- **VLarn** is currently available for **UNIX**-like
-  ([_TTY_](https://github.com/johnsonjh/vlarn/blob/master/INSTALL.TTY.txt) and
-  [_X11_](https://github.com/johnsonjh/vlarn/blob/master/INSTALL.X11.txt)),
-  **Microsoft Windows**, and
-  [**AmigaOS**](https://github.com/johnsonjh/vlarn/blob/master/Amiga-README.txt).
+- **VLarn** is currently available for **UNIX**-like systems
+  (in both [_TTY_](INSTALL.TTY.txt) and [_X11_](INSTALL.X11.txt) variants),
+  **Microsoft Windows**, and (*classic*) [**AmigaOS**](Amiga-README.txt).
 
-- Ports are currently in-progress for **Multics** (_MR12.6e+_), **Atari ST**,
-  and **OpenVMS**, and planned for **BeOS**/**Haiku** and _16-bit_ **CP/M**
-  (_e.g._ _CP/M-68K_, _CP/M-Z8K_, _CP/M-86_).
+- Ports are currently in-progress for **PC DOS**, **Multics** (_MR12.6e+_),
+  **Atari ST**, and **OpenVMS**.
+
+- Additional ports are planned for **BeOS** / **Haiku** and _16-bit_ **CP/M**
+  (_e.g._ **CP/M-68K**, **CP/M-Z8K**, **CP/M-86**).
 
 - **VLarn**, like _ULarn_ 1.6, is easily portable to different systems, with
   all system-dependent code isolated in separate modules.
@@ -65,8 +65,8 @@
 - **VLarn** incorporates some components which are, individually, available
   under the terms and conditions of a modified **3-clause BSD-style license**.
 
-- See the [LICENSE](https://github.com/johnsonjh/vlarn/blob/master/LICENSE.md)
-  file for complete licensing and redistribution information.
+- See the [LICENSE file](LICENSE.md) for complete licensing and redistribution
+  information.
 
 ## History
 
@@ -113,4 +113,4 @@
 
 ### Older History
 
-- See the [OLD-NEWS](OLD-NEWS.txt) file for additional information.
+- See the [OLD-NEWS file](OLD-NEWS.txt) for additional information.
