@@ -32,9 +32,9 @@
  */
 
 #ifndef __DUNGEON_OBJ_H
-#define __DUNGEON_OBJ_H
+# define __DUNGEON_OBJ_H
 
-#define ALTAR_PRO_BOOST 3
+# define ALTAR_PRO_BOOST 3
 
 /* =============================================================================
  * FUNCTION: oopendoor

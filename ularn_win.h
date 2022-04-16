@@ -55,15 +55,15 @@
  */
 
 #ifndef __ULARN_WIN_H
-#define __ULARN_WIN_H
+# define __ULARN_WIN_H
 
-#include "config.h"
+# include "config.h"
 
-#ifdef WINDOWS
+# ifdef WINDOWS
 
-#include <windows.h>
+#  include <windows.h>
 
-#endif
+# endif
 
 /*
  * Text formats
@@ -206,23 +206,23 @@ typedef enum ActionType {
  *   0 if init failed, or 1 if success.
  */
 
-#ifdef WINDOWS
+# ifdef WINDOWS
 
 int init_app(HINSTANCE hinstance);
 
-#else
+# else
 
-#ifdef UNIX_X11
+#  ifdef UNIX_X11
 
 int init_app(char *DisplayName);
 
-#else
+#  else
 
 int init_app(void);
 
-#endif
+#  endif
 
-#endif
+# endif
 
 /* =============================================================================
  * FUNCTION: close_app

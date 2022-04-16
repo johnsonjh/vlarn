@@ -30,7 +30,7 @@
  */
 
 #ifndef __ACTION_H
-#define __ACTION_H
+# define __ACTION_H
 
 /* =============================================================================
  * FUNCTION: run

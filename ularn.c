@@ -47,7 +47,7 @@
 #include "itm.h"
 
 #ifdef WINDOWS
-#include <windows.h>
+# include <windows.h>
 #endif
 
 /* =============================================================================
@@ -185,15 +185,15 @@ void ULarnSetup(int argc, char *argv[])
 
 #else
 
-#ifdef AMIGA_WIN
+# ifdef AMIGA_WIN
 
   home = "";
 
-#else
+# else
 
   home = ".";
 
-#endif
+# endif
 
 #endif
 
@@ -904,7 +904,7 @@ int main(int argc, char *argv[])
 
 #else
 
-#ifdef WINDOWS
+# ifdef WINDOWS
 
   /*
    * get command line parameters
@@ -930,9 +930,9 @@ int main(int argc, char *argv[])
   if (!init_app(hinstance))
   	return 0;
 
-#else
+# else
 
-#ifdef AMIGA_WIN
+#  ifdef AMIGA_WIN
 
   /* The Amiga sets argc to 0 if the program was started from Workbench
    * In this case the arg list points to a WBStartup structure instead
@@ -946,13 +946,13 @@ int main(int argc, char *argv[])
   	return 0;
   }
 
-#else
+#  else
 
   init_app();
 
-#endif
+#  endif
 
-#endif
+# endif
 
 #endif
 

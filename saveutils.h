@@ -21,9 +21,9 @@
  */
 
 #ifndef __SAVEUTILS_H
-#define __SAVEUTILS_H
+# define __SAVEUTILS_H
 
-#include <stdio.h>
+# include <stdio.h>
 
 /*
  * This is the current checksum value for bread and bwrite.

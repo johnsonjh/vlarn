@@ -25,9 +25,9 @@
  */
 
 #ifndef __SPHERE_H
-#define __SPHERE_H
+# define __SPHERE_H
 
-#include <stdio.h>
+# include <stdio.h>
 
 /* =============================================================================
  * FUNCTION: rmsphere

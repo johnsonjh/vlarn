@@ -25,7 +25,7 @@
  */
 
 #ifndef __ULARN_ASK_H
-#define __ULARN_ASK_H
+# define __ULARN_ASK_H
 
 /* =============================================================================
  * FUNCTION: more

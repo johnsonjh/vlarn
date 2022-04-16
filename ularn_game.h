@@ -51,7 +51,7 @@
  */
 
 #ifndef __ULARN_GAME_H
-#define __ULARN_GAME_H
+# define __ULARN_GAME_H
 
 /* =============================================================================
  * Exported variables
@@ -68,24 +68,24 @@ extern char nobeep;  /* true if program is not to beep*/
 
 /* *************** File Names *************** */
 
-#define SCORENAME "Vscore"
-#define HELPNAME "Vhelp"
-#define LEVELSNAME "Vmaps"
-#define FORTSNAME "Vfortune"
+# define SCORENAME "Vscore"
+# define HELPNAME "Vhelp"
+# define LEVELSNAME "Vmaps"
+# define FORTSNAME "Vfortune"
 
 /* maximum number moves before the game is called*/
-#define TIMELIMIT 90000
+# define TIMELIMIT 90000
 
 /* create a checkpoint file every CKCOUNT moves */
-#define CKCOUNT 150
+# define CKCOUNT 150
 
 /* max size of the players name */
-#define LOGNAMESIZE 80
-#define USERNAME_LENGTH 80
+# define LOGNAMESIZE 80
+# define USERNAME_LENGTH 80
 
-#ifndef MAXPATHLEN
-#define MAXPATHLEN 1024
-#endif
+# ifndef MAXPATHLEN
+#  define MAXPATHLEN 1024
+# endif
 
 /* The library files directory */
 extern char libdir[MAXPATHLEN];

@@ -26,10 +26,10 @@
  */
 
 #ifndef __SCORES_H
-#define __SCORES_H
+# define __SCORES_H
 
 /* max number of people on a scoreboard max */
-#define SCORESIZE 25
+# define SCORESIZE 25
 
 /* Player died reasons */
 typedef enum {

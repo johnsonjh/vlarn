@@ -30,12 +30,12 @@
  */
 
 #ifndef __STORE_H
-#define __STORE_H
+# define __STORE_H
 
-#include "itm.h"
+# include "itm.h"
 
 /* the tax rate for the LRS = 5%  */
-#define TAXRATE (0.05)
+# define TAXRATE (0.05)
 
 /* =============================================================================
  * FUNCTION: dndstore

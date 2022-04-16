@@ -46,27 +46,27 @@
  */
 
 #ifndef __DUNGEON_H
-#define __DUNGEON_H
+# define __DUNGEON_H
 
-#include <stdio.h>
+# include <stdio.h>
 
-#include "monster.h"
+# include "monster.h"
 
 /* =============================================================================
  * Exported variables
  */
 
-#define MAXLEVEL 16 /*  max # levels in the dungeon + 1 */
-#define MAXVLEVEL 5 /*  max # of levels in the volcano */
-#define NLEVELS (MAXLEVEL + MAXVLEVEL)
-#define DBOTTOM (MAXLEVEL - 1)
-#define VBOTTOM (MAXLEVEL + MAXVLEVEL - 1)
+# define MAXLEVEL 16 /*  max # levels in the dungeon + 1 */
+# define MAXVLEVEL 5 /*  max # of levels in the volcano */
+# define NLEVELS (MAXLEVEL + MAXVLEVEL)
+# define DBOTTOM (MAXLEVEL - 1)
+# define VBOTTOM (MAXLEVEL + MAXVLEVEL - 1)
 
 /*
  * Dungeon level size. MUST bo odd.
  */
-#define MAXX 67
-#define MAXY 17
+# define MAXX 67
+# define MAXY 17
 
 /*
  * Items stolen by monsters data structure
@@ -98,8 +98,8 @@ typedef struct {
  *   2b. The monster is awake (STEALTH_AWAKE set)
  *       (Awake monsters are assumed to be making noise)
  */
-#define STEALTH_SEEN 1
-#define STEALTH_AWAKE 2
+# define STEALTH_SEEN 1
+# define STEALTH_AWAKE 2
 
 extern char item[MAXX][MAXY];    /* objects in maze if any */
 extern char know[MAXX][MAXY];    /* contains what the player thinks is here */
@@ -133,7 +133,7 @@ extern char *levelname[]; /* Dungeon level names */
  * Destroy object at present location
  * As the player is there, obviously it is known to be destroyed.
  */
-#define forget()                                                               \
+# define forget()                                                               \
   {                                                                            \
     item[playerx][playery] = ONOTHING;                                         \
     know[playerx][playery] = ONOTHING;                                         \
@@ -144,7 +144,7 @@ extern char *levelname[]; /* Dungeon level names */
  * Wipe out a monster at a location.
  * Redraw the location if it is not unknown.
  */
-#define disappear(x, y)                                                        \
+# define disappear(x, y)                                                        \
   {                                                                            \
     mitem[x][y].mon = 0;                                                       \
     if (know[x][y] != OUNKNOWN)                                                \
@@ -152,7 +152,7 @@ extern char *levelname[]; /* Dungeon level names */
   }
 
 /* verify coordinates */
-#define vxy(x, y)                                                              \
+# define vxy(x, y)                                                              \
   {                                                                            \
     if (x < 0)                                                                 \
       x = 0;                                                                   \

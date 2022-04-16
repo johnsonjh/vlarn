@@ -53,9 +53,9 @@
  */
 
 #ifndef _IFF_TOOLS_H
-#define _IFF_TOOLS_H
+# define _IFF_TOOLS_H
 
-#include <graphics/gfx.h>
+# include <graphics/gfx.h>
 
 /* =============================================================================
  * FUNCTION: FreeBitmap

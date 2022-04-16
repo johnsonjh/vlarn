@@ -24,7 +24,7 @@
  */
 
 #ifndef __GETOPT_H
-#define __GETOPT_H
+# define __GETOPT_H
 
 /*
  * For communication from `getopt' to the caller.

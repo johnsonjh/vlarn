@@ -29,7 +29,7 @@
  */
 
 #ifndef __SHOW_H
-#define __SHOW_H
+# define __SHOW_H
 
 /* =============================================================================
  * FUNCTION: show_plusses

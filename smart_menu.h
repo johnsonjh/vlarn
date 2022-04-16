@@ -85,9 +85,9 @@
  */
 
 #ifndef __SMART_MENU_H
-#define __SMART_MENU_H
+# define __SMART_MENU_H
 
-#include <intuition/intuition.h>
+# include <intuition/intuition.h>
 
 extern int Quit;
 

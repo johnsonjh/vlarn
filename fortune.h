@@ -21,7 +21,7 @@
  */
 
 #ifndef __FORTUNE_H
-#define __FORTUNE_H
+# define __FORTUNE_H
 
 /* =============================================================================
  * FUNCTION: fortune

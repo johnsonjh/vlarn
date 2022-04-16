@@ -21,7 +21,7 @@
  */
 
 #ifndef __CONFIG_H
-#define __CONFIG_H
+# define __CONFIG_H
 
 /*
  * Uncomment exactly one of the following lines to
@@ -44,18 +44,18 @@
  * Now set the O/S flag based on the version selected.
  */
 
-#ifdef UNIX_X11
-#define UNIX
-#endif
+# ifdef UNIX_X11
+#  define UNIX
+# endif
 
-#ifdef UNIX_TTY
-#define UNIX
-#endif
+# ifdef UNIX_TTY
+#  define UNIX
+# endif
 
 /*
  * LIBDIR:
  * This symbol indicates where the data files will reside.
  */
-#define LIBDIR "lib"
+# define LIBDIR "lib"
 
 #endif

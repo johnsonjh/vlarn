@@ -79,14 +79,14 @@
  */
 
 #ifndef __PLAYER_H
-#define __PLAYER_H
+# define __PLAYER_H
 
-#include "potion.h"
-#include "scroll.h"
-#include "spell.h"
-#include "scores.h"
+# include "potion.h"
+# include "scroll.h"
+# include "spell.h"
+# include "scores.h"
 
-#define INNATE_TELEPORT_LEVEL 10
+# define INNATE_TELEPORT_LEVEL 10
 
 /*************** Defines for the character attibute array c[] ******/
 
@@ -204,11 +204,11 @@ typedef enum
 } AttributeType;
 
 
-#define ABILITY_FIRST STRENGTH
-#define ABILITY_LAST  CHARISMA
-#define ABILITY_COUNT (ABILITY_LAST - ABILITY_FIRST + 1)
+# define ABILITY_FIRST STRENGTH
+# define ABILITY_LAST  CHARISMA
+# define ABILITY_COUNT (ABILITY_LAST - ABILITY_FIRST + 1)
 
-#define IVENSIZE  26  /* max size of inventory */
+# define IVENSIZE  26  /* max size of inventory */
 
 /*
  * Exported variables

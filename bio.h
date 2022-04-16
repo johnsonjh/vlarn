@@ -64,10 +64,10 @@
  */
 
 #ifndef __BIO_H
-#define __BIO_H
+# define __BIO_H
 
-#include <libraries/dos.h>
-#include <libraries/dosextens.h>
+# include <libraries/dos.h>
+# include <libraries/dosextens.h>
 
 /*
 ** NOTE : The buffer is used for either input out output at any one time.

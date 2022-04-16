@@ -44,11 +44,11 @@
  */
 
 #ifndef __MONSTER_H
-#define __MONSTER_H
+# define __MONSTER_H
 
-#include "dungeon.h"
+# include "dungeon.h"
 
-#define MAXMONST 57 /* maximum # monsters in the dungeon  */
+# define MAXMONST 57 /* maximum # monsters in the dungeon  */
 
 struct monst {
   char *name;
@@ -66,15 +66,15 @@ struct monst {
 /*
  *  Flags for monst structure
  */
-#define FL_NONE 0x00 /* Nothing of interest                     */
-#define FL_GENOCIDED 0x01 /* Monster has been genocided              */
-#define FL_HEAD 0x02 /* Monster has a head                      */
-#define FL_NOBEHEAD 0x04 /* Monster cannot be beheaded by Vorpy     */
-#define FL_SLOW 0x08 /* Monster moves at 1/2 nornal speed       */
-#define FL_FLY 0x10 /* Monster can fly over pits and trapdoors */
-#define FL_SPIRIT 0x20 /* Is a spirit (affected by spirit prot)   */
-#define FL_UNDEAD 0x40 /* Is undead (affected by undead prot)     */
-#define FL_INFRAVIS 0x80 /* Monster has infravision (see invisible) */
+# define FL_NONE 0x00 /* Nothing of interest                     */
+# define FL_GENOCIDED 0x01 /* Monster has been genocided              */
+# define FL_HEAD 0x02 /* Monster has a head                      */
+# define FL_NOBEHEAD 0x04 /* Monster cannot be beheaded by Vorpy     */
+# define FL_SLOW 0x08 /* Monster moves at 1/2 nornal speed       */
+# define FL_FLY 0x10 /* Monster can fly over pits and trapdoors */
+# define FL_SPIRIT 0x20 /* Is a spirit (affected by spirit prot)   */
+# define FL_UNDEAD 0x40 /* Is undead (affected by undead prot)     */
+# define FL_INFRAVIS 0x80 /* Monster has infravision (see invisible) */
 
 /************* Defines for the monsters as objects *************/
 

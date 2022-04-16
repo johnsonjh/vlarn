@@ -20,7 +20,7 @@
  */
 
 #ifndef __SAVEGAME_H
-#define __SAVEGAME_H
+# define __SAVEGAME_H
 
 /* =============================================================================
  * FUNCTION: savegame

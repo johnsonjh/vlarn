@@ -74,12 +74,12 @@
  */
 
 #ifndef __X11_SIMPLE_MENU_H
-#define __X11_SIMPLE_MENU_H
+# define __X11_SIMPLE_MENU_H
 
-#include <X11/Xlib.h>
+# include <X11/Xlib.h>
 
-#define XMENU_NULLID 0
-#define XMENU_SEPARATOR 1
+# define XMENU_NULLID 0
+# define XMENU_SEPARATOR 1
 
 typedef enum { XMENU_UNCHECKED, XMENU_CHECKED } XMENU_CheckState;
 
@@ -87,7 +87,7 @@ typedef enum { XMENU_UNCHECKED, XMENU_CHECKED } XMENU_CheckState;
  * The X events the menu handler requires its window to handle
  */
 
-#define XMENU_EVENT_MASK                                                       \
+# define XMENU_EVENT_MASK                                                       \
   (ButtonPressMask | ButtonReleaseMask | Button1MotionMask)
 
 struct XMENU_Item {

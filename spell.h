@@ -27,10 +27,10 @@
  */
 
 #ifndef __SPELL_H
-#define __SPELL_H
+# define __SPELL_H
 
-#include "dungeon.h"
-#include "ularn_win.h"
+# include "dungeon.h"
+# include "ularn_win.h"
 
 typedef enum {
   SPELL_PRO, /* Protection             */
@@ -76,13 +76,13 @@ typedef enum {
 } SpellType;
 
 /* The dexterity boost from the DEX spell */
-#define SDEXTERITY_BOOST 3
+# define SDEXTERITY_BOOST 3
 /* The strength boost from the STR spell */
-#define SSTRENGTH_BOOST 3
+# define SSTRENGTH_BOOST 3
 /* The protection boost from the PRO spell */
-#define SPELL_PRO_BOOST 2
+# define SPELL_PRO_BOOST 2
 /* The protection boost from a globe of invulnerability */
-#define SPELL_GLOBE_BOOST 10
+# define SPELL_GLOBE_BOOST 10
 
 /*
  * This array defines the highest spell number that may be learnt from a

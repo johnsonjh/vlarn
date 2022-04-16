@@ -22,7 +22,7 @@
  */
 
 #ifndef __ITM_H
-#define __ITM_H
+# define __ITM_H
 
 typedef enum {
   OUNKNOWN, /* Marker for unknown areas */
@@ -149,8 +149,8 @@ typedef enum {
 } ObjectIdType;
 
 /*** How enchantment happened ***/
-#define ENCH_SCROLL 0 /* Enchantment from reading a scroll */
-#define ENCH_ALTAR 1 /* Enchantment from an altar         */
+# define ENCH_SCROLL 0 /* Enchantment from reading a scroll */
+# define ENCH_ALTAR 1 /* Enchantment from an altar         */
 
 extern char objnamelist[OCOUNT];
 
