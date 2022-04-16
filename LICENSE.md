@@ -12,7 +12,8 @@
 ## Overview
 
 **VLarn**, _as a whole_, is distributed under the terms of the
-**GNU General Public License**, **version 2**.
+**GNU General Public License**, **version 2**, or (at your option) any later
+version.
 
 - While this version was originally based on _ULarn 1.5pl4_, the changes
   it has undergone have been so substantial that none of the original code

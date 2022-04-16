@@ -59,7 +59,8 @@
 ## License
 
 - **VLarn**, _as a whole_, is distributed under the terms of the
-  **GNU General Public License**, **version 2**.
+  **GNU General Public License**, **version 2**, or (at your option) any later
+  version.
 
 - **VLarn** incorporates some components which are, individually, available
   under the terms and conditions of a modified **3-clause BSD-style license**.
