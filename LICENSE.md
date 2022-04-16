@@ -347,14 +347,13 @@ of this License.
 
 ## Amiga components license
 
-\
 Copyright © 1995-2004 _Julian Olds_
 \
 Copyright © 1987-2022 _The Larn/Ularn/VLarn Authors_
 \
 \
 All rights reserved.
-\
+
 
 - Redistribution and use, in source and binary forms, with or without
   modification, are permitted, provided that the following conditions are met:
@@ -385,12 +384,11 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ## X11 Simple Menu license
 
-\
 Copyright © 2003 _Julian Olds_
 \
 \
 All rights reserved.
-\
+
 
 - Redistribution and use, in source and binary forms, with or without
   modification, are permitted, provided that the following conditions are met:
