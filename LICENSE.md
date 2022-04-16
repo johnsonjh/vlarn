@@ -3,7 +3,7 @@
 <!-- toc -->
 
 - [Overview](#overview)
-- [GNU General Public License, Version 2](#vlarn-license)
+- [GNU General Public License, version 2](#vlarn-license)
 - [BSD-style license for Amiga components](#amiga-components-license)
 - [BSD-style license for X11 Simple Menu](#x11-simple-menu-license)
 
@@ -11,24 +11,24 @@
 
 ## Overview
 
-**VLarn**, *as a whole*, is distributed under the terms of the
-**GNU General Public License**, **Version 2**.
+**VLarn**, _as a whole_, is distributed under the terms of the
+**GNU General Public License**, **version 2**.
 
-* While this version was originally based on *ULarn 1.5pl4*, the changes
+- While this version was originally based on _ULarn 1.5pl4_, the changes
   it has undergone have been so substantial that none of the original code
   remains, though many of the names and descriptions have been retained.
 
-* Some individual components of **VLarn** are ***not*** GPL licensed:
-  * `x11_simple_menu`, a library of X11 menu procedures, is entirely
-    the work of *Julian Olds*, and is distributed under the terms of a
+- Some individual components of **VLarn** are **_not_** GPL licensed:
+  - `x11_simple_menu`, a library of X11 menu procedures, is entirely
+    the work of _Julian Olds_, and is distributed under the terms of a
     **modified 3-clause BSD-style license**.
-  * The Amiga modules `bio` (*Buffered I/O*), `ifftools` (*IFF ILBM Reader*),
-    and `smart_menu` (*Intuition Menu Helper*) are distributed under the terms
+  - The Amiga modules `bio` (_Buffered I/O_), `ifftools` (_IFF ILBM Reader_),
+    and `smart_menu` (_Intuition Menu Helper_) are distributed under the terms
     of a **modified 3-clause BSD-style license**.
 
 ## VLarn License
 
-### ***GNU General Public License***, _Version 2, June 1991_
+### **_GNU General Public License_**, _Version 2, June 1991_
 
 _Copyright © 1989, 1991 Free Software Foundation, Inc.,_
 _51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA_
@@ -345,12 +345,12 @@ of this License.
 
 ## Amiga components license
 
-- Copyright © 1995-2004 *Julian Olds*
-- Copyright © 1987-2022 *The Larn/Ularn/Vlarn Authors*
+- Copyright © 1995-2004 _Julian Olds_
+- Copyright © 1987-2022 _The Larn/Ularn/Vlarn Authors_
 
 All rights reserved.
 
-* Redistribution and use, in source and binary forms, with or without
+- Redistribution and use, in source and binary forms, with or without
   modification, are permitted, provided that the following conditions are met:
 
   1. Redistributions of source code must retain the above copyright notice,
@@ -360,16 +360,16 @@ All rights reserved.
      this list of conditions, and the following disclaimer in the documentation
      and/or other materials provided with the distribution.
 
-  3. Neither the names of the *Regents of the University of California*, nor
-     *The Larn/Ularn/Vlarn Authors*, nor the names of any contributors may be
+  3. Neither the names of the _Regents of the University of California_, nor
+     _The Larn/Ularn/Vlarn Authors_, nor the names of any contributors may be
      used to endorse or promote products derived from this software without
      specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “**AS IS**”
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL *THE REGENTS OF THE UNIVERSITY OF CALIFORNIA* OR
-*THE LARN/ULARN/VLARN AUTHORS* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+DISCLAIMED. IN NO EVENT SHALL _THE REGENTS OF THE UNIVERSITY OF CALIFORNIA_ OR
+_THE LARN/ULARN/VLARN AUTHORS_ BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
 SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES, INCLUDING, BUT NOT LIMITED TO,
 PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF USE, DATA, OR PROFITS, OR
 BUSINESS INTERRUPTION, HOWEVER CAUSED, AND ON ANY THEORY OF LIABILITY, WHETHER
@@ -379,11 +379,11 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ## X11 Simple Menu license
 
-- Copyright © 2003 *Julian Olds*
+- Copyright © 2003 _Julian Olds_
 
 All rights reserved.
 
-* Redistribution and use, in source and binary forms, with or without
+- Redistribution and use, in source and binary forms, with or without
   modification, are permitted, provided that the following conditions are met:
 
   1. Redistributions of source code must retain the above copyright notice,
@@ -399,8 +399,8 @@ All rights reserved.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “**AS IS**”
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL *THE REGENTS OF THE UNIVERSITY OF CALIFORNIA* OR
-*THE LARN/ULARN/VLARN AUTHORS* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+DISCLAIMED. IN NO EVENT SHALL _THE REGENTS OF THE UNIVERSITY OF CALIFORNIA_ OR
+_THE LARN/ULARN/VLARN AUTHORS_ BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
 SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES, INCLUDING, BUT NOT LIMITED TO,
 PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF USE, DATA, OR PROFITS, OR
 BUSINESS INTERRUPTION, HOWEVER CAUSED, AND ON ANY THEORY OF LIABILITY, WHETHER
