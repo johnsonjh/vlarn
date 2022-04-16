@@ -4,8 +4,6 @@
 [![DeepSourceA](https://deepsource.io/gh/johnsonjh/vlarn.svg/?label=active+issues)](https://deepsource.io/gh/johnsonjh/vlarn/?ref=repository-badge)
 [![DeepSourceR](https://deepsource.io/gh/johnsonjh/vlarn.svg/?label=resolved+issues)](https://deepsource.io/gh/johnsonjh/vlarn/?ref=repository-badge)
 
----
-
 <!-- toc -->
 
 ## Table of Contents
