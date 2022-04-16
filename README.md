@@ -53,7 +53,8 @@
 
 - You may contact the VLarn maintainer, Jeffrey H. Johnson, via e-mail at
   \<[trnsz@pobox.com](mailto:trnsz@pobox.com)\>, with bug reports or questions.
-  *Please include `[VLarn]` in the subject line*.
+
+- Please include `[VLarn]` in the e-mail subject line.
 
 ## License
 
@@ -82,6 +83,7 @@
 - Extended time limits
 - Tweaked carrying capacity
 - Increased checkpoint frequency
+- Rebalanced gameplay
 - Lemmings less aggressive
 - Modified scoreboard system
 - Removed Dealer McDope's pad
