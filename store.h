@@ -22,7 +22,6 @@
  * item_value  : Calculates the value of an item as per the trading post
  * otradepost  : Handles entering the trading post.
  * olrs        : Handles entering the Larn Revenue Service
- * opad        : Handles enetering dealer McDope's pad.
  * ohome       : Handes the player returning home.
  * write_store : Writes all shop data to the save file
  * read_store  : Reads all shop data from the save file
@@ -169,21 +168,6 @@ void otradepost(void);
  */
 void olrs(void);
 
-/* =============================================================================
- * FUNCTION: opad
- *
- * DESCRIPTION:
- * Function to handle entering dealer McDope's pad.
- *
- * PARAMETERS:
- *
- *   None.
- *
- * RETURN VALUE:
- *
- *   None.
- */
-void opad(void);
 
 /* =============================================================================
  * FUNCTION: ohome

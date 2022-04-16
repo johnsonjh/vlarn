@@ -673,12 +673,6 @@ static void makeobject(int j) {
     fillroom(OBANK2, 0); /*  branch office of the bank */
   }
 
-  if ((c[PAD] == 0) && (j >= 4)) {
-    if (rnd(100) > 75)
-      // fillroom(OPAD, 0);  /* Dealer McDope's Pad */
-      c[PAD]++;
-  }
-
   froom(2, ORING, 0);            /* a ring mail  */
   froom(1, OSTUDLEATHER, 0);     /* a studded leather  */
   froom(3, OSPLINT, 0);          /* a splint mail*/

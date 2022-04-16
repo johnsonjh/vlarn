@@ -47,13 +47,11 @@ char objnamelist[OCOUNT] = {
     /* gems */
     '<', '<', '<', '<',
     /* buildings/entrances */
-    'M', 'S', '$', '$', 'E', 'V', 'V', 'H', 'T', 'L', 'P',
+    'M', 'S', '$', '$', 'E', 'V', 'V', 'H', 'T', 'L',
     /* traps */
     ' ', '^', ' ', '^', '^', ' ', ' ',
     /* misc */
-    's', 'c', 'u',
-    /* drugs */
-    ':', ':', ':', ':', ':'};
+    's', 'c', 'u'};
 
 int objtilelist[OCOUNT] = {175, 191,
                            /* Dungeon features */
@@ -75,13 +73,11 @@ int objtilelist[OCOUNT] = {175, 191,
                            /* gems */
                            113, 114, 115, 116,
                            /* buildings/entrances */
-                           73, 75, 79, 78, 117, 118, 119, 132, 140, 145, 161,
+                           73, 75, 79, 78, 117, 118, 119, 132, 140, 145,
                            /* Traps */
                            191, 129, 191, 136, 138, 191, 191,
                            /* Misc */
-                           143, 146, 147,
-                           /* Drugs */
-                           156, 157, 158, 159, 160};
+                           143, 146, 147};
 
 /*
  * Description for each item
@@ -181,7 +177,6 @@ char *objectname[OCOUNT] = {
     "your home",
     "the local trading post",
     "the Larn Revenue Service",
-    "Dealer McDope's Pad",
     /* traps */
     "an arrow trap",
     "an arrow trap",
@@ -194,10 +189,4 @@ char *objectname[OCOUNT] = {
     "a sphere of annihilation",
     "a fortune cookie",
     "a golden urn",
-    /* drugs */
-    "some speed",
-    "some LSD",
-    "some hashish",
-    "some magic mushrooms",
-    "some cocaine",
 };

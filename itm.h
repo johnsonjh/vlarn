@@ -131,7 +131,6 @@ typedef enum {
   OHOME,      /* Player's home                  */
   OTRADEPOST, /* Larn trading post              */
   OLRS,       /* Larn Revenue Service           */
-  OPAD,       /* Dealer McDope's Pad            */
 
   /* Traps */
   OTRAPARROWIV,
@@ -146,12 +145,6 @@ typedef enum {
   OCOOKIE,
   OURN, /* golden urn - not implemented */
 
-  /* Drugs */
-  OSPEED,
-  OACID,
-  OHASH,
-  OSHROOMS,
-  OCOKE,
   OCOUNT
 } ObjectIdType;
 

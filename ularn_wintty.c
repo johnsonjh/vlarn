@@ -325,13 +325,11 @@ static int ItemAttr[OCOUNT] = {
     0, 0, 0, 0,
     /* buildings/entrances */
     A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE,
-    A_REVERSE, A_REVERSE, A_REVERSE, A_REVERSE,
+    A_REVERSE, A_REVERSE, A_REVERSE,
     /* traps */
     0, 0, 0, 0, 0, 0, 0,
     /* misc */
-    0, 0, 0,
-    /* drugs */
-    0, 0, 0, 0, 0};
+    0, 0, 0};
 
 static int ItemColor[OCOUNT] = {
     C_WHITE, C_WHITE,
@@ -358,13 +356,11 @@ static int ItemColor[OCOUNT] = {
     C_WHITE, C_RED, C_GREEN, C_BLUE,
     /* buildings/entrances */
     C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE,
-    C_WHITE, C_WHITE, C_WHITE,
+    C_WHITE, C_WHITE,
     /* traps */
     C_RED, C_RED, C_RED, C_RED, C_RED, C_RED, C_RED,
     /* misc */
-    C_WHITE, C_WHITE, C_WHITE,
-    /* drugs */
-    C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_WHITE};
+    C_WHITE, C_WHITE, C_WHITE};
 
 static int MonstColor[MONST_COUNT] = {
     C_WHITE,   C_WHITE,   C_GREEN,   C_GREEN,   C_WHITE, C_WHITE,  C_RED,

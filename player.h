@@ -194,7 +194,6 @@ typedef enum
   ELVEN,      /* Created elven chain               */
   VORP,       /* Created vorpal sword              */
   SLAY,       /* Created slayer                    */
-  PAD,        /* Created Dealer McDope's           */
   LIFE_PRESERVER, /* Created amulet of life preservation */
   /* Misc */
   COKED,      /* Flag indicating player is coked   */
