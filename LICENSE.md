@@ -1,11 +1,12 @@
-# Licensing
+# VLarn Licensing
 
 <!-- toc -->
 
 - [Overview](#overview)
-- [GNU General Public License, version 2](#vlarn-license)
-- [BSD-style license for Amiga components](#amiga-components-license)
-- [BSD-style license for X11 Simple Menu](#x11-simple-menu-license)
+- Licenses:
+  - **VLarn** [GNU GPLv2](#vlarn-license)
+    - **Amiga components** [3-clause BSD license](#amiga-components-license)
+    - **X11 Simple Menu** [3-clause BSD license](#x11-simple-menu-license)
 
 <!-- tocstop -->
 
@@ -19,9 +20,11 @@
   remains, though many of the names and descriptions have been retained.
 
 - Some individual components of **VLarn** are **_not_** GPL licensed:
+
   - `x11_simple_menu`, a library of X11 menu procedures, is entirely
     the work of _Julian Olds_, and is distributed under the terms of a
     **modified 3-clause BSD-style license**.
+
   - The Amiga modules `bio` (_Buffered I/O_), `ifftools` (_IFF ILBM Reader_),
     and `smart_menu` (_Intuition Menu Helper_) are distributed under the terms
     of a **modified 3-clause BSD-style license**.

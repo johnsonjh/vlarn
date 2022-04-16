@@ -55,12 +55,12 @@
 
 - You may contact the VLarn maintainer, Jeffrey H. Johnson, via e-mail at
   \<[trnsz@pobox.com](mailto:trnsz@pobox.com)\>, with bug reports or questions.
-  Please include '_VLarn_' in the Subject line.
+  *Please include `[VLarn]` in the subject line*.
 
 ## License
 
 - **VLarn**, _as a whole_, is distributed under the terms of the
-  **GNU General Public License\*, **version 2\*\*.
+  **GNU General Public License**, **version 2**.
 
 - **VLarn** incorporates some components which are, individually, available
   under the terms and conditions of a modified **3-clause BSD-style license**.
@@ -111,8 +111,6 @@
 - Removed unneeded function calls causing extra map redraws
 - Fixed calculation of AC and WC when destroying armor or weapons
 
-#### Older History
+### Older History
 
-- See the [OLD-NEWS](https://github.com/johnsonjh/vlarn/blob/master/OLD-NEWS.txt)
-  file for additional information, including details for releases older than
-  **ULarn 1.6 Patchlevel 3**.
+- See the [OLD-NEWS](OLD-NEWS.txt) file for additional information.
