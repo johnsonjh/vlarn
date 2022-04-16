@@ -1,12 +1,12 @@
-CC=cc
-LD=cc
+CC?=cc
+LD=$(CC)
 RC=windres
 
-CFLAGS=-Wall -DUNIX_X11 -I/usr/include/X11R6
-LDFLAGS=-L/usr/X11R6/lib
+CFLAGS+=-Wall -DUNIX_X11 -I/usr/include/X11R6
+LDFLAGS+=-L/usr/X11R6/lib
 
-INSTALL_PATH=/opt/vlarn/bin
-LIB_PATH=/opt/vlarn/lib
+INSTALL_PATH?=/opt/vlarn/bin
+LIB_PATH?=/opt/vlarn/lib
 
 OBJECT=ularn.o ularn_winx11.o ularn_game.o ularn_ask.o store.o sphere.o spell.o show.o scroll.o scores.o saveutils.o savegame.o potion.o player.o object.o monster.o itm.o help.o getopt.o fortune.o dungeon_obj.o dungeon.o diag.o action.o x11_simple_menu.o
 

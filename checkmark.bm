@@ -1,5 +1,12 @@
 #define checkmark_width 12
 #define checkmark_height 12
 static char checkmark_bits[] = {
-   0x00, 0x00, 0x06, 0x03, 0x8e, 0x03, 0xdc, 0x01, 0xf8, 0x00, 0x70, 0x00,
-   0xf8, 0x00, 0xdc, 0x01, 0x8e, 0x03, 0x06, 0x03, 0x00, 0x00, 0x00, 0x00};
+  (char)0,   (char)0,   (char)6,
+  (char)3,   (char)142, (char)3,
+  (char)220, (char)1,   (char)248,
+  (char)0,   (char)112, (char)0,
+  (char)248, (char)0,   (char)220,
+  (char)1,   (char)142, (char)3,
+  (char)6,   (char)3,   (char)0,
+  (char)0,   (char)0,   (char)0
+};

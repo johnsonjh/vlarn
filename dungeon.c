@@ -1327,6 +1327,7 @@ void createitem(int x, int y, int it, int arg) {
           iarg[ox][oy] += (short)arg;
           return;
         }
+        /* fallthrough */
       case ODGOLD:
         if ((10L * iarg[ox][oy] + arg) < 327670L) {
           i = iarg[ox][oy];
@@ -1334,6 +1335,7 @@ void createitem(int x, int y, int it, int arg) {
           item[ox][oy] = ODGOLD;
           return;
         }
+        /* fallthrough */
       case OMAXGOLD:
         if ((100L * iarg[ox][oy] + arg) < 3276700L) {
           i = (int)((100L * iarg[ox][oy]) + arg);
@@ -1341,6 +1343,7 @@ void createitem(int x, int y, int it, int arg) {
           item[ox][oy] = OMAXGOLD;
           return;
         }
+        /* fallthrough */
       case OKGOLD:
         if ((1000L * iarg[ox][oy] + arg) <= 32767000L) {
           i = iarg[ox][oy];

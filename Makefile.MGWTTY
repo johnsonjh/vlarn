@@ -1,10 +1,10 @@
-CC=gcc
-LD=gcc
+CC?=gcc
+LD=$(CC)
 RC=windres
 
-CFLAGS=-Wall -I C:/pdcurses
-LDFLAGS=-L C:/pdcurses/pdcurses
-LIB=-lpdcurses
+CFLAGS+=-Wall -IC:/pdcurses
+LDFLAGS+=-LC:/pdcurses/pdcurses
+LIB?=-lpdcurses
 
 INSTALL_PATH=/opt/vlarn/bin
 LIB_PATH=/opt/vlarn/lib

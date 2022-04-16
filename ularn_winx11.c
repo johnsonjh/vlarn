@@ -1521,8 +1521,10 @@ static void handle_event(XEvent *event) {
 
         if (KeyMap[Action][i].ModKey != M_ASCII) {
           /* Virtual key binding */
-          if ((key_symbol == KeyMap[Action][i].VirtKey) &&
-              (KeyMap[Action][i].ModKey == ModKey))
+          if (((unsigned long)key_symbol == \
+                 (unsigned long)KeyMap[Action][i].VirtKey) &&
+              ((unsigned long)KeyMap[Action][i].ModKey == \
+                 (unsigned long)ModKey))
             Found = 1;
         }
       }
@@ -1557,7 +1559,8 @@ static void handle_event(XEvent *event) {
       Event = Action;
     else {
       /* check run key */
-      if ((key_symbol == RunKeyMap.VirtKey) && (RunKeyMap.ModKey == ModKey))
+      if (((unsigned long)key_symbol == (unsigned long)RunKeyMap.VirtKey) && \
+             ((unsigned long)RunKeyMap.ModKey == (unsigned long)ModKey))
         Runkey = 1;
     }
 
@@ -2759,7 +2762,14 @@ void drawscreen(void) { PaintWindow(); }
 /* =============================================================================
  * FUNCTION: draws
  */
-void draws(int minx, int miny, int maxx, int maxy) { PaintWindow(); }
+void draws(int minx, int miny, int maxx, int maxy) {
+  (void)minx;
+  (void)miny;
+  (void)maxx;
+  (void)maxy;
+
+  PaintWindow();
+}
 
 /* =============================================================================
  * FUNCTION: mapeffect

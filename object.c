@@ -674,8 +674,9 @@ void lookforobject(void) {
     if (rnd(11) < 6)
       return;
     item[playerx][playery] = OTELEPORTER;
-
+    /* fallthrough */
   case OTELEPORTER:
+    /* fallthrough */
     /*
      * The player is being teleported, so obviously the player gets
      * to know that a teleport trap is here.
@@ -901,6 +902,7 @@ void lookforobject(void) {
     if (rnd(17) < 13)
       return; /* for an arrow trap */
     item[playerx][playery] = OTRAPARROW;
+    /* fallthrough */
   case OTRAPARROW:
     Print("\nYou are hit by an arrow!");
     UlarnBeep(); /* for an arrow trap */
@@ -913,6 +915,7 @@ void lookforobject(void) {
     if (rnd(17) < 13)
       return; /* for a dart trap */
     item[playerx][playery] = ODARTRAP;
+    /* fallthrough */
   case ODARTRAP:
     Print("\nYou are hit by a dart!");
     UlarnBeep(); /* for a dart trap */
@@ -927,6 +930,7 @@ void lookforobject(void) {
     if (rnd(17) < 13)
       return; /* for a trap door */
     item[playerx][playery] = OTRAPDOOR;
+    /* fallthrough */
   case OTRAPDOOR:
     for (i = 0; i < IVENSIZE; i++) {
       if (iven[i] == OWWAND) {
