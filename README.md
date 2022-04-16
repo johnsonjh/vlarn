@@ -36,16 +36,16 @@
   **Microsoft Windows**, and
   [**AmigaOS**](https://github.com/johnsonjh/vlarn/blob/master/Amiga-README.txt).
 
-- Ports are currently in-progress for **Multics** (*MR12.6e+*), **Atari ST**,
-  and **OpenVMS**, and planned for **BeOS**/**Haiku** and *16-bit* **CP/M**
-  (*e.g.* _CP/M-68K_, _CP/M-Z8K_, _CP/M-86_).
+- Ports are currently in-progress for **Multics** (_MR12.6e+_), **Atari ST**,
+  and **OpenVMS**, and planned for **BeOS**/**Haiku** and _16-bit_ **CP/M**
+  (_e.g._ _CP/M-68K_, _CP/M-Z8K_, _CP/M-86_).
 
 - **VLarn**, like _ULarn_ 1.6, is easily portable to different systems, with
   all system-dependent code isolated in separate modules.
 
 ## Distribution
 
-* **VLarn** is available from:
+- **VLarn** is available from:
   - [GitHub](https://github.com/johnsonjh/vlarn)
   - [GitLab](https://gitlab.com/johnsonjh/vlarn)
   - [NotABug](https://notabug.org/trn/vlarn)
@@ -113,6 +113,6 @@
 
 #### Older History
 
-* See the [OLD-NEWS](https://github.com/johnsonjh/vlarn/blob/master/OLD-NEWS.txt)
+- See the [OLD-NEWS](https://github.com/johnsonjh/vlarn/blob/master/OLD-NEWS.txt)
   file for additional information, including details for releases older than
   **ULarn 1.6 Patchlevel 3**.
