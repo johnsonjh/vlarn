@@ -520,7 +520,7 @@ void seemagic(int arg) {
       if (spelknow[i])
         number++;
 
-    number = (number + 2) / 3 + 4; /* # lines needed to display */
+    //number = (number + 2) / 3 + 4; /* # lines needed to display */
     ClearText();
     MoveCursor(1, 1);
   } else

@@ -86,7 +86,7 @@ struct monst monster[MONST_COUNT] = {
    /* NAME                   LV   AC  DAM  ATT  INT   GOLD    HP     EXP  FLAGS
     *-----------------------------------------------------------------------------------------------------------------------------*/
     {"unseen attacker",      0,    0,   0,  0,   1,    0,     0,       0, 0},
-    {"lemming",              1,    0,   0,  0,   3,    0,     0,       1, FL_HEAD},
+    {"lemming",              1,    0,   0,  0,   1,    0,     0,       1, FL_HEAD},
     {"gnome",                1,   10,   1,  0,   8,   30,     2,       2, FL_HEAD | FL_INFRAVIS},
     {"hobgoblin",            1,   13,   2,  0,   5,   25,     3,       2, FL_HEAD | FL_SLOW},
     {"jackal",               1,    7,   1,  0,   4,    0,     1,       1, FL_HEAD},
@@ -705,7 +705,7 @@ static void mmove(int sx, int sy, int dx, int dy) {
   /* perform special processing for monsters */
 
   if (monst_id == LEMMING) {
-    if (rnd(100) <= 1) {
+    if (rnd(150) <= 1) {
       mitem[sx][sy].mon = LEMMING;
       hitp[sx][sy] = hitp[dx][dy];
     }
@@ -1455,7 +1455,7 @@ void hitmonster(int x, int y) {
   }
 
   if (mitem[x][y].mon == LEMMING)
-    if (rnd(100) <= 10)
+    if (rnd(150) <= 10)
       createmonster(LEMMING); /* was 40, now 10 */
 }
 

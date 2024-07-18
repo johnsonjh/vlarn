@@ -198,6 +198,9 @@ void ULarnSetup(int argc, char *argv[])
 #endif
 
   /* set the save directory to the home directory by default */
+  if (home == NULL) {
+      abort();
+  }
   strcpy(savedir, home);
 
   /* initialize dungeon storage */

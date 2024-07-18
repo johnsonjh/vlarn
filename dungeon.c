@@ -776,11 +776,11 @@ static void sethp(int flg) {
   }
 
   if (level == 0)
-    /* Don't spawn extra onsters on the home level */
+    /* Don't spawn extra monsters on the home level */
     return;
 
   if (flg)
-    /* Get the initial numb er of monsters for this level */
+    /* Get the initial number of monsters for this level */
     j = rnd(12) + 2 + (level >> 1);
   else
     /* Calculate the number of new monsters to create on revisit */
